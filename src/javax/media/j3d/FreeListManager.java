@@ -34,22 +34,22 @@ class FreeListManager {
     // constants that represent the freelists managed by the Manager
     static final int DISPLAYLIST = 0;
     static final int TEXTURE2D = 1;
-    static final int TEXTURE3D = 2;       
-    
+    static final int TEXTURE3D = 2;
+
     private static int maxFreeListNum = 2;
-    
+
     // what list we are going to shrink next
     private static int currlist = 0;
 
     static MemoryFreeList[] freelist = null;
-    
+
     static void createFreeLists() {
         maxFreeListNum = 2;
         freelist = new MemoryFreeList[maxFreeListNum+1];
         freelist[DISPLAYLIST] = new IntegerFreeList();
         freelist[TEXTURE2D] = new IntegerFreeList();
         freelist[TEXTURE3D] = new IntegerFreeList();
-        
+
     }
 
     // see if the current list can be shrunk
@@ -58,7 +58,7 @@ class FreeListManager {
 	if (freelist[currlist] != null) {
 	    freelist[currlist].shrink();
 	}
-	
+
 	currlist++;
 	if (currlist > maxFreeListNum) currlist = 0;
     }

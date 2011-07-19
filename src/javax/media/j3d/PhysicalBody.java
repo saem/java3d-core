@@ -103,7 +103,7 @@ public class PhysicalBody extends Object {
 		       | View.PB_EAR_POSITION_DIRTY
 		       | View.PB_NOMINAL_EYE_HEIGHT_FROM_GROUND_DIRTY
 		       | View.PB_NOMINAL_EYE_OFFSET_FROM_NOMINAL_SCREEN_DIRTY);
-    
+
     /**
      * Constructs a PhysicalBody object with default parameters.
      * The default values are as follows:
@@ -198,7 +198,7 @@ public class PhysicalBody extends Object {
     /**
      * Retrieves the user head object's left eye position and places
      * that value in the specified object.
-     * @param position the object that will receive the left-eye's position 
+     * @param position the object that will receive the left-eye's position
      * in head coordinates
      */
     public void getLeftEyePosition(Point3d position) {
@@ -218,9 +218,9 @@ public class PhysicalBody extends Object {
     }
 
     /**
-     * Retrieves the user head object's right eye position and places 
+     * Retrieves the user head object's right eye position and places
      * that value in the specified object.
-     * @param position the object that will receive the right-eye's position 
+     * @param position the object that will receive the right-eye's position
      * in head coordinates
      */
     public void getRightEyePosition(Point3d position) {
@@ -242,7 +242,7 @@ public class PhysicalBody extends Object {
     /**
      * Retrieves the user head object's left ear position and places
      * that value in the specified object.
-     * @param position the object that will receive the left-ear's position 
+     * @param position the object that will receive the left-ear's position
      * in head coordinates
      */
     public void getLeftEarPosition(Point3d position) {
@@ -262,9 +262,9 @@ public class PhysicalBody extends Object {
     }
 
     /**
-     * Retrieves the user head object's right ear position and places 
+     * Retrieves the user head object's right ear position and places
      * that value in the specified object.
-     * @param position the object that will receive the right-ear's position 
+     * @param position the object that will receive the right-ear's position
      * in head coordinates
      */
     public void getRightEarPosition(Point3d position) {

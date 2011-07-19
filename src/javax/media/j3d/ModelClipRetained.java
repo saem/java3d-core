@@ -91,7 +91,7 @@ class ModelClipRetained extends LeafRetained {
     boolean inImmCtx = false;
 
     // The mirror copy of this modelClip
-    ModelClipRetained mirrorModelClip = null; 
+    ModelClipRetained mirrorModelClip = null;
 
     // A reference to the scene graph model clip
     ModelClipRetained sgModelClip = null;
@@ -113,7 +113,7 @@ class ModelClipRetained extends LeafRetained {
 
     /**
      * Constructs and initializes model clip planes
-     */  
+     */
     ModelClipRetained() {
 
 	// planes contains the negate default values
@@ -186,8 +186,8 @@ class ModelClipRetained extends LeafRetained {
      */
     void setPlane(int planeNum, Vector4d plane) {
 	initPlane(planeNum, plane);
-	sendMessage(PLANE_CHANGED, 
-		    new Integer(planeNum), 
+	sendMessage(PLANE_CHANGED,
+		    new Integer(planeNum),
 		    new Vector4d(this.xformPlanes[planeNum]));
     }
 
@@ -228,7 +228,7 @@ class ModelClipRetained extends LeafRetained {
     void setEnables(boolean[] enables) {
         Boolean[] en = new Boolean[6];
 
-	initEnables(enables);        
+	initEnables(enables);
         en[0] = (enables[0] ? Boolean.TRUE: Boolean.FALSE);
         en[1] = (enables[1] ? Boolean.TRUE: Boolean.FALSE);
         en[2] = (enables[2] ? Boolean.TRUE: Boolean.FALSE);
@@ -253,7 +253,7 @@ class ModelClipRetained extends LeafRetained {
      */
     void setEnable(int planeNum, boolean enable) {
 	initEnable(planeNum, enable);
-	sendMessage(ENABLE_CHANGED, 
+	sendMessage(ENABLE_CHANGED,
 		    new Integer(planeNum),
 		     (enable ? Boolean.TRUE: Boolean.FALSE));
     }
@@ -295,7 +295,7 @@ class ModelClipRetained extends LeafRetained {
 
     /**
      * Set the Model Clip's region of influencing and send message
-     */ 
+     */
     void setInfluencingBounds(Bounds region) {
         initInfluencingBounds(region);
 	sendMessage(BOUNDS_CHANGED,
@@ -303,9 +303,9 @@ class ModelClipRetained extends LeafRetained {
 		    null);
     }
 
-    /** 
+    /**
      * Get the Model Clip's region of influencing.
-     */ 
+     */
     Bounds getInfluencingBounds() {
         Bounds b = null;
 
@@ -321,7 +321,7 @@ class ModelClipRetained extends LeafRetained {
 
     /**
      * Set the Model Clip's region of influencing to the specified Leaf node.
-     */ 
+     */
     void initInfluencingBoundingLeaf(BoundingLeaf region) {
         if (region != null) {
             boundingLeaf = (BoundingLeafRetained)region.retained;
@@ -332,7 +332,7 @@ class ModelClipRetained extends LeafRetained {
 
     /**
      * Set the Model Clip's region of influencing to the specified Leaf node.
-     */ 
+     */
     void setInfluencingBoundingLeaf(BoundingLeaf region) {
         if (boundingLeaf != null)
             boundingLeaf.mirrorBoundingLeaf.removeUser(mirrorModelClip);
@@ -343,16 +343,16 @@ class ModelClipRetained extends LeafRetained {
             boundingLeaf = null;
         }
 
-	sendMessage(BOUNDINGLEAF_CHANGED, 
+	sendMessage(BOUNDINGLEAF_CHANGED,
 		    (boundingLeaf != null ?
-		     boundingLeaf.mirrorBoundingLeaf : null), 
+		     boundingLeaf.mirrorBoundingLeaf : null),
 		    null);
     }
 
 
-    /** 
+    /**
      * Get the Model Clip's region of influencing.
-     */ 
+     */
     BoundingLeaf getInfluencingBoundingLeaf() {
         return (boundingLeaf != null ?
 		(BoundingLeaf)boundingLeaf.source : null);
@@ -560,7 +560,7 @@ class ModelClipRetained extends LeafRetained {
     }
 
     /**
-     * Returns the index of the specified Group node within the ModelClip's list of scoped 
+     * Returns the index of the specified Group node within the ModelClip's list of scoped
      * Group nodes
      * @param Group node whose index is desired
      * @return index of this node
@@ -587,12 +587,12 @@ class ModelClipRetained extends LeafRetained {
     }
 
 
-    /** 
+    /**
      * This method and its native counterpart update the native context
      * model clip planes.
      */
     void update(Canvas3D cv, int enableMask) {
-	cv.setModelViewMatrix(cv.ctx, 
+	cv.setModelViewMatrix(cv.ctx,
 			      cv.vworldToEc.mat,
 			      getLastLocalToVworld());
 	update(cv.ctx, enableMask, getLastLocalToVworld());
@@ -601,8 +601,8 @@ class ModelClipRetained extends LeafRetained {
     void update(Context ctx, int enableMask, Transform3D trans) {
 	if (!VirtualUniverse.mc.isD3D()) {
 	    for (int i = 0; i < 6; i ++) {
-	         Pipeline.getPipeline().updateModelClip(ctx, i, ((enableMask & (1 << i)) != 0), 
-			xformPlanes[i].x, xformPlanes[i].y, 
+	         Pipeline.getPipeline().updateModelClip(ctx, i, ((enableMask & (1 << i)) != 0),
+			xformPlanes[i].x, xformPlanes[i].y,
 			xformPlanes[i].z, xformPlanes[i].w);
 	    }
 	    return;
@@ -619,8 +619,8 @@ class ModelClipRetained extends LeafRetained {
 
 	for (int i=0; i < 6; i++) {
 	    if ((enableMask & (1 << i)) != 0) {
-		
-		Vector4d vec = new Vector4d(xformPlanes[i].x, xformPlanes[i].y, 
+
+		Vector4d vec = new Vector4d(xformPlanes[i].x, xformPlanes[i].y,
 					    xformPlanes[i].z, xformPlanes[i].w);
 		vec.normalize();
 		invtrans.transform(vec);
@@ -653,7 +653,7 @@ class ModelClipRetained extends LeafRetained {
 	    mirrorModelClip.boundingLeaf = null;
 	    mirrorModelClip.region = null;
 	}
-	
+
 	if (bnds != null) {
 	    mirrorModelClip.regionOfInfluence = bnds;
 	    if (mirrorModelClip.region == null) {
@@ -691,7 +691,7 @@ class ModelClipRetained extends LeafRetained {
 	}
 	else if ((component & PLANE_CHANGED) != 0) {
 	    int planeNum = ((Integer)objs[2]).intValue();
-	    
+
 	    mirrorModelClip.xformPlanes[planeNum].set((Vector4d)objs[3]);
 	}
 	else if ((component & INIT_MIRROR) != 0) {
@@ -711,12 +711,12 @@ class ModelClipRetained extends LeafRetained {
 	if  ((component & BOUNDINGLEAF_CHANGED) != 0) {
 	    mirrorModelClip.boundingLeaf = (BoundingLeafRetained)objs[2];
 	    if (objs[2] != null) {
-		mirrorModelClip.region = 
+		mirrorModelClip.region =
 		    (Bounds)mirrorModelClip.boundingLeaf.transformedRegion;
 	    }
 	    else {
 		if (mirrorModelClip.regionOfInfluence != null) {
-		    mirrorModelClip.region = 
+		    mirrorModelClip.region =
 			((Bounds)mirrorModelClip.regionOfInfluence).copy(mirrorModelClip.region);
 		    mirrorModelClip.region.transform(mirrorModelClip.regionOfInfluence,
 						     getCurrentLocalToVworld());
@@ -724,17 +724,17 @@ class ModelClipRetained extends LeafRetained {
 		else {
 		    mirrorModelClip.region = null;
 		}
-		
+
 	    }
-	} 
+	}
 
 	if ((component & BOUNDS_CHANGED) != 0) {
 	    mirrorModelClip.regionOfInfluence = (Bounds) objs[2];
 	    if (mirrorModelClip.boundingLeaf == null) {
 		if (objs[2] != null) {
-		    mirrorModelClip.region = 
+		    mirrorModelClip.region =
 			((Bounds)mirrorModelClip.regionOfInfluence).copy(mirrorModelClip.region);
-		    
+
 		    mirrorModelClip.region.transform(mirrorModelClip.regionOfInfluence,
 						     getCurrentLocalToVworld());
 		}
@@ -742,7 +742,7 @@ class ModelClipRetained extends LeafRetained {
 		    mirrorModelClip.region = null;
 		}
 	    }
-	} 
+	}
 
 	if ((component & SCOPE_CHANGED) != 0) {
             Object[] scopeList = (Object[])objs[2];
@@ -792,7 +792,7 @@ class ModelClipRetained extends LeafRetained {
 					mirrorModelClip.enables[3] |
 					mirrorModelClip.enables[4] |
 					mirrorModelClip.enables[5] ;
-	} 
+	}
     }
 
 
@@ -880,7 +880,7 @@ class ModelClipRetained extends LeafRetained {
 	}
 	Object[] scopeInfo = new Object[2];
 	scopeInfo[0] = ((scopes.size() > 0) ? Boolean.TRUE:Boolean.FALSE);
-	scopeInfo[1] = addScopeList;	
+	scopeInfo[1] = addScopeList;
 	createMessage.args[2] = scopeInfo;
 	createMessage.args[3] = xformPlanes.clone();
 
@@ -891,7 +891,7 @@ class ModelClipRetained extends LeafRetained {
 	createMessage.args[4] = obj;
 	VirtualUniverse.mc.processMessage(createMessage);
 
-	
+
     }
 
 
@@ -947,16 +947,16 @@ class ModelClipRetained extends LeafRetained {
 	Shape3DRetained shape;
 	ArrayList shapeList = (ArrayList)args[2];
 	ArrayList removeScopeList = new ArrayList();
-	
+
 	for (int i = 0; i < shapeList.size(); i++) {
 	    shape = ((GeometryAtom)shapeList.get(i)).source;
 	    shape.removeModelClip(mirrorModelClip);
 	}
 
-	mirrorModelClip.isScoped = false;	
+	mirrorModelClip.isScoped = false;
 
     }
-    
+
 
     // Clone the retained side only, internal use only
     protected Object clone() {
@@ -977,7 +977,7 @@ class ModelClipRetained extends LeafRetained {
 			 mc.enables[2] |
 			 mc.enables[3] |
 			 mc.enables[4] |
-			 mc.enables[5] );	
+			 mc.enables[5] );
 
         mc.inImmCtx = false;
         mc.region = null;
@@ -1007,13 +1007,13 @@ class ModelClipRetained extends LeafRetained {
     }
 
 
-    void printPlane(int index, String string) 
+    void printPlane(int index, String string)
     {
-	System.err.println(string + " : < " + planes[index].toString() 
+	System.err.println(string + " : < " + planes[index].toString()
 		+ " > " + enables[index]);
-    } 
+    }
 
-    void printPlanes(String string, Vector4d[] planes) 
+    void printPlanes(String string, Vector4d[] planes)
     {
 	System.err.println(string);
 	printPlane(0, "[0]");
@@ -1025,7 +1025,7 @@ class ModelClipRetained extends LeafRetained {
     }
 
 
-    void printEnables(String string, boolean[] enables) 
+    void printEnables(String string, boolean[] enables)
     {
 	System.err.println(string);
 	System.err.println("[0] : < " + enables[0] + " >");

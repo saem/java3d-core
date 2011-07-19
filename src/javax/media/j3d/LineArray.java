@@ -182,7 +182,7 @@ public class LineArray extends GeometryArray {
         LineArray l = new LineArray(rt.getVertexCount(),
                 rt.getVertexFormat(),
                 texSetCount,
-                texMap, 
+                texMap,
                 vertexAttrCount,
                 vertexAttrSizes);
 	l.duplicateNodeComponent(this);

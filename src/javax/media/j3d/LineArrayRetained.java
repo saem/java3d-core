@@ -35,11 +35,11 @@ import java.lang.Math;
  */
 
 class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
-    
+
     LineArrayRetained() {
 	this.geoType = GEO_TYPE_LINE_SET;
     }
- 
+
     boolean intersect(PickShape pickShape, PickInfo pickInfo, int flags, Point3d iPnt,
                       GeometryRetained geom, int geomIndex) {
 	Point3d pnts[] = new Point3d[2];
@@ -52,7 +52,7 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 		 initialVertexIndex : initialCoordIndex);
 	pnts[0] = new Point3d();
 	pnts[1] = new Point3d();
-    
+
 	switch (pickShape.getPickType()) {
 	case PickShape.PICKRAY:
 	    PickRay pickRay= (PickRay) pickShape;
@@ -74,31 +74,31 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKSEGMENT:
 	    PickSegment pickSegment = (PickSegment) pickShape;
-	    Vector3d dir = 
-		new Vector3d(pickSegment.end.x - pickSegment.start.x, 
+	    Vector3d dir =
+		new Vector3d(pickSegment.end.x - pickSegment.start.x,
 			     pickSegment.end.y - pickSegment.start.y,
 			     pickSegment.end.z - pickSegment.start.z);
-	    
+
 	    while (i < validVertexCount) {
                 for(int j=0; j<2; j++) {
                     vtxIndexArr[j] = i;
                     getVertexData(i++, pnts[j]);
                 }
 		if (intersectLineAndRay(pnts[0], pnts[1],
-					pickSegment.start, 
+					pickSegment.start,
 					dir, sdist, iPnt) &&
 		    (sdist[0] <= 1.0)) {
 		    if (flags == 0) {
@@ -110,19 +110,19 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGBOX:
-	    BoundingBox bbox = (BoundingBox) 
+	    BoundingBox bbox = (BoundingBox)
 		               ((PickBounds) pickShape).bounds;
 	    while (i < validVertexCount) {
                 for(int j=0; j<2; j++) {
@@ -139,20 +139,20 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 
 	    break;
 	case PickShape.PICKBOUNDINGSPHERE:
-	    BoundingSphere bsphere = (BoundingSphere) 
+	    BoundingSphere bsphere = (BoundingSphere)
 		                     ((PickBounds) pickShape).bounds;
 
 	    while (i < validVertexCount) {
@@ -170,19 +170,19 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGPOLYTOPE:
-	    BoundingPolytope bpolytope = (BoundingPolytope) 
+	    BoundingPolytope bpolytope = (BoundingPolytope)
 		                      ((PickBounds) pickShape).bounds;
 
 	    while (i < validVertexCount) {
@@ -200,13 +200,13 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -229,13 +229,13 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -258,13 +258,13 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -273,8 +273,8 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	    // Should not happen since API already check for this
 	    throw new IllegalArgumentException(J3dI18N.getString("LineArrayRetained0"));
 	default:
-	    throw new RuntimeException ("PickShape not supported for intersection"); 
-	} 
+	    throw new RuntimeException ("PickShape not supported for intersection");
+	}
 
 	if (minDist < Double.MAX_VALUE) {
 	    iPnt.x = x;
@@ -283,8 +283,8 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	    return true;
 	}
 	return false;
-   
-    }    
+
+    }
 
     boolean intersect(Point3d[] pnts) {
 	Point3d[] points = new Point3d[2];
@@ -292,9 +292,9 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	Vector3d dir;
 	int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
 		 initialVertexIndex : initialCoordIndex);
-	
+
 	points[0] = new Point3d();
-	points[1] = new Point3d();	
+	points[1] = new Point3d();
 
 	switch (pnts.length) {
 	case 3: // Triangle
@@ -341,7 +341,7 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	return false;
     }
 
-    boolean intersect(Transform3D thisToOtherVworld, 
+    boolean intersect(Transform3D thisToOtherVworld,
 		      GeometryRetained geom) {
 	Point3d[] pnts = new Point3d[2];
 	int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
@@ -372,7 +372,7 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	switch(targetBound.getPickType()) {
 	case PickShape.PICKBOUNDINGBOX:
 	    BoundingBox box = (BoundingBox) targetBound;
-	    
+
 	    while (i < validVertexCount) {
 		getVertexData(i++, pnts[0]);
 		getVertexData(i++, pnts[1]);
@@ -383,7 +383,7 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	    break;
 	case PickShape.PICKBOUNDINGSPHERE:
 	    BoundingSphere bsphere = (BoundingSphere) targetBound;
-	    
+
 	    while (i < validVertexCount) {
 		getVertexData(i++, pnts[0]);
 		getVertexData(i++, pnts[1]);
@@ -395,8 +395,8 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	    break;
 	case PickShape.PICKBOUNDINGPOLYTOPE:
 	    BoundingPolytope bpolytope = (BoundingPolytope) targetBound;
- 
-	    
+
+
 	    while (i < validVertexCount) {
 		getVertexData(i++, pnts[0]);
 		getVertexData(i++, pnts[1]);
@@ -408,7 +408,7 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	    break;
 	default:
 	    throw new RuntimeException("Bounds not supported for intersection "
-				       + targetBound); 
+				       + targetBound);
 	}
 
 	return false;
@@ -427,8 +427,8 @@ class LineArrayRetained extends GeometryArrayRetained implements Cloneable {
 	centroid.z = 0;
 
 	while (i < validVertexCount) {
-	    getVertexData(i++, pnt0); 
-	    getVertexData(i++, pnt1); 
+	    getVertexData(i++, pnt0);
+	    getVertexData(i++, pnt1);
 	    length = pnt0.distance(pnt1);
 	    centroid.x += (pnt0.x + pnt1.x) * length;
 	    centroid.y += (pnt0.y + pnt1.y) * length;

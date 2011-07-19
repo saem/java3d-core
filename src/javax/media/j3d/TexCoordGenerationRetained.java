@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * coordinate generation.  It is included as part of an Appearance
  * component object.
  */
-class TexCoordGenerationRetained extends NodeComponentRetained {    
+class TexCoordGenerationRetained extends NodeComponentRetained {
 
     // A list of pre-defined bits to indicate which component
     // in this TexCoordGeneration object changed.
@@ -62,7 +62,7 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 
     // true when mirror texCoord component set
     boolean mirrorCompDirty = false;
-  
+
     /**
      * Enables or disables texture coordinate generation for this
      * appearance component object.
@@ -265,7 +265,7 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 		mirror = mirrorTg;
 	    }
 	} else {
-	    ((TexCoordGenerationRetained) mirror).set(this);	    
+	    ((TexCoordGenerationRetained) mirror).set(this);
 	}
     }
 
@@ -273,25 +273,25 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 	int gMode = genMode;
 	Transform3D trans = null;
 	Transform3D m = cv.vworldToEc;
-	
+
 	if (((cv.textureExtendedFeatures & Canvas3D.TEXTURE_CUBE_MAP) == 0) &&
-	    ((genMode == TexCoordGeneration.NORMAL_MAP) || 
+	    ((genMode == TexCoordGeneration.NORMAL_MAP) ||
 	    (genMode == TexCoordGeneration.REFLECTION_MAP))) {
 	    gMode = TexCoordGeneration.SPHERE_MAP;
-	} 
+	}
 
 	if (VirtualUniverse.mc.isD3D() &&
 	    (gMode == TexCoordGeneration.EYE_LINEAR)) {
 	    trans = new Transform3D(cv.vworldToEc);
 	    trans.invert();
 	    m = trans;
-	} 
-	
-	Pipeline.getPipeline().updateTexCoordGeneration(cv.ctx, 
+	}
+
+	Pipeline.getPipeline().updateTexCoordGeneration(cv.ctx,
 		     enable, gMode, format, planeS.x, planeS.y, planeS.z,
 		     planeS.w, planeT.x, planeT.y, planeT.z, planeT.w,
-		     planeR.x, planeR.y, planeR.z, planeR.w, 
-		     planeQ.x, planeQ.y, planeQ.z, planeQ.w, 
+		     planeR.x, planeR.y, planeR.z, planeR.w,
+		     planeQ.x, planeQ.y, planeQ.z, planeQ.w,
 		     m.mat);
     }
 
@@ -303,11 +303,11 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 	((TexCoordGenerationRetained)mirror).set(this);
     }
 
-    /** Update the "component" field of the mirror object with the 
+    /** Update the "component" field of the mirror object with the
      *  given "value"
      */
     synchronized void updateMirrorObject(int component, Object value) {
-	
+
 	TexCoordGenerationRetained mirrorTc = (TexCoordGenerationRetained) mirror;
 
 	mirrorTc.mirrorCompDirty = true;
@@ -354,7 +354,7 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 	tr.planeR = new Vector4f(planeR);
 	// other attributes is copied in super.clone()
 	return tr;
-	
+
     }
 
     protected void set(TexCoordGenerationRetained tr) {
@@ -365,12 +365,12 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 	planeS.set(tr.planeS);
 	planeT.set(tr.planeT);
 	planeR.set(tr.planeR);
-    }    
+    }
 
     final void sendMessage(int attrMask, Object attr) {
 
        	ArrayList univList = new ArrayList();
-	ArrayList gaList = Shape3DRetained.getGeomAtomsList(mirror.users, univList);  
+	ArrayList gaList = Shape3DRetained.getGeomAtomsList(mirror.users, univList);
 
 	// Send to rendering attribute structure, regardless of
 	// whether there are users or not (alternate appearance case ..)
@@ -390,7 +390,7 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 	    createMessage = new J3dMessage();
 	    createMessage.threads = J3dThread.UPDATE_RENDER;
 	    createMessage.type = J3dMessage.TEXCOORDGENERATION_CHANGED;
-		
+
 	    createMessage.universe = (VirtualUniverse) univList.get(i);
 	    createMessage.args[0] = this;
 	    createMessage.args[1]= new Integer(attrMask);
@@ -400,7 +400,7 @@ class TexCoordGenerationRetained extends NodeComponentRetained {
 	    GeometryAtom[] gaArr = new GeometryAtom[gL.size()];
 	    gL.toArray(gaArr);
 	    createMessage.args[3] = gaArr;
-	    
+
 	    VirtualUniverse.mc.processMessage(createMessage);
 	}
     }

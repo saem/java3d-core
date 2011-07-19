@@ -68,7 +68,7 @@ import javax.vecmath.*;
  * consist of a quadrilateral that contains a texture of a tree.
  *
  * <p>
- * Note that in a multiple View system, picking and interestion test 
+ * Note that in a multiple View system, picking and interestion test
  * is done with the primary View only.
  *
  * @see Billboard
@@ -338,7 +338,7 @@ public class OrientedShape3D extends Shape3D {
      * @param mode alignment mode, one of: ROTATE_ABOUT_AXIS,
      * ROTATE_ABOUT_POINT, or ROTATE_NONE
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void setAlignmentMode(int mode) {
@@ -358,7 +358,7 @@ public class OrientedShape3D extends Shape3D {
      * @return one of: ROTATE_ABOUT_AXIS, ROTATE_ABOUT_POINT,
      * or ROTATE_NONE
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public int getAlignmentMode() {
@@ -380,7 +380,7 @@ public class OrientedShape3D extends Shape3D {
      *
      * @param axis the new alignment axis
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void setAlignmentAxis(Vector3f axis) {
@@ -407,7 +407,7 @@ public class OrientedShape3D extends Shape3D {
      * @param y the y component of the alignment axis
      * @param z the z component of the alignment axis
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void setAlignmentAxis(float x, float y, float z) {
@@ -427,7 +427,7 @@ public class OrientedShape3D extends Shape3D {
      *
      * @param axis the vector that will contain the alignment axis
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void getAlignmentAxis(Vector3f axis)  {
@@ -443,7 +443,7 @@ public class OrientedShape3D extends Shape3D {
      *
      * @param point the new rotation point
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void setRotationPoint(Point3f point) {
@@ -465,7 +465,7 @@ public class OrientedShape3D extends Shape3D {
      * @param y the y component of the rotation point
      * @param z the z component of the rotation point
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void setRotationPoint(float x, float y, float z) {
@@ -485,7 +485,7 @@ public class OrientedShape3D extends Shape3D {
      *
      * @param point the point that will contain the rotation point
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void getRotationPoint(Point3f point)  {
@@ -502,7 +502,7 @@ public class OrientedShape3D extends Shape3D {
      * @param constantScaleEnable a flag indicating whether to enable
      * constant scale
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      *
      * @since Java 3D 1.3
@@ -526,7 +526,7 @@ public class OrientedShape3D extends Shape3D {
      *
      * @return the current constant scale enable flag
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      *
      * @since Java 3D 1.3
@@ -546,7 +546,7 @@ public class OrientedShape3D extends Shape3D {
      *
      * @param scale the scale value
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      *
      * @since Java 3D 1.3
@@ -568,7 +568,7 @@ public class OrientedShape3D extends Shape3D {
      *
      * @return the current scale value
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      *
      * @since Java 3D 1.3
@@ -635,7 +635,7 @@ public class OrientedShape3D extends Shape3D {
      *  <code>false</code>, the value of each node's
      *  <code>duplicateOnCloneTree</code> variable determines whether
      *  NodeComponent data is duplicated or copied.
-     * @exception ClassCastException if originalNode is not an instance of 
+     * @exception ClassCastException if originalNode is not an instance of
      *  <code>Shape3D</code>
      *
      * @see Node#cloneTree
@@ -643,7 +643,7 @@ public class OrientedShape3D extends Shape3D {
      * @see NodeComponent#setDuplicateOnCloneTree
      */
     public void duplicateNode(Node originalNode, boolean forceDuplicate) {
-	checkDuplicateNode(originalNode, forceDuplicate);       
+	checkDuplicateNode(originalNode, forceDuplicate);
     }
 
 
@@ -670,9 +670,9 @@ public class OrientedShape3D extends Shape3D {
      * @see NodeComponent#setDuplicateOnCloneTree
      */
     void duplicateAttributes(Node originalNode, boolean forceDuplicate) {
-  
+
 	super.duplicateAttributes(originalNode, forceDuplicate);
-	OrientedShape3DRetained attr = (OrientedShape3DRetained) 
+	OrientedShape3DRetained attr = (OrientedShape3DRetained)
 						originalNode.retained;
 	OrientedShape3DRetained rt = (OrientedShape3DRetained) retained;
 

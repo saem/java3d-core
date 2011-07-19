@@ -35,7 +35,7 @@ import java.util.ArrayList;
 class OrderedBin extends Object {
     // ArrayList of orderedCollection, one for each child of the orderedGroup
     ArrayList orderedCollections = new ArrayList();
-    
+
     // orderedGroup source
     OrderedGroupRetained source;
     OrderedChildInfo childInfoList= null;
@@ -83,7 +83,7 @@ class OrderedBin extends Object {
 	    }
 	    childInfoList = childInfoList.next;
 	}
-	
+
 	// Now update the sets based on oi, since the og.orderedChildIdTable reflects
 	// the childIds for the next frame, use the table to set the oc at the
 	// correct place
@@ -95,7 +95,7 @@ class OrderedBin extends Object {
 	}
 	setOCForOI.clear();
 	valueOfSetOCForOI.clear();
-	
+
 	onUpdateList = false;
 	lastChildInfo = null;
 
@@ -110,14 +110,14 @@ class OrderedBin extends Object {
 	else {
 	    // Add at the end
 	    cinfo.prev = lastChildInfo;
-	    lastChildInfo.next = cinfo;	    
+	    lastChildInfo.next = cinfo;
 	    cinfo.next = null;
 	    // Update this to be the last child
 	    lastChildInfo = cinfo;
 	}
 
     }
-    
+
 }
 
 

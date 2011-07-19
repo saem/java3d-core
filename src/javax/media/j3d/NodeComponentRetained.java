@@ -57,7 +57,7 @@ class NodeComponentRetained extends SceneGraphObjectRetained {
     // In the case of Appearance, its a bitmask of all components
     int changedFrequent = 0;
     int compChanged = 0;
-    
+
     // Increment the refcount.  If this is the first, mark it as live.
     void doSetLive(boolean inBackgroundGroup, int refCount) {
 	int oldRefCount = this.refCount;
@@ -80,7 +80,7 @@ class NodeComponentRetained extends SceneGraphObjectRetained {
 	}
     }
 
-	
+
 
     // Decrement the refcount.  If this is the last, mark it as not live.
     void clearLive(int refCount) {
@@ -171,7 +171,7 @@ class NodeComponentRetained extends SceneGraphObjectRetained {
     void setInImmCtx(boolean inCtx) {
         inImmCtx = inCtx;
     }
- 
+
     /**
      * This gets the immedate mode context flag
      */

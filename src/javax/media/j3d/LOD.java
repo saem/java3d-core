@@ -103,7 +103,7 @@ public abstract class LOD extends Behavior {
     /**
      * Returns the enumeration object of all switches.
      * @return the enumeration object of all switches
-     */  
+     */
     public Enumeration getAllSwitches() {
         return switches.elements();
     }
@@ -168,7 +168,7 @@ public abstract class LOD extends Behavior {
      * <code>originalNode</code> into
      * the current node.  This method is called from the
      * <code>cloneNode</code> method which is, in turn, called by the
-     * <code>cloneTree</code> method.<P> 
+     * <code>cloneTree</code> method.<P>
      *
      * @param originalNode the original node to duplicate.
      * @param forceDuplicate when set to <code>true</code>, causes the
@@ -186,7 +186,7 @@ public abstract class LOD extends Behavior {
      */
     void duplicateAttributes(Node originalNode, boolean forceDuplicate) {
         super.duplicateAttributes(originalNode, forceDuplicate);
-	
+
 	LOD lod = (LOD) originalNode;
 
         int numSwitch = lod.numSwitches();

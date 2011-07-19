@@ -58,7 +58,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
     // Cached the arming Node being used when it is not BOUND
     NodeRetained armingNode;
 
-    // A transformed Bounds of Group/Bounds 
+    // A transformed Bounds of Group/Bounds
     // use by BOUND, GROUP
     Bounds vwcBounds;
 
@@ -75,7 +75,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
      * Only use by SHAPE, MORPH, GROUP, ORIENTEDSHAPE
      */
     UnorderList geometryAtoms = null;
- 
+
     // one of GROUP, BOUNDINGLEAF, SHAPE, MORPH, BOUND
     int nodeType;
 
@@ -119,7 +119,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
      * <em>arm</em> collision detection
      * @exception IllegalArgumentException if object is under a
      * SharedGroup node or object is other than a Group, Shape3D,
-     * Morph or BoundingLeaf node. 
+     * Morph or BoundingLeaf node.
      */
     public WakeupOnCollisionExit(Node armingNode) {
 	this(armingNode, USE_BOUNDS);
@@ -135,7 +135,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
      * USE_GEOMETRY or USE_BOUNDS.
      * @exception IllegalArgumentException if object is under a
      * SharedGroup node or object is other than a Group, Shape3D,
-     * Morph or BoundingLeaf node. 
+     * Morph or BoundingLeaf node.
      */
     public WakeupOnCollisionExit(Node armingNode, int speedHint) {
 	this(new SceneGraphPath(null, armingNode), speedHint, null);
@@ -164,7 +164,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
      * @exception IllegalArgumentException if object associated with the
      * SceneGraphPath is other than a Group, Shape3D, Morph, or BoundingLeaf node.
      */
-    WakeupOnCollisionExit(SceneGraphPath armingPath, 
+    WakeupOnCollisionExit(SceneGraphPath armingPath,
 			   int speedHint, Bounds armingBounds) {
 	if (armingPath != null) {
 	    this.armingNode = (NodeRetained) armingPath.getObject().retained;
@@ -174,8 +174,8 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
 	    WakeupOnCollisionEntry.validateSpeedHint(speedHint,
 						     "WakeupOnCollisionExit4");
 	} else {
-	    this.armingBounds = armingBounds;	
-	    nodeType = WakeupOnCollisionEntry.BOUND;    
+	    this.armingBounds = armingBounds;
+	    nodeType = WakeupOnCollisionEntry.BOUND;
 	}
 	accuracyMode = speedHint;
 	WakeupIndexedList.init(this, TOTAL_INDEXED_UNORDER_SET_TYPES);
@@ -187,7 +187,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
      * criterion---null implies that a bounds object armed this criteria
      */
     public SceneGraphPath getArmingPath() {
-	return (armingPath != null ? 
+	return (armingPath != null ?
 		new SceneGraphPath(armingPath) : null);
     }
 
@@ -197,14 +197,14 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
      * criterion---null implies that a SceneGraphPath armed this criteria
      */
     public Bounds getArmingBounds() {
-	return (armingBounds != null ? 
+	return (armingBounds != null ?
 		(Bounds)armingBounds.clone() : null);
     }
 
     /**
      * Retrieves the path describing the object causing the collision.
      * @return the SceneGraphPath that describes the triggering object.
-     * @exception IllegalStateException if not called from within the 
+     * @exception IllegalStateException if not called from within the
      * a behavior's processStimulus method which was awoken by a collision.
      */
     public SceneGraphPath getTriggeringPath() {
@@ -225,7 +225,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
     /**
      * Retrieves the Bounds object that caused the collision
      * @return the colliding Bounds object.
-     * @exception IllegalStateException if not called from within the 
+     * @exception IllegalStateException if not called from within the
      * a behavior's processStimulus method which was awoken by a collision.
      */
     public Bounds getTriggeringBounds() {
@@ -244,7 +244,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
     }
 
     /**
-     * This is a callback from BehaviorStructure. It is 
+     * This is a callback from BehaviorStructure. It is
      * used to add wakeupCondition to behavior structure.
      */
     void addBehaviorCondition(BehaviorStructure bs) {
@@ -258,7 +258,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
 	      if (geometryAtoms == null) {
 		  geometryAtoms = new UnorderList(1, GeometryAtom.class);
 	      }
-	      Shape3DRetained shape = (Shape3DRetained) armingNode; 
+	      Shape3DRetained shape = (Shape3DRetained) armingNode;
 	      geometryAtoms.add(Shape3DRetained.getGeomAtom(shape.getMirrorShape(armingPath)));
 	      break;
 	  case WakeupOnCollisionEntry.MORPH:  // Use geometryAtoms[].collisionBounds
@@ -290,9 +290,9 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
 		      geometryAtoms = new UnorderList(1, GeometryAtom.class);
 		  }
 		  ((GroupRetained) armingNode).searchGeometryAtoms(geometryAtoms);
-	      } 
+	      }
 	      // else use this.vwcBounds
-	  default: 
+	  default:
 	}
 
 	behav.universe.geometryStructure.addWakeupOnCollision(this);
@@ -300,7 +300,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
 
 
     /**
-     * This is a callback from BehaviorStructure. It is 
+     * This is a callback from BehaviorStructure. It is
      * used to remove wakeupCondition from behavior structure.
      */
     void removeBehaviorCondition(BehaviorStructure bs) {
@@ -314,7 +314,7 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
 
 
 
-    // Set collidingPath & collidingBounds 
+    // Set collidingPath & collidingBounds
     void setTarget(BHLeafInterface leaf) {
 	SceneGraphPath path;
 	Bounds bound;
@@ -324,12 +324,12 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
 	    GeometryAtom geomAtom = (GeometryAtom) leaf;
 	    Shape3DRetained shape = geomAtom.source;
 	    path = WakeupOnCollisionEntry.getSceneGraphPath(
-			shape.sourceNode, 
+			shape.sourceNode,
 			shape.key,
 			shape.getCurrentLocalToVworld(0));
 	    bound = WakeupOnCollisionEntry.getTriggeringBounds(shape);
 
-	    
+
 	} else {
 	    // Find the triggered Path & Bounds for this alternative
 	    // collision target
@@ -357,21 +357,21 @@ public final class WakeupOnCollisionExit extends WakeupCriterion {
 		// this may involve recursive tree traverse if
 		// BoundsAutoCompute is true, we can't avoid
 		// since the bound under it may change by transform
-		vwcBounds = group.getEffectiveBounds(); 
+		vwcBounds = group.getEffectiveBounds();
 	    }
 	    group.transformBounds(armingPath, vwcBounds);
 	} else if (nodeType == WakeupOnCollisionEntry.BOUND) {
 	    vwcBounds.transform(armingBounds, behav.getCurrentLocalToVworld());
 	}
-	
-	if (reEvaluateGAs && 
-	    (nodeType == WakeupOnCollisionEntry.GROUP) && 
+
+	if (reEvaluateGAs &&
+	    (nodeType == WakeupOnCollisionEntry.GROUP) &&
 	    (accuracyMode == USE_GEOMETRY)) {
 	    geometryAtoms.clear();
-	    ((GroupRetained) armingNode).searchGeometryAtoms(geometryAtoms);	    
+	    ((GroupRetained) armingNode).searchGeometryAtoms(geometryAtoms);
 	}
-    }   
-    
+    }
+
    void setTriggered(){
 	// if path not set, probably the branch is just detach.
 	if (collidingPath != null) {

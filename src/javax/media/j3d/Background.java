@@ -226,7 +226,7 @@ public class Background extends Leaf {
      *
      * @since Java 3D 1.3
      */
-    public static final int SCALE_REPEAT = 4; 
+    public static final int SCALE_REPEAT = 4;
 
     /**
      * Indicates that the background image is centered in the window
@@ -240,8 +240,8 @@ public class Background extends Leaf {
      *
      * @since Java 3D 1.3
      */
-    public static final int SCALE_NONE_CENTER = 5; 
-    
+    public static final int SCALE_NONE_CENTER = 5;
+
    // Array for setting default read capabilities
     private static final int[] readCapabilities = {
         ALLOW_APPLICATION_BOUNDS_READ,
@@ -250,8 +250,8 @@ public class Background extends Leaf {
         ALLOW_IMAGE_READ,
         ALLOW_IMAGE_SCALE_MODE_READ
     };
-    
-    
+
+
     /**
      * Constructs a Background node with default parameters.  The default
      * values are as follows:
@@ -303,16 +303,16 @@ public class Background extends Leaf {
      * filled with the background color.
      *
      * @param image pixel array object used as the background image
-     * 
+     *
      * @exception IllegalArgumentException if the image class of the specified
      * ImageComponent2D is ImageClass.NIO_IMAGE_BUFFER.
      */
     public Background(ImageComponent2D image) {
         // set default read capabilities
         setDefaultReadCapabilities(readCapabilities);
-       
-        if((image != null) && 
-                (image.getImageClass() == ImageComponent.ImageClass.NIO_IMAGE_BUFFER)) {     
+
+        if((image != null) &&
+                (image.getImageClass() == ImageComponent.ImageClass.NIO_IMAGE_BUFFER)) {
             throw new IllegalArgumentException(J3dI18N.getString("Background14"));
         }
 
@@ -352,7 +352,7 @@ public class Background extends Leaf {
          if(!this.getCapability(ALLOW_COLOR_WRITE))
            throw new CapabilityNotSetException(J3dI18N.getString("Background0"));
 
-	if (isLive()) 
+	if (isLive())
 	    ((BackgroundRetained)this.retained).setColor(color);
 	else
 	    ((BackgroundRetained)this.retained).initColor(color);
@@ -424,8 +424,8 @@ public class Background extends Leaf {
 
         BackgroundRetained bgRetained = (BackgroundRetained)this.retained;
 
-        if((image != null) && 
-                (image.getImageClass() == ImageComponent.ImageClass.NIO_IMAGE_BUFFER)) {     
+        if((image != null) &&
+                (image.getImageClass() == ImageComponent.ImageClass.NIO_IMAGE_BUFFER)) {
             throw new IllegalArgumentException(J3dI18N.getString("Background14"));
         }
 
@@ -441,7 +441,7 @@ public class Background extends Leaf {
                 }
             }
         }
-        
+
 	if (isLive())
 	    bgRetained.setImage(image);
 	else
@@ -493,12 +493,12 @@ public class Background extends Leaf {
 	default:
 	    throw new IllegalArgumentException(J3dI18N.getString("Background11"));
 	}
-	
+
 	if (isLive())
 	    ((BackgroundRetained)this.retained).setImageScaleMode(imageScaleMode);
 	else
 	    ((BackgroundRetained)this.retained).initImageScaleMode(imageScaleMode);
-	
+
     }
 
     /**
@@ -567,7 +567,7 @@ public class Background extends Leaf {
      * region.
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     public void setApplicationBounds(Bounds region) {
         if (isLiveOrCompiled())
 	    if(!this.getCapability(ALLOW_APPLICATION_BOUNDS_WRITE))
@@ -579,12 +579,12 @@ public class Background extends Leaf {
 	    ((BackgroundRetained)this.retained).initApplicationBounds(region);
     }
 
-    /**  
+    /**
      * Retrieves the Background node's application bounds.
      * @return this Background's application bounds information
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     public Bounds getApplicationBounds() {
         if (isLiveOrCompiled())
 	    if(!this.getCapability(ALLOW_APPLICATION_BOUNDS_READ))
@@ -601,7 +601,7 @@ public class Background extends Leaf {
      * node's new application region.
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     public void setApplicationBoundingLeaf(BoundingLeaf region) {
         if (isLiveOrCompiled())
 	    if(!this.getCapability(ALLOW_APPLICATION_BOUNDS_WRITE))
@@ -613,12 +613,12 @@ public class Background extends Leaf {
 	    ((BackgroundRetained)this.retained).initApplicationBoundingLeaf(region);
     }
 
-    /**  
+    /**
      * Retrieves the Background node's application bounding leaf.
      * @return this Background's application bounding leaf information
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     public BoundingLeaf getApplicationBoundingLeaf() {
         if (isLiveOrCompiled())
 	    if(!this.getCapability(ALLOW_APPLICATION_BOUNDS_READ))
@@ -636,7 +636,7 @@ public class Background extends Leaf {
         this.retained.setSource(this);
     }
 
- 
+
    /**
      * Creates a new instance of the node.  This routine is called
      * by <code>cloneTree</code> to duplicate the current node.
@@ -645,7 +645,7 @@ public class Background extends Leaf {
      *  <code>false</code>, the value of each node's
      *  <code>duplicateOnCloneTree</code> variable determines whether
      *  NodeComponent data is duplicated or copied.<br>
-     * Background geometry will not clone in this operation. 
+     * Background geometry will not clone in this operation.
      * It is the user's responsibility
      * to call <code>cloneTree</code> on that branchGroup.
      *
@@ -660,7 +660,7 @@ public class Background extends Leaf {
         return b;
     }
 
-    
+
     /**
      * Copies all node information from <code>originalNode</code> into
      * the current node.  This method is called from the
@@ -686,7 +686,7 @@ public class Background extends Leaf {
      *  <code>false</code>, the value of each node's
      *  <code>duplicateOnCloneTree</code> variable determines whether
      *  NodeComponent data is duplicated or copied.
-     * @exception ClassCastException if originalNode is not an instance of 
+     * @exception ClassCastException if originalNode is not an instance of
      *  <code>Background</code>
      *
      * @see Node#cloneTree
@@ -704,7 +704,7 @@ public class Background extends Leaf {
      * <code>originalNode</code> into
      * the current node.  This method is called from the
      * <code>cloneNode</code> method which is, in turn, called by the
-     * <code>cloneTree</code> method.<P> 
+     * <code>cloneTree</code> method.<P>
      *
      * @param originalNode the original node to duplicate
      * @param forceDuplicate when set to <code>true</code>, causes the
@@ -735,14 +735,14 @@ public class Background extends Leaf {
 	rt.initGeometry((BranchGroup) (attr.getGeometry() == null ? null : attr.getGeometry().cloneTree(true)));
 	rt.initImage((ImageComponent2D) getNodeComponent(
 					     attr.getImage(),
-					     forceDuplicate, 
+					     forceDuplicate,
 					     originalNode.nodeHashtable));
 
 	// this will be updated in updateNodeReferences
 	rt.initApplicationBoundingLeaf(attr.getApplicationBoundingLeaf());
     }
 
-   
+
     /**
      * Callback used to allow a node to check if any scene graph objects
      * referenced

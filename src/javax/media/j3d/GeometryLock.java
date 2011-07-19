@@ -31,7 +31,7 @@ import java.util.Vector;
 class GeometryLock {
 
     // Current thread holding the lock
-    Thread threadId = null; 
+    Thread threadId = null;
 
     // Whether the lock is currently owned
     boolean lockOwned = false;
@@ -80,7 +80,7 @@ class GeometryLock {
 		notify();
 	    }
 	}
-	    
+
     }
-    
+
 }

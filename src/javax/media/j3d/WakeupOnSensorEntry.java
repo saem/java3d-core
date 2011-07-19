@@ -40,7 +40,7 @@ public final class WakeupOnSensorEntry extends WakeupCriterion {
     static final int TOTAL_INDEXED_UNORDER_SET_TYPES = 2;
 
     Bounds region;
-    
+
     // Transformed region used by BehaviorStructure
     Bounds transformedRegion;
 
@@ -63,7 +63,7 @@ public final class WakeupOnSensorEntry extends WakeupCriterion {
     public Bounds getBounds() {
 	return (Bounds) region.clone();
     }
-    
+
     /**
      * Update the cached Transfrom Region, call from BehaviorStructure
      */
@@ -80,7 +80,7 @@ public final class WakeupOnSensorEntry extends WakeupCriterion {
 
 
     /**
-     * This is a callback from BehaviorStructure. It is 
+     * This is a callback from BehaviorStructure. It is
      * used to add wakeupCondition to behavior structure.
      */
     void addBehaviorCondition(BehaviorStructure bs) {
@@ -92,7 +92,7 @@ public final class WakeupOnSensorEntry extends WakeupCriterion {
 
 
     /**
-     * This is a callback from BehaviorStructure. It is 
+     * This is a callback from BehaviorStructure. It is
      * used to remove wakeupCondition from behavior structure.
      */
     void removeBehaviorCondition(BehaviorStructure bs) {
@@ -114,7 +114,7 @@ public final class WakeupOnSensorEntry extends WakeupCriterion {
      *
      * @return the triggering Sensor object
      *
-     * @exception IllegalStateException if not called from within 
+     * @exception IllegalStateException if not called from within
      * a behavior's processStimulus method which was awoken by a sensor
      * entry.
      *

@@ -31,7 +31,7 @@ package javax.media.j3d;
  * All operations remove(WakeupCondition), add(WakeupCondition),
  * contains(WakeupCondition) etc. take O(1) time.
  * The class is designed to optimize speed. So many reductance
- * procedures call and range check as found in ArrayList are 
+ * procedures call and range check as found in ArrayList are
  * removed.
  *
  * <p>
@@ -84,7 +84,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
      * set(), remove() when -O flag turn on.
      */
     transient WakeupCondition elementData[];
-    
+
     /**
      * Clone copy of elementData return by toArray(true);
      */
@@ -178,9 +178,9 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
     final int size() {
 	return size;
     }
-  
+
     /**
-     * Returns the size of entry use in toArray() number of elements 
+     * Returns the size of entry use in toArray() number of elements
      * in this list.
      *
      * @return  the number of elements in this list.
@@ -210,8 +210,8 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 
 
     /**
-     * Searches for the last occurence of the given argument, testing 
-     * for equality using the <tt>equals</tt> method. 
+     * Searches for the last occurence of the given argument, testing
+     * for equality using the <tt>equals</tt> method.
      *
      * @param   o   an object.
      * @return  the index of the first occurrence of the argument in this
@@ -229,14 +229,14 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
      * @return  a clone of this <tt>ArrayList</tt> instance.
      */
     synchronized protected final Object clone() {
-	try { 
+	try {
 	    WakeupIndexedList v = (WakeupIndexedList)super.clone();
 	    v.elementData =  (WakeupCondition[])java.lang.reflect.Array.newInstance(
 						   componentType, size);
 	    System.arraycopy(elementData, 0, v.elementData, 0, size);
 	    isDirty = true; // can't use the old cloneData reference
 	    return v;
-	} catch (CloneNotSupportedException e) { 
+	} catch (CloneNotSupportedException e) {
 	    // this shouldn't happen, since we are Cloneable
 	    throw new InternalError();
 	}
@@ -246,7 +246,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
     /**
      * Returns an array containing all of the elements in this list.
      * The size of the array may longer than the actual size. Use
-     * arraySize() to retrieve the size. 
+     * arraySize() to retrieve the size.
      * The array return is a copied of internal array. if copy
      * is true.
      *
@@ -268,13 +268,13 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 	    cloneSize = size;
 	    return elementData;
 	}
- 
+
     }
 
     /**
      * Returns an array containing all of the elements in this list.
      * The size of the array may longer than the actual size. Use
-     * arraySize() to retrieve the size. 
+     * arraySize() to retrieve the size.
      * The array return is a copied of internal array. So another
      * thread can continue add/delete the current list. However,
      * it should be noticed that two call to toArray() may return
@@ -289,10 +289,10 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 
     /**
      * Returns an array containing elements starting from startElement
-     * all of the elements in this list. A new array of exact size 
+     * all of the elements in this list. A new array of exact size
      * is always allocated.
      *
-     * @param startElement starting element to copy 
+     * @param startElement starting element to copy
      *
      * @return an array containing elements starting from
      *         startElement, null if element not found.
@@ -324,7 +324,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 	    System.arraycopy(oldData, 0, elementData, 0, size);
 	}
     }
-   
+
 
     // Positional Access Operations
 
@@ -362,7 +362,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 
 	if (debug) {
 	    if (o.listIdx[univIdx][listType] != -1) {
-		System.err.println("Illegal use of UnorderIndexedList idx in set " + 
+		System.err.println("Illegal use of UnorderIndexedList idx in set " +
 				   o.listIdx[univIdx][listType]);
 		Thread.dumpStack();
 	    }
@@ -388,7 +388,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 	    System.arraycopy(oldData, 0, elementData, 0, size);
 
 	}
-	
+
 	int univIdx = o.behav.getIdxUsed(univ);
 	//	System.err.println(this + " add " + o + " univ " + univIdx);
 	if (debug) {
@@ -407,7 +407,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 	isDirty = true;
     }
 
-  
+
     /**
      * Removes the element at the specified position in this list.
      * Replace the removed element by the last one.
@@ -422,19 +422,19 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 
 	if (debug) {
 	    if (elm.listIdx[univIdx][listType] != index) {
-		System.err.println("Inconsistent idx in remove, expect " + index + 
+		System.err.println("Inconsistent idx in remove, expect " + index +
 				   " actual " + elm.listIdx[univIdx][listType]);
-		Thread.dumpStack();	    
-	    } 
+		Thread.dumpStack();
+	    }
 	}
 
 	elm.listIdx[univIdx][listType] = -1;
 	size--;
 	if (index != size) {
-	    elm = elementData[size];   
+	    elm = elementData[size];
 	    elm.listIdx[univIdx][listType] = index;
 	    elementData[index] = elm;
-	} 
+	}
 	elementData[size] = null;
 	isDirty = true;
 	/*
@@ -444,7 +444,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 	*/
     }
 
- 
+
    /**
      * Removes the element at the last position in this list.
      * @return    The element remove
@@ -497,7 +497,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 	    o.listIdx[univIdx][listType] = -1;
 	    isDirty = true;
 	    return true;
-	} 
+	}
 	return false;
     }
 
@@ -539,7 +539,7 @@ class WakeupIndexedList implements Cloneable, java.io.Serializable  {
 	StringBuffer sb = new StringBuffer(hashCode() + " Size = " + size + "[");
 	int len = size-1;
 	Object obj;
-	
+
 	for (int i=0; i < size; i++) {
 	    obj = elementData[i];
 	    if (obj != null) {

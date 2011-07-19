@@ -47,7 +47,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
     int whichChild = Switch.CHILD_NONE;
 
     /**
-     * The BitSet specifying which children are to be selected for 
+     * The BitSet specifying which children are to be selected for
      * rendering. This is used ONLY if whichChild is set to CHILD_MASK.
      */
     BitSet	childMask = new BitSet();
@@ -79,11 +79,11 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
     }
 
     /**
-     * Sets which child should be drawn. 
+     * Sets which child should be drawn.
      * @param whichChild the child to choose during a render operation
      */
     // synchronized with clearLive
-    synchronized void setWhichChild(int whichChild, boolean updateAlways) {	
+    synchronized void setWhichChild(int whichChild, boolean updateAlways) {
 
         int i, nchildren;
 
@@ -151,12 +151,12 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
      * Returns the index of the current child.
      * @return the default child's index
      */
-    int getWhichChild() {	
+    int getWhichChild() {
         return this.whichChild;
     }
 
     /**
-     * Sets current childMask. 
+     * Sets current childMask.
      * @param childMask a BitSet to select the children for rendering
      */
     // synchronized with clearLive
@@ -177,7 +177,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
 	    }
 	}
 	this.isDirty = true;
-        if (source != null && source.isLive() && 
+        if (source != null && source.isLive() &&
                 whichChild == Switch.CHILD_MASK) {
             updateTargets = new UpdateTargets();
             ArrayList updateList = new ArrayList(1);
@@ -257,7 +257,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
 
     /**
      * Returns the current childMask.
-     * @return the current childMask 
+     * @return the current childMask
      */
     final BitSet getChildMask() {
         return (BitSet)this.childMask.clone();
@@ -317,7 +317,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
             }
         }
         // Note that s.childSwitchLinks is updated in super.setLive
-        s.parentSwitchLink = this;	
+        s.parentSwitchLink = this;
 
         if (!inSharedGroup) {
             setAuxData(s, 0, 0);
@@ -327,7 +327,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
 
             s.hashkeyIndex = new int[s.keys.length];
             for(j=0; j<s.keys.length; j++) {
-                hkIndex = s.keys[j].equals(localToVworldKeys, 0, 
+                hkIndex = s.keys[j].equals(localToVworldKeys, 0,
 						localToVworldKeys.length);
                 if(hkIndex >= 0) {
                     setAuxData(s, j, hkIndex);
@@ -344,7 +344,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
         boolean switchOn;
 	SwitchRetained switchRoot;
 	int size;
-	
+
         // save setLiveState
         Targets[] savedSwitchTargets = s.switchTargets;
         ArrayList savedSwitchStates = s.switchStates;
@@ -457,7 +457,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
         super.removeNodeData(s);
     }
 
-	
+
 
     // synchronized with setWhichChild and setChildMask
     synchronized void clearLive(SetLiveState s) {
@@ -504,7 +504,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
 
     void traverseSwitchChild(int child, HashKey key, int index,
 			     SwitchRetained switchRoot, boolean init,
-			     boolean swChanged, boolean switchOn, 
+			     boolean swChanged, boolean switchOn,
 			     int switchLevel, ArrayList updateList) {
 	int i,j,k;
 	SwitchRetained sw;
@@ -538,7 +538,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
 
 
         childSwitchLinks = (ArrayList)childrenSwitchLinks.get(child);
-	int cslSize =childSwitchLinks.size(); 
+	int cslSize =childSwitchLinks.size();
         for (i=0; i<cslSize; i++) {
 
 	    obj = childSwitchLinks.get(i);
@@ -562,15 +562,15 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
 
 		if ((ln.sharedGroup != null) &&
 		    (ln.sharedGroup.localToVworldKeys != null)) {
-		    
+
 		    j = switchKey.equals(ln.sharedGroup.localToVworldKeys,0,
 					 ln.sharedGroup.localToVworldKeys.length);
 		    if(j < 0) {
-			System.err.println("SwitchRetained : Can't find hashKey"); 
+			System.err.println("SwitchRetained : Can't find hashKey");
 		    }
-			
+
 		    if (j<ln.sharedGroup.localToVworldKeys.length) {
-			int lscSize = ln.sharedGroup.children.size(); 
+			int lscSize = ln.sharedGroup.children.size();
 			for(k=0; k<lscSize; k++) {
 			    ln.sharedGroup.traverseSwitchChild(k, ln.sharedGroup.
 							       localToVworldKeys[j],
@@ -717,7 +717,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
             if (validCachedBounds) {
                 return (Bounds) cachedBounds.clone();
             }
-            
+
             // issue 544
             Bounds boundingObject = null;
             if (VirtualUniverse.mc.useBoxForGroupBounds) {
@@ -770,7 +770,7 @@ class SwitchRetained extends GroupRetained implements TargetsInterface
     */
 
     /**
-     * Compiles the children of the switch, preventing shape merging at 
+     * Compiles the children of the switch, preventing shape merging at
      * this level or above
      */
     void compile(CompileState compState) {

@@ -61,7 +61,7 @@ public class ImageComponent3D extends ImageComponent {
 
     // non-public, no parameter constructor
     ImageComponent3D() {}
-    
+
     /**
      * Constructs a 3D image component object using the specified
      * format, width, height, and depth.  Default values are used for
@@ -105,7 +105,7 @@ public class ImageComponent3D extends ImageComponent {
      * the width or height of the first image are not positive.
      */
     public ImageComponent3D(int format, BufferedImage[] images) {
-        ((ImageComponent3DRetained)this.retained).processParams(format, 
+        ((ImageComponent3DRetained)this.retained).processParams(format,
 		images[0].getWidth(null), images[0].getHeight(null), images.length);
         for (int i=0; i<images.length; i++) {
             ((ImageComponent3DRetained)this.retained).set(i, images[i]);
@@ -131,7 +131,7 @@ public class ImageComponent3D extends ImageComponent {
      */
     public ImageComponent3D(int format, RenderedImage[] images) {
 
-        ((ImageComponent3DRetained)this.retained).processParams(format, 
+        ((ImageComponent3DRetained)this.retained).processParams(format,
 	images[0].getWidth(), images[0].getHeight(), images.length);
         for (int i=0; i<images.length; i++) {
             ((ImageComponent3DRetained)this.retained).set(i, images[i]);
@@ -204,7 +204,7 @@ public class ImageComponent3D extends ImageComponent {
 
  	((ImageComponentRetained)this.retained).setByReference(byReference);
  	((ImageComponentRetained)this.retained).setYUp(yUp);
- 	((ImageComponent3DRetained)this.retained).processParams(format, 
+ 	((ImageComponent3DRetained)this.retained).processParams(format,
                 images[0].getWidth(null), images[0].getHeight(null), images.length);
  	for (int i=0; i<images.length; i++) {
  	    ((ImageComponent3DRetained)this.retained).set(i, images[i]);
@@ -242,7 +242,7 @@ public class ImageComponent3D extends ImageComponent {
 
  	((ImageComponentRetained)this.retained).setByReference(byReference);
  	((ImageComponentRetained)this.retained).setYUp(yUp);
- 	((ImageComponent3DRetained)this.retained).processParams(format, 
+ 	((ImageComponent3DRetained)this.retained).processParams(format,
                 images[0].getWidth(), images[0].getHeight(), images.length);
  	for (int i=0; i<images.length; i++) {
  	    ((ImageComponent3DRetained)this.retained).set(i, images[i]);
@@ -283,12 +283,12 @@ public class ImageComponent3D extends ImageComponent {
 			    boolean byReference,
 			    boolean yUp) {
 
-        
+
  	throw new UnsupportedOperationException();
         /*
   	((ImageComponentRetained)this.retained).setByReference(byReference);
  	((ImageComponentRetained)this.retained).setYUp(yUp);
- 	((ImageComponent3DRetained)this.retained).processParams(format, 
+ 	((ImageComponent3DRetained)this.retained).processParams(format,
                 images[0].getWidth(), images[0].getHeight(), images.length);
  	for (int i=0; i<images.length; i++) {
  	    ((ImageComponent3DRetained)this.retained).set(i, images[i]);
@@ -426,7 +426,7 @@ public class ImageComponent3D extends ImageComponent {
      * @since Java 3D 1.5
      */
     public void set(NioImageBuffer[] images) {
-        
+
  	throw new UnsupportedOperationException();
         /*
         checkForLiveOrCompiled();
@@ -538,11 +538,11 @@ public class ImageComponent3D extends ImageComponent {
      * @since Java 3D 1.5
      */
     public void set(int index, NioImageBuffer image) {
-        
+
  	throw new UnsupportedOperationException();
         /*
          checkForLiveOrCompiled();
-        // For NioImageBuffer the width and height checking is done in the retained.        
+        // For NioImageBuffer the width and height checking is done in the retained.
         ((ImageComponent3DRetained)this.retained).set(index, image);
          */
     }
@@ -565,7 +565,7 @@ public class ImageComponent3D extends ImageComponent {
      * ImageClass.BUFFERED_IMAGE.
      */
     public BufferedImage[] getImage() {
-        if (isLiveOrCompiled()) 
+        if (isLiveOrCompiled())
             if(!this.getCapability(ImageComponent.ALLOW_IMAGE_READ))
               throw new CapabilityNotSetException(J3dI18N.getString("ImageComponent3D3"));
 	return ((ImageComponent3DRetained)this.retained).getImage();
@@ -651,7 +651,7 @@ public class ImageComponent3D extends ImageComponent {
 	RenderedImage img = ((ImageComponent3DRetained)this.retained).getImage(index);
 	if ((img != null) && !(img instanceof BufferedImage)) {
 	    throw new IllegalStateException(J3dI18N.getString("ImageComponent3D9"));
-	}	
+	}
 	return (BufferedImage) img;
     }
 
@@ -761,7 +761,7 @@ public class ImageComponent3D extends ImageComponent {
      * RenderedImage object containing the subimage.
      *
      * @exception IllegalArgumentException if the specified RenderedImage
-     * is not compatible with the existing RenderedImage. 
+     * is not compatible with the existing RenderedImage.
      *
      * @exception IllegalStateException if the image class is not one of:
      * ImageClass.BUFFERED_IMAGE or ImageClass.RENDERED_IMAGE.
@@ -874,7 +874,7 @@ public class ImageComponent3D extends ImageComponent {
         this.retained.setSource(this);
     }
 
-  
+
 
     /**
      * @deprecated replaced with cloneNodeComponent(boolean forceDuplicate)
@@ -900,13 +900,13 @@ public class ImageComponent3D extends ImageComponent {
 	return img;
     }
 
-      
+
    /**
      * Copies all node information from <code>originalNodeComponent</code> into
      * the current node.  This method is called from the
      * <code>duplicateNode</code> method. This routine does
      * the actual duplication of all "local data" (any data defined in
-     * this object). 
+     * this object).
      *
      * @param originalNodeComponent the original node to duplicate.
      * @param forceDuplicate when set to <code>true</code>, causes the
@@ -918,8 +918,8 @@ public class ImageComponent3D extends ImageComponent {
      * @see Node#cloneTree
      * @see NodeComponent#setDuplicateOnCloneTree
      */
-    void duplicateAttributes(NodeComponent originalNodeComponent, 
-			     boolean forceDuplicate) { 
+    void duplicateAttributes(NodeComponent originalNodeComponent,
+			     boolean forceDuplicate) {
       super.duplicateAttributes(originalNodeComponent, forceDuplicate);
       // TODO : Handle NioImageBuffer if its supported.
       RenderedImage imgs[] = ((ImageComponent3DRetained)

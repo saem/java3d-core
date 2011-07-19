@@ -48,13 +48,13 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	double minDist = Double.MAX_VALUE;
 	double x = 0, y = 0, z = 0;
         int[] vtxIndexArr = new int[3];
-        
+
 	int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
 		 initialVertexIndex : initialCoordIndex);
 	pnts[0] = new Point3d();
 	pnts[1] = new Point3d();
 	pnts[2] = new Point3d();
-    
+
 	switch (pickShape.getPickType()) {
 	case PickShape.PICKRAY:
 	    PickRay pickRay= (PickRay) pickShape;
@@ -69,17 +69,17 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 			return true;
 		    }
 		    if (sdist[0] < minDist) {
-			minDist = sdist[0];                        
+			minDist = sdist[0];
 			x = iPnt.x;
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
                                           vtxIndexArr, iPnt, sdist[0]);
 		    }
 		}
@@ -104,21 +104,21 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGBOX:
-	    BoundingBox bbox = (BoundingBox) 
+	    BoundingBox bbox = (BoundingBox)
 		((PickBounds) pickShape).bounds;
-	    
+
 	    while (i < validVertexCount) {
                 for(int j=0; j<3; j++) {
                     vtxIndexArr[j] = i;
@@ -134,21 +134,21 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGSPHERE:
-	    BoundingSphere bsphere = (BoundingSphere) 
+	    BoundingSphere bsphere = (BoundingSphere)
 		((PickBounds) pickShape).bounds;
-	    
+
 	    while (i < validVertexCount) {
                 for(int j=0; j<3; j++) {
                     vtxIndexArr[j] = i;
@@ -164,28 +164,28 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGPOLYTOPE:
-	    BoundingPolytope bpolytope = (BoundingPolytope) 
+	    BoundingPolytope bpolytope = (BoundingPolytope)
 		((PickBounds) pickShape).bounds;
-	    
+
 	    while (i < validVertexCount) {
                 for(int j=0; j<3; j++) {
                     vtxIndexArr[j] = i;
                     getVertexData(i++, pnts[j]);
                 }
 		if (intersectBoundingPolytope(pnts, bpolytope,
-					      sdist,iPnt)) { 
+					      sdist,iPnt)) {
 		    if (flags == 0) {
 			return true;
 		    }
@@ -195,13 +195,13 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -224,20 +224,20 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKCONE:
 	    PickCone pickCone= (PickCone) pickShape;
-	    
+
 	    while (i < validVertexCount) {
                 for(int j=0; j<3; j++) {
                     vtxIndexArr[j] = i;
@@ -253,13 +253,13 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 			y = iPnt.y;
 			z = iPnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -268,10 +268,10 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	    // Should not happen since API already check for this
 	    throw new IllegalArgumentException(J3dI18N.getString("TriangleArrayRetained0"));
 	default:
-	    throw new RuntimeException ("PickShape not supported for intersection"); 
-	} 
+	    throw new RuntimeException ("PickShape not supported for intersection");
+	}
 
-    
+
 	if (minDist < Double.MAX_VALUE) {
 	    iPnt.x = x;
 	    iPnt.y = y;
@@ -280,17 +280,17 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	}
 	return false;
     }
-  
-  
+
+
     boolean intersect(Point3d[] pnts) {
 	Point3d[] points = new Point3d[3];
 	double dist[] = new double[1];
 	int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
 		 initialVertexIndex : initialCoordIndex);
-	
+
 	points[0] = new Point3d();
-	points[1] = new Point3d();	
-	points[2] = new Point3d();	
+	points[1] = new Point3d();
+	points[2] = new Point3d();
 
 	switch (pnts.length) {
 	case 3: // Triangle
@@ -341,11 +341,11 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	    break;
 	}
 	return false;
-    }    
-  
+    }
+
     boolean intersect(Transform3D thisToOtherVworld,
 		      GeometryRetained geom) {
-    
+
 	Point3d[] pnts = new Point3d[3];
 	int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
 		 initialVertexIndex : initialCoordIndex);
@@ -379,7 +379,7 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	switch(targetBound.getPickType()) {
 	case PickShape.PICKBOUNDINGBOX:
 	    BoundingBox box = (BoundingBox) targetBound;
-	    
+
 	    while (i < validVertexCount) {
 		getVertexData(i++, pnts[0]);
 		getVertexData(i++, pnts[1]);
@@ -391,7 +391,7 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	    break;
 	case PickShape.PICKBOUNDINGSPHERE:
 	    BoundingSphere bsphere = (BoundingSphere) targetBound;
-	    
+
 	    while (i < validVertexCount) {
 		getVertexData(i++, pnts[0]);
 		getVertexData(i++, pnts[1]);
@@ -404,7 +404,7 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	    break;
 	case PickShape.PICKBOUNDINGPOLYTOPE:
 	    BoundingPolytope bpolytope = (BoundingPolytope) targetBound;
-	    
+
 	    while (i < validVertexCount) {
 		getVertexData(i++, pnts[0]);
 		getVertexData(i++, pnts[1]);
@@ -417,7 +417,7 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 	    break;
 	default:
 	    throw new RuntimeException("Bounds not supported for intersection "
-				       + targetBound); 
+				       + targetBound);
 	}
 
 	return false;
@@ -444,8 +444,8 @@ class TriangleArrayRetained extends GeometryArrayRetained {
 
 
 	while(i < validVertexCount) {
-	    getVertexData(i++, pnt0); 
-	    getVertexData(i++, pnt1); 
+	    getVertexData(i++, pnt0);
+	    getVertexData(i++, pnt1);
 	    getVertexData(i++, pnt2);
 
 	    // Determine the normal

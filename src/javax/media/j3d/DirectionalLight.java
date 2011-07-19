@@ -33,7 +33,7 @@ import javax.vecmath.Vector3f;
  * A DirectionalLight node defines an oriented light with an origin at
  * infinity. It has the same attributes as a Light node, with the
  * addition of a directional vector to specify the direction in which the
- * light shines. A directional light has parallel light rays that travel 
+ * light shines. A directional light has parallel light rays that travel
  * in one direction along the specified vector. Directional light contributes
  * to diffuse and specular reflections, which in turn depend on the
  * orientation of an object's surface but not its position. A directional
@@ -59,7 +59,7 @@ public class DirectionalLight extends Light {
     private static final int[] readCapabilities = {
 	ALLOW_DIRECTION_READ
     };
-    
+
     /**
      * Constructs a DirectionalLight node with default parameters.
      * The default values are as follows:
@@ -111,7 +111,7 @@ public class DirectionalLight extends Light {
 	this.retained = new DirectionalLightRetained();
 	this.retained.setSource(this);
     }
-  
+
   /**
    * Set light direction.
    * @param direction the new direction
@@ -124,7 +124,7 @@ public class DirectionalLight extends Light {
 	        throw new CapabilityNotSetException(
 				   J3dI18N.getString("DirectionalLight0"));
 
-	if (isLive())        
+	if (isLive())
 	    ((DirectionalLightRetained)this.retained).setDirection(direction);
 	else
 	    ((DirectionalLightRetained)this.retained).initDirection(direction);
@@ -191,7 +191,7 @@ public class DirectionalLight extends Light {
      * <code>originalNode</code> into
      * the current node.  This method is called from the
      * <code>cloneNode</code> method which is, in turn, called by the
-     * <code>cloneTree</code> method.<P> 
+     * <code>cloneTree</code> method.<P>
      *
      * @param originalNode the original node to duplicate.
      * @param forceDuplicate when set to <code>true</code>, causes the
@@ -209,7 +209,7 @@ public class DirectionalLight extends Light {
      */
     void duplicateAttributes(Node originalNode, boolean forceDuplicate) {
         super.duplicateAttributes(originalNode, forceDuplicate);
-	
+
 	Vector3f v = new Vector3f();
 	((DirectionalLightRetained) originalNode.retained).getDirection(v);
 	((DirectionalLightRetained) retained).initDirection(v);

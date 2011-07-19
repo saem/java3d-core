@@ -67,7 +67,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
     // Package scope contructor
     J3DGraphics2DImpl(Canvas3D c) {
 	canvas3d = c;
-	
+
 	synchronized (VirtualUniverse.mc.contextCreationLock) {
 	    if (c.ctx == null) {
 		// create a dummy bufferImage
@@ -75,7 +75,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 		height = 1;
 		g3dImage = new BufferedImage(width, height,
 					     BufferedImage.TYPE_INT_ARGB);
-		offScreenGraphics2D = g3dImage.createGraphics();	
+		offScreenGraphics2D = g3dImage.createGraphics();
 	    } else {
 		init();
 	    }
@@ -84,7 +84,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
     }
 
     // This is invoke from Renderer callback when the first
-    // time createContext() finish which set 
+    // time createContext() finish which set
     // canvas3d.extensionSupported correctly.
     void init() {
 	// if ABGR extension is supported, we want to use
@@ -95,14 +95,14 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    width = canvas3d.getWidth();
 	    height = canvas3d.getHeight();
 	    initTexMap = false;
-	    
+
 	    if (width <= 0) {
 		width = 1;
 	    }
 	    if (height <= 0) {
 		height = 1;
 	    }
-	    
+
 	    synchronized (extentLock) {
 	    xmax = width;
 	    ymax = height;
@@ -117,7 +117,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    if (!abgr) {
 		data = new byte[width*height*4];
 	    }
-	    
+
 	    // should be the last flag to set
 	    initCtx = true;
 	}
@@ -131,19 +131,19 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
      * rendering to be complete before returning from this call.
      */
     public void flush(boolean waiting) {
-        
+
         if (hasBeenDisposed) {
             throw new IllegalStateException(J3dI18N.getString("J3DGraphics2D0"));
         }
 
 	if (!isFlushed) {
-	    // Composite g3dImage into Canvas3D	
+	    // Composite g3dImage into Canvas3D
             if (Thread.currentThread() == canvas3d.screen.renderer) {
 		if (!initCtx) {
 		    return;
-		}		
+		}
 		doFlush();
-            } else { 
+            } else {
 		if (!initCtx) {
 		    if (waiting &&
 			(canvas3d.pendingView != null) &&
@@ -161,23 +161,23 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 		// XXXX: may not be legal for behaviorScheduler
 		// May cause deadlock if it is in behaviorScheduler
 		// and we wait for Renderer to finish
-		boolean renderRun = (Thread.currentThread() != 
+		boolean renderRun = (Thread.currentThread() !=
 				     canvas3d.view.universe.behaviorScheduler);
 		// This must put before sendRenderMessage()
 		threadWaiting = true;
 		sendRenderMessage(renderRun, GraphicsContext3D.FLUSH2D, null,
-				  null, null);		    
-		if (waiting) {		
+				  null, null);
+		if (waiting) {
 		    // It is possible that thread got notify BEFORE
 		    // the following runMonitor invoke.
 		    runMonitor(J3dThread.WAIT);
-		} 
+		}
 	    }
 	    isFlushed = true;
 
  	}
     }
-    
+
     // copy the data into a byte buffer that will be passed to opengl
     void doFlush() {
         assert !hasBeenDisposed;
@@ -210,7 +210,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    }
 	    copyDataToCanvas(0, 0, xmin, ymin, xmax, ymax, width, height);
 	} else {
- 
+
 	    runMonitor(J3dThread.NOTIFY);
 	}
 	// this define an empty region
@@ -234,7 +234,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
         int biType = bi.getType();
 	int w, h, i, j;
 	int row, rowBegin, rowInc, dstBegin;
-	
+
 	dstBegin = 0;
 	rowInc = 1;
 	rowBegin = 0;
@@ -244,17 +244,17 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    (biType == BufferedImage.TYPE_INT_RGB)) {
 	    // optimized cases
 	    rowBegin = y1;
-	    
+
 	    int colBegin = x1;
-	    
+
 	    int[] intData =
 		((DataBufferInt)bi.getRaster().getDataBuffer()).getData();
 	    int rowOffset = rowInc * width;
 	    int intPixel;
-	    
+
 	    rowBegin = rowBegin*width + colBegin;
 	    dstBegin = rowBegin*4;
-	    
+
 	    if (biType == BufferedImage.TYPE_INT_ARGB) {
 		for (h = y1; h < y2; h++) {
 		    i = rowBegin;
@@ -269,7 +269,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 		    rowBegin += rowOffset;
 		    dstBegin += (rowOffset*4);
 		}
-	    } else { 
+	    } else {
 		for (h = y1; h < y2; h++) {
 		    i = rowBegin;
 		    j = dstBegin;
@@ -286,7 +286,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    }
 	} else {
 	    // non-optimized cases
-	    WritableRaster ras = bi.getRaster(); 
+	    WritableRaster ras = bi.getRaster();
 	    ColorModel cm = bi.getColorModel();
 	    Object pixel = ImageComponentRetained.getDataElementBuffer(ras);
 
@@ -341,7 +341,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	validate(0, 0, width, height);
     }
 
-    void validate(float x1, float y1, float x2, float y2, 
+    void validate(float x1, float y1, float x2, float y2,
 		  AffineTransform xform) {
 	float t;
 
@@ -354,7 +354,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    ptSrc.x = x2;
 	    ptSrc.y = y2;
 	    xform.transform(ptSrc, ptDst2);
-	    
+
 	    if (ptDst1.x > ptDst2.x) {
 		t = ptDst1.x;
 		ptDst1.x = ptDst2.x;
@@ -381,7 +381,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    }
 	}
 	if (doResize)  {
-	    synchronized (VirtualUniverse.mc.contextCreationLock) {	    
+	    synchronized (VirtualUniverse.mc.contextCreationLock) {
 		Graphics2D oldOffScreenGraphics2D = offScreenGraphics2D;
 		initCtx = false;
 		init();
@@ -394,8 +394,8 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    tr.transform(ptSrc, ptDst1);
 	    ptSrc.x = x2;
 	    ptSrc.y = y2;
-	    tr.transform(ptSrc, ptDst2);	
-	    
+	    tr.transform(ptSrc, ptDst2);
+
 	    synchronized (extentLock) {
 	    if (ptDst1.x < xmin) {
 		xmin = (int) ptDst1.x;
@@ -412,10 +412,10 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	    }
 	}
     }
-    
+
     void copyGraphics2D(Graphics2D oldg) {
 	// restore the original setting of Graphics2D when resizing the windows
-	setColor(oldg.getColor());	
+	setColor(oldg.getColor());
 	setFont(oldg.getFont());
 	setClip(oldg.getClip());
 	setComposite(oldg.getComposite());
@@ -424,8 +424,8 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	setStroke(oldg.getStroke());
 	if (xOrModeColor != null) {
 	    setXORMode(xOrModeColor);
-	} 
-	
+	}
+
     }
 
     // Implementation of Graphics2D methods
@@ -447,7 +447,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 
     public String toString() {
 	return offScreenGraphics2D.toString();
-    
+
     }
 
     public final AffineTransform getTransform() {
@@ -508,7 +508,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	validate(0, 0, img.getWidth(obs), img.getHeight(obs), xform);
 	return offScreenGraphics2D.drawImage(img, xform, obs);
     }
-	
+
     public final void drawImage(BufferedImage img, BufferedImageOp op,
 				int x, int y) {
 	if (op != null) {
@@ -517,17 +517,17 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	validate(x, y, x+img.getWidth(), y+img.getHeight());
 	offScreenGraphics2D.drawImage(img, null, x, y);
     }
-    
+
     public final boolean drawImage(Image img,
 				   int x, int y,
 				   ImageObserver observer) {
 
-	validate(x, y, 
-		 x + img.getWidth(observer), 
+	validate(x, y,
+		 x + img.getWidth(observer),
 		 y + img.getWidth(observer));
 	return offScreenGraphics2D.drawImage(img, x, y, observer);
     }
-    
+
     public final boolean drawImage(Image img, int x, int y,
 				   int width, int height,
 				   ImageObserver observer) {
@@ -535,7 +535,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	return offScreenGraphics2D.drawImage(img, x, y, width, height,
 					     observer);
     }
-    
+
     public final boolean drawImage(Image img, int x, int y,
 				   int width, int height,
 				   Color bgcolor,
@@ -550,7 +550,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 				int sx1, int sy1, int sx2, int sy2,
 				ImageObserver observer) {
 	validate(dx1, dy1, dx2, dy2);
-	offScreenGraphics2D.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, 
+	offScreenGraphics2D.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1,
 				      sx2, sy2, observer);
     }
 
@@ -559,7 +559,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 				   int sx1, int sy1, int sx2, int sy2,
 				   ImageObserver observer) {
 	validate(dx1, dy1, dx2, dy2);
-	return offScreenGraphics2D.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, 
+	return offScreenGraphics2D.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1,
 					     sx2, sy2, observer);
     }
 
@@ -569,7 +569,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 				   Color bgcolor,
 				   ImageObserver observer) {
 	validate(dx1, dy1, dx2, dy2);
-	return offScreenGraphics2D.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, 
+	return offScreenGraphics2D.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1,
 					     sx2, sy2, bgcolor, observer);
     }
 
@@ -600,8 +600,8 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 
     public final void draw(Shape s) {
 	Rectangle rect = s.getBounds();
-	validate(rect.x, rect.y, 
-		 rect.x + rect.width, 
+	validate(rect.x, rect.y,
+		 rect.x + rect.width,
 		 rect.y + rect.height);
 	offScreenGraphics2D.draw(s);
     }
@@ -707,7 +707,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
        float x1 = (float) bounds.getX();
        float y1 = (float) bounds.getY();
        validate(x1+x, y1+y,
-		x1 + x + (float) bounds.getWidth(), 
+		x1 + x + (float) bounds.getWidth(),
 		y1 + y + (float) bounds.getHeight());
        offScreenGraphics2D.drawString(s, x, y);
 
@@ -740,7 +740,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 				    int arcWidth, int arcHeight) {
 	// XXXX: call validate with bounding box of primitive
 	validate();
-	offScreenGraphics2D.fillRoundRect(x, y, width, height, arcWidth, 
+	offScreenGraphics2D.fillRoundRect(x, y, width, height, arcWidth,
 				      arcHeight);
     }
 
@@ -839,7 +839,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	validate();
 	offScreenGraphics2D.drawBytes(data,  offset, length, x, y);
     }
- 
+
     public void drawChars(char data[], int offset, int length, int x, int y) {
 	// XXXX: call validate with bounding box of primitive
 	validate();
@@ -947,15 +947,15 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 
 	if (Thread.currentThread() == canvas3d.screen.renderer) {
 	    doDrawAndFlushImage(img, x, y, observer);
-	} else { 
+	} else {
 	    // Behavior Scheduler or other threads
 	    // XXXX: may not be legal for behaviorScheduler
 	    // May cause deadlock if it is in behaviorScheduler
 	    // and we wait for Renderer to finish
-	    boolean renderRun = (Thread.currentThread() != 
+	    boolean renderRun = (Thread.currentThread() !=
 				 canvas3d.view.universe.behaviorScheduler);
 	    sendRenderMessage(renderRun, GraphicsContext3D.DRAWANDFLUSH2D,
-			      img, new Point(x, y), observer); 
+			      img, new Point(x, y), observer);
 	}
     }
 
@@ -999,7 +999,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 	} else {
 	    x1 = 0;
 	}
-	
+
 	if (py + imgHeight > height) {
 	    y2 = height - py;
 	} else {
@@ -1019,13 +1019,13 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
 
     }
 
-  	
+
     void copyDataToCanvas(int px, int py, int x1, int y1,
 			  int x2, int y2, int w, int h) {
 	try {
 	    if (!canvas3d.drawingSurfaceObject.renderLock()) {
 		return;
-	    }	    
+	    }
 
             if (!initTexMap) {
                 if (objectId == -1) {
@@ -1033,7 +1033,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
                 }
                 texWidth = getGreaterPowerOf2(w);
                 texHeight = getGreaterPowerOf2(h);
-                
+
                 // Canvas got resize, need to init texture map again
                 // in Renderer thread
                 if (!canvas3d.initTexturemapping(canvas3d.ctx,
@@ -1045,8 +1045,8 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
                     VirtualUniverse.mc.freeTexture2DId(objectId);
                     objectId = -1;
                     // TODO : Need to find a better way to report no resource problem --- Chien.
-                    System.err.println("J3DGraphics2DImpl.copyDataToCanvas() : Fail to get texture resources ..."); 
-                    
+                    System.err.println("J3DGraphics2DImpl.copyDataToCanvas() : Fail to get texture resources ...");
+
                 } else {
                     initTexMap = true;
                 }
@@ -1059,7 +1059,7 @@ final class J3DGraphics2DImpl extends J3DGraphics2D {
                             ImageComponentRetained.TYPE_BYTE_RGBA),
                         objectId, data, width, height);
             }
-	    
+
 	    canvas3d.drawingSurfaceObject.unLock();
 	} catch (NullPointerException ne) {
 	    canvas3d.drawingSurfaceObject.unLock();

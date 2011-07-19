@@ -46,7 +46,7 @@ class ClipRetained extends LeafRetained {
     /**
      * Clip's back distance
      */
-    double backDistance = 100.0;	
+    double backDistance = 100.0;
 
     /**
      * back distance scaled to vworld
@@ -55,10 +55,10 @@ class ClipRetained extends LeafRetained {
 
     /**
      * The Boundary object defining the application region.
-     */  
+     */
     Bounds applicationRegion = null;
 
-    /** 
+    /**
      * The bounding leaf reference
      */
     BoundingLeafRetained boundingLeaf = null;
@@ -93,7 +93,7 @@ class ClipRetained extends LeafRetained {
     }
 
     /**
-     * initializes the clip's back distance to the specified value.  
+     * initializes the clip's back distance to the specified value.
      * @param backDistance the new back clipping distance
      */
     final void initBackDistance(double backDistance) {
@@ -102,7 +102,7 @@ class ClipRetained extends LeafRetained {
 
 
     /**
-     * Sets the clip's back distance to the specified value.  
+     * Sets the clip's back distance to the specified value.
      * @param backDistance the new back clipping distance
      */
     final void setBackDistance(double backDistance) {
@@ -122,7 +122,7 @@ class ClipRetained extends LeafRetained {
    /**
      * Initializes the Clip's application region.
      * @param region a region that contains the Backgound's new application bounds
-     */  
+     */
     final void initApplicationBounds(Bounds region) {
 	if (region != null) {
 	    applicationRegion = (Bounds) region.clone();
@@ -134,29 +134,29 @@ class ClipRetained extends LeafRetained {
     /**
      * Set the Clip's application region.
      * @param region a region that contains the Clip's new application bounds
-     */  
+     */
     final void setApplicationBounds(Bounds region) {
 	initApplicationBounds(region);
 	// Don't send the message if there is a valid boundingleaf
 	if (boundingLeaf == null) {
-	    sendMessage(BOUNDS_CHANGED, 
+	    sendMessage(BOUNDS_CHANGED,
 			(region != null ? region.clone(): null), null);
 	}
     }
 
-    /**  
+    /**
      * Get the Backgound's application region.
      * @return this Clip's application bounds information
-     */  
+     */
     final Bounds getApplicationBounds() {
 	return (applicationRegion != null ?
 		(Bounds) applicationRegion.clone() : null);
     }
 
    /**
-     * Initializes the Clip's application region 
+     * Initializes the Clip's application region
      * to the specified Leaf node.
-     */  
+     */
     void initApplicationBoundingLeaf(BoundingLeaf region) {
 	if (region != null) {
 	    boundingLeaf = (BoundingLeafRetained)region.retained;
@@ -167,18 +167,18 @@ class ClipRetained extends LeafRetained {
 
     /**
      * Set the Clip's application region to the specified Leaf node.
-     */  
+     */
     void setApplicationBoundingLeaf(BoundingLeaf region) {
 	if (boundingLeaf != null)
 	    boundingLeaf.mirrorBoundingLeaf.removeUser(this);
-	    
+
 	if (region != null) {
 	    boundingLeaf = (BoundingLeafRetained)region.retained;
 	    boundingLeaf.mirrorBoundingLeaf.addUser(this);
 	} else {
 	    boundingLeaf = null;
 	}
-	sendMessage(BOUNDINGLEAF_CHANGED, 
+	sendMessage(BOUNDINGLEAF_CHANGED,
 		    (boundingLeaf != null ?
 		     boundingLeaf.mirrorBoundingLeaf : null),
 		    (applicationRegion != null ? applicationRegion.clone() : null));
@@ -186,7 +186,7 @@ class ClipRetained extends LeafRetained {
 
     /**
      * Get the Clip's application region
-     */  
+     */
     BoundingLeaf getApplicationBoundingLeaf() {
 	return (boundingLeaf != null ?
 		(BoundingLeaf)boundingLeaf.source : null);
@@ -198,7 +198,7 @@ class ClipRetained extends LeafRetained {
     void setInImmCtx(boolean inCtx) {
         inImmCtx = inCtx;
     }
- 
+
     /**
      * This gets the immedate mode context flag
      */
@@ -253,7 +253,7 @@ class ClipRetained extends LeafRetained {
 
 	super.markAsLive();
     }
- 
+
     /**
      * This clearLive routine first calls the superclass's method, then
      * it removes itself to the list of lights
@@ -294,9 +294,9 @@ class ClipRetained extends LeafRetained {
 	    else {
 		transformedRegion = null;
 	    }
-		
+
 	}
-	backDistanceInVworld = backDistance * 
+	backDistanceInVworld = backDistance *
 	    lastLocalToVworld.getDistanceScale();
     }
 
@@ -332,7 +332,7 @@ class ClipRetained extends LeafRetained {
 		else {
 		    transformedRegion = null;
 		}
-			
+
 	    }
 
 	}
@@ -344,7 +344,7 @@ class ClipRetained extends LeafRetained {
 
     /** Note: This routine will only be called on
      * the mirror object - will update the object's
-     * cached region and transformed region 
+     * cached region and transformed region
      */
 
     void updateBoundingLeaf() {

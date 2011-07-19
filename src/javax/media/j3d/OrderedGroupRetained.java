@@ -28,7 +28,7 @@ package javax.media.j3d;
 
 import java.util.ArrayList;
 
-/** 
+/**
  * The OrderedGroup is a group node that ensures its children rendered
  * in index increasing order.
  */
@@ -71,11 +71,11 @@ class OrderedGroupRetained extends GroupRetained {
 
     void setChildIndexOrder(int[] cIOArr) {
 	if(cIOArr != null) {
-	    if((userChildIndexOrder == null) || 
+	    if((userChildIndexOrder == null) ||
 	       (userChildIndexOrder.length != cIOArr.length)) {
 		userChildIndexOrder = new int[cIOArr.length];
 	    }
-	    
+
 	    System.arraycopy(cIOArr, 0, userChildIndexOrder,
 			     0, userChildIndexOrder.length);
 	}
@@ -97,19 +97,19 @@ class OrderedGroupRetained extends GroupRetained {
 	    VirtualUniverse.mc.processMessage(m);
 	}
     }
-    
+
     int[] getChildIndexOrder() {
 	if (userChildIndexOrder == null) {
 	    return null;
 	}
-	
+
 	int[] newArr = new int[userChildIndexOrder.length];
-	System.arraycopy(userChildIndexOrder, 0, 
+	System.arraycopy(userChildIndexOrder, 0,
 			 newArr, 0, userChildIndexOrder.length);
 	return newArr;
 
     }
-    
+
     Integer getOrderedChildId() {
         Integer orderedChildId;
 	synchronized(orderedChildIdFreeList) {
@@ -131,12 +131,12 @@ class OrderedGroupRetained extends GroupRetained {
 
     int getOrderedChildCount() {
 	int count;
-	
+
 	synchronized (orderedChildIdFreeList) {
 	    count = orderedChildIdCount;
 	}
 	return count;
-    }	
+    }
 
     void addChild(Node child) {
 	if(userChildIndexOrder != null) {
@@ -148,19 +148,19 @@ class OrderedGroupRetained extends GroupRetained {
 	super.addChild(child);
 
     }
-    
+
     void addChild(Node child, int[] cIOArr) {
 	if(cIOArr != null) {
 	    userChildIndexOrder  = new int[cIOArr.length];
-	    
+
 	    System.arraycopy(cIOArr, 0, userChildIndexOrder,
-			     0, userChildIndexOrder.length);	
+			     0, userChildIndexOrder.length);
 	}
 	else {
 	    userChildIndexOrder = null;
 	}
 
-	// GroupRetained.addChild have to check for case of non-null child 
+	// GroupRetained.addChild have to check for case of non-null child
 	// index order array and handle it.
 	super.addChild(child);
 
@@ -176,11 +176,11 @@ class OrderedGroupRetained extends GroupRetained {
 	super.moveTo(bg);
     }
 
-   
+
     void doRemoveChildIndexEntry(int index) {
-	
+
 	int[] newArr  = new int[userChildIndexOrder.length - 1];
-	
+
 	for(int i=0, j=0; i<userChildIndexOrder.length; i++) {
 	    if(userChildIndexOrder[i] > index) {
 		newArr[j] = userChildIndexOrder[i] - 1;
@@ -191,24 +191,24 @@ class OrderedGroupRetained extends GroupRetained {
 		j++;
 	    }
 	}
-	
+
 	userChildIndexOrder = newArr;
-	
+
     }
-    
+
     void doAddChildIndexEntry() {
 	int[] newArr  = new int[userChildIndexOrder.length + 1];
-	
+
 	System.arraycopy(userChildIndexOrder, 0, newArr,
 			 0, userChildIndexOrder.length);
-	
+
 	newArr[userChildIndexOrder.length] = userChildIndexOrder.length;
-	
+
 	userChildIndexOrder = newArr;
     }
 
-    /** 
-     * Compiles the children of the OrderedGroup, preventing shape merging at 
+    /**
+     * Compiles the children of the OrderedGroup, preventing shape merging at
      * this level or above
      */
     void compile(CompileState compState) {
@@ -222,7 +222,7 @@ class OrderedGroupRetained extends GroupRetained {
             compState.numOrderedGroups++;
         }
     }
-    
+
     void setOrderedBin(OrderedBin ob, int index) {
 	synchronized (orderedBin) {
 	    orderedBin[index] = ob;
@@ -251,7 +251,7 @@ class OrderedGroupRetained extends GroupRetained {
 	int i;
 
 	//System.err.println("updateChildIdTableInserted childId " + childId + " orderedId " + orderedId + " " + this);
-        if (orderedChildIdTable != null) { 
+        if (orderedChildIdTable != null) {
 	    size = orderedChildIdTable.length;
 	    for (i=0; i<size; i++) {
 		if (orderedChildIdTable[i] != -1) {
@@ -277,7 +277,7 @@ class OrderedGroupRetained extends GroupRetained {
         }
         orderedChildIdTable[orderedId] = childId;
 	//printTable(orderedChildIdTable);
-	
+
     }
 
     void updateChildIdTableRemoved(int childId ) {
@@ -287,7 +287,7 @@ class OrderedGroupRetained extends GroupRetained {
 	// from the table
 	if (orderedChildIdTable == null)
 	    return;
-	
+
 	for (int i=0; i<orderedChildIdTable.length; i++) {
 	    if (orderedChildIdTable[i] != -1) {
 		if (orderedChildIdTable[i] > childId) {
@@ -329,7 +329,7 @@ class OrderedGroupRetained extends GroupRetained {
 	super.setLive(s);
         s.orderedPaths = orderedPaths;
 	if((userChildIndexOrder != null) && (refCount == 1)) {
-	    
+
 	    // Don't send a message for initial set live.
 	    int[]newArr = new int[userChildIndexOrder.length];
 	    System.arraycopy(userChildIndexOrder, 0, newArr,
@@ -347,7 +347,7 @@ class OrderedGroupRetained extends GroupRetained {
 	    s.notifyThreads |= J3dThread.UPDATE_RENDERING_ENVIRONMENT;
             // only need to do it once if in shared group
             s.nodeList.add(this);
-	    s.ogCIOList.add(this);		
+	    s.ogCIOList.add(this);
 	    s.ogCIOTableList.add(null);
 	    userChildIndexOrder = null;
         }
@@ -402,11 +402,11 @@ class OrderedGroupRetained extends GroupRetained {
     }
 
 
-    // This node has been cleared, so 
+    // This node has been cleared, so
     void clearDerivedDataStructures() {
 	int i;
-	
-        //System.err.println("og clearDerivedDataStructures " + this); 
+
+        //System.err.println("og clearDerivedDataStructures " + this);
 	// Clear the orderedBin and childId table for all views
 	// since this orderedGroup has been clearLived!
 	for (i = 0; i < orderedBin.length; i++) {
@@ -435,11 +435,11 @@ class OrderedGroupRetained extends GroupRetained {
     void decrChildCount() {
 	childCount--;
     }
-    
+
     void printTable(int[] table) {
 	for (int i=0; i<table.length; i++) {
 	    System.err.print(" " + table[i]);
-	}	
+	}
 	System.err.println("");
    }
 
@@ -456,7 +456,7 @@ class OrderedGroupRetained extends GroupRetained {
     	if(userChildIndexOrder != null) {
 	    doRemoveChildIndexEntry(index);
 	}
-	
+
 	super.doRemoveChild(index, messages, messageIndex);
 
     }
@@ -496,12 +496,12 @@ class OrderedGroupRetained extends GroupRetained {
 		int[] newArr = new int[userChildIndexOrder.length];
 		System.arraycopy(userChildIndexOrder, 0, newArr,
 				 0, userChildIndexOrder.length);
-		
+
 		s.ogCIOTableList.add(newArr);
 	    }
 
 	    childOrderedPaths = (ArrayList)childrenOrderedPaths.get(childIndex);
-	    
+
             for(int i=0; i< orderedPaths.size();i++){
                 childOrderedPath =
                             ((OrderedPath)orderedPaths.get(i)).clonePath();

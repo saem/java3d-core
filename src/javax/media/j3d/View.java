@@ -266,7 +266,7 @@ import com.sun.j3d.utils.universe.Viewer; // Needed for Support of DVR.
  * There are five methods used to get information about system
  * execution and performance:<P>
  * <UL>
- * <code>getCurrentFrameStartTime</code> returns the time at which 
+ * <code>getCurrentFrameStartTime</code> returns the time at which
  * the most recent rendering frame started.<P>
  * <code>getLastFrameDuration</code> returns the duration, in milliseconds, of
  * the most recently completed rendering frame.<P>
@@ -281,7 +281,7 @@ import com.sun.j3d.utils.universe.Viewer; // Needed for Support of DVR.
  * The following methods control the traversal, the rendering, and
  * the execution of the behavior scheduler for this view:<P>
  * <UL>
- * <code>startBehaviorScheduler</code> starts the behavior scheduler 
+ * <code>startBehaviorScheduler</code> starts the behavior scheduler
  * running after it has been stopped.<P>
  * <code>stopBehaviorScheduler</code> stops the behavior scheduler after all
  * currently-scheduled behaviors are executed.<P>
@@ -311,8 +311,8 @@ import com.sun.j3d.utils.universe.Viewer; // Needed for Support of DVR.
  * <code>getSceneAntialiasingEnable</code> returns the scene antialiasing
  * flag.<P>
  * </UL>
- * Note that line and point antialiasing are independent of scene 
- * antialiasing. If antialiasing is enabled for lines and points, 
+ * Note that line and point antialiasing are independent of scene
+ * antialiasing. If antialiasing is enabled for lines and points,
  * the lines and points will be antialiased prior to scene antialiasing.
  * If scene antialiasing is disabled, antialiased lines and points will
  * still be antialiased.
@@ -382,7 +382,7 @@ import com.sun.j3d.utils.universe.Viewer; // Needed for Support of DVR.
  * The View object provides the following compatibility-mode
  * methods that operate on the viewing transform.<P>
  * <UL>
- * <code>setVpcToEc</code> a compatibility mode method that 
+ * <code>setVpcToEc</code> a compatibility mode method that
  * specifies the ViewPlatform
  * coordinates (VPC) to eye coordinates viewing transform.<P>
  * <code>getVpcToEc</code> returns the VPC.<P>
@@ -392,12 +392,12 @@ import com.sun.j3d.utils.universe.Viewer; // Needed for Support of DVR.
  * The View object provides the following compatibility-mode
  * methods that operate on the projection transform:<P>
  * <UL>
- * The <code>setLeftProjection</code> and <code>setRightProjection</code> 
+ * The <code>setLeftProjection</code> and <code>setRightProjection</code>
  * methods specify
  * a viewing frustum for the left and right eye that transforms
  * points in eye coordinates to clipping coordinates.<P>
- * 
- * The <code>getLeftProjection</code> and <code>getRightProjection</code> 
+ *
+ * The <code>getLeftProjection</code> and <code>getRightProjection</code>
  * methods return
  * the viewing frustum for the left and right eye.<P>
  * </UL>
@@ -715,7 +715,7 @@ public class View extends Object {
 
     // AudioDevice enumerator current position
     //    AudioDeviceEnumerator allAudioEnumerator = null;
-    
+
     // These are used for tracking the frame times
     static final int NUMBER_FRAME_START_TIMES = 10;
 
@@ -731,7 +731,7 @@ public class View extends Object {
     // These are the ones that get updated directly by MC
     long frameNumber = 0;
     long startTime = 0;
-    long stopTime = 0;    
+    long stopTime = 0;
 
     // Support dynamic video resize -- DVR.
     Viewer viewer = null; // Cached the associate viewer of this view.
@@ -749,7 +749,7 @@ public class View extends Object {
     // View cache for this view.
     //
     ViewCache viewCache = null;
-    
+
     // Compatibility mode related field has changed.
     // { compatibilityModeEnable, compatVpcToEc, compatLeftProjection,
     //   compatRightProjection }
@@ -774,7 +774,7 @@ public class View extends Object {
     // Monoscopic View Policy field has changed.
     static final int MONOSCOPIC_VIEW_POLICY_DIRTY     = 0x200;
     // Field Of View field has changed.
-    static final int FIELD_OF_VIEW_DIRTY              = 0x400; 
+    static final int FIELD_OF_VIEW_DIRTY              = 0x400;
     // Tracking Enable field has changed.
     static final int TRACKING_ENABLE_DIRTY            = 0x800;
     // User Head To Vworld Enable field has changed.
@@ -787,7 +787,7 @@ public class View extends Object {
     static final int RIGHT_MANUAL_EYE_IN_COEXISTENCE_DIRTY = 0x8000;
     // visibilityPolicy has changed.
     static final int VISIBILITY_POLICY_DIRTY               = 0x10000;
-    
+
     // This is not from View object. It is here for the purpose
     // keeping all ViewCache's dirty mask bit declaration in one place.
     // ViewPlatformRetained viewAttach Policy field has changed.
@@ -798,14 +798,14 @@ public class View extends Object {
     static final int PE_COE_TO_TRACKER_BASE_DIRTY           = 0x100000;
     static final int PE_TRACKING_AVAILABLE_DIRTY            = 0x200000;
     static final int PE_COE_CENTER_IN_PWORLD_POLICY_DIRTY   = 0x400000;
-    
+
     // PhysicalBody fields has changed.
     static final int PB_EYE_POSITION_DIRTY                             = 0x1000000;
     static final int PB_EAR_POSITION_DIRTY                             = 0x2000000;
     static final int PB_NOMINAL_EYE_HEIGHT_FROM_GROUND_DIRTY           = 0x4000000;
     static final int PB_NOMINAL_EYE_OFFSET_FROM_NOMINAL_SCREEN_DIRTY   = 0x8000000;
 
-    
+
     // Mask that indicates this View's view dependence info. has changed,
     // and CanvasViewCache may need to recompute the final view matries.
     int vDirtyMask = (COMPATIBILITY_MODE_DIRTY | SCREEN_SCALE_POLICY_DIRTY
@@ -818,14 +818,14 @@ public class View extends Object {
 		      | COEXISTENCE_CENTERING_ENABLE_DIRTY
 		      | LEFT_MANUAL_EYE_IN_COEXISTENCE_DIRTY
 		      | RIGHT_MANUAL_EYE_IN_COEXISTENCE_DIRTY
-		      | VISIBILITY_POLICY_DIRTY);    
-     
+		      | VISIBILITY_POLICY_DIRTY);
+
 
     //
     // This object contains a specification of the user's physical body.
     //
     // Attributes of this object are defined in head coordinates and
-    // include information such as the location of the user's eyes and 
+    // include information such as the location of the user's eyes and
     // ears.
     // The origin is defined to be halfway between the left and right eye
     // in the plane of the face.
@@ -839,7 +839,7 @@ public class View extends Object {
 
     // View model compatibility mode flag
     boolean compatibilityModeEnable = false;
-    
+
     // View model coexistenceCenteringEnable flag
     boolean coexistenceCenteringEnable = true;
 
@@ -974,17 +974,17 @@ public class View extends Object {
 
     //
     // Flag to enable depth buffer freeze during trasparent rendering pass
-    //  
+    //
     boolean depthBufferFreezeTransparent = true;
 
     //
     // Flag to enable scene antialiasing
-    //  
+    //
     boolean sceneAntialiasingEnable = false;
 
     //
     // Flag to enable local eye lighting
-    //  
+    //
     boolean localEyeLightingEnable = false;
 
     // Array Lists to track the screens and canvases associated with this View.
@@ -1002,7 +1002,7 @@ public class View extends Object {
 
     // Flag to notify user thread when renderOnce is finished
     volatile boolean renderOnceFinish = true;
-    
+
     // Lock to synchronize start/stop/renderOnce call
     private Object startStopViewLock = new Object();
 
@@ -1015,10 +1015,10 @@ public class View extends Object {
      * use for stop view, when stopview, set to count -1,
      * when reach 1, call stopView() in MC and reset to -1.
      */
-    int stopViewCount = -1; 
+    int stopViewCount = -1;
 
     /**
-     * False if current frame cycle time less than minimum frame cycle time 
+     * False if current frame cycle time less than minimum frame cycle time
      */
     boolean isMinCycleTimeAchieve = true;
 
@@ -1042,7 +1042,7 @@ public class View extends Object {
     // resetting the newly set universe.
     long resetUnivCount = 0;
 
-    // This notify user thread waitForMC() to continue when 
+    // This notify user thread waitForMC() to continue when
     // MC finish unregisterView
     volatile boolean doneUnregister = false;
 
@@ -1118,7 +1118,7 @@ public class View extends Object {
     public void setViewPolicy(int policy) {
 	if (policy != HMD_VIEW &&
 	    policy != SCREEN_VIEW) {
-	    
+
 	    throw new IllegalArgumentException(J3dI18N.getString("View0"));
 	}
 	if(policy == HMD_VIEW) {
@@ -1128,7 +1128,7 @@ public class View extends Object {
 	    synchronized (canvasList) {
 		for (int i=canvases.size()-1; i>=0; i--) {
 		    Canvas3D c3d = (Canvas3D)canvases.elementAt(i);
-		    
+
 		    if ((c3d.monoscopicViewPolicy == View.CYCLOPEAN_EYE_VIEW) &&
 			(!c3d.useStereo)){
 			throw new
@@ -1151,7 +1151,7 @@ public class View extends Object {
     public int getViewPolicy() {
 	return this.viewPolicy;
     }
-  
+
     /**
      * Sets the projection policy for this View.
      * This variable specifies the type of projection transform that
@@ -1186,7 +1186,7 @@ public class View extends Object {
     public int getProjectionPolicy() {
 	return this.projectionPolicy;
     }
-  
+
     /**
      * Sets the screen scale policy for this view.
      * This policy specifies how the screen scale is derived.
@@ -1387,7 +1387,7 @@ public class View extends Object {
 	}
 	repaint();
     }
-    
+
     /**
      * Retrieves the coexistenceCentering enable flag.
      *
@@ -1411,7 +1411,7 @@ public class View extends Object {
 	}
 	repaint();
     }
-  
+
     /**
      * Retrieves the compatibility mode enable flag.
      * @return the current compatibility mode enable flag
@@ -1419,7 +1419,7 @@ public class View extends Object {
     public boolean getCompatibilityModeEnable() {
 	return this.compatibilityModeEnable;
     }
-  
+
     /**
      * Compatibility mode method that specifies a viewing frustum for
      * the left eye that transforms points in Eye Coordinates (EC) to
@@ -1514,7 +1514,7 @@ public class View extends Object {
 	if (!vpcToEc.isAffine()) {
 	    throw new BadTransformException(J3dI18N.getString("View7"));
 	}
-	
+
 	synchronized(this) {
 	    compatVpcToEc.setWithLock(vpcToEc);
 	    vDirtyMask |= View.COMPATIBILITY_MODE_DIRTY;
@@ -1611,7 +1611,7 @@ public class View extends Object {
 	}
 	repaint();
     }
-    
+
     /**
      * Returns the current screen scale value
      * @return the current screen scale value
@@ -1629,7 +1629,7 @@ public class View extends Object {
     public void setFieldOfView(double fieldOfView) {
 	synchronized(this) {
 	    this.fieldOfView = fieldOfView;
-	    vDirtyMask |= View.FIELD_OF_VIEW_DIRTY;	    
+	    vDirtyMask |= View.FIELD_OF_VIEW_DIRTY;
 	}
 	repaint();
 
@@ -1817,7 +1817,7 @@ public class View extends Object {
 
     /**
      * Sets the view model's front clip policy, the policy Java 3D uses
-     * in computing where to place the front clip plane. The variable 
+     * in computing where to place the front clip plane. The variable
      * can contain one of:
      * <UL>
      * <LI>VIRTUAL_EYE, to specify that the associated distance is
@@ -1856,7 +1856,7 @@ public class View extends Object {
 
     /**
      * Sets the view model's back clip policy, the policy Java 3D uses
-     * in computing where to place the back clip plane. The variable 
+     * in computing where to place the back clip plane. The variable
      * can contain one of:
      * <UL>
      * <LI>VIRTUAL_EYE, to specify that the associated distance is
@@ -1894,7 +1894,7 @@ public class View extends Object {
     }
 
     /**
-     * Sets the visibility policy for this view.  This attribute 
+     * Sets the visibility policy for this view.  This attribute
      * is one of:
      * <UL>
      * <LI>VISIBILITY_DRAW_VISIBLE, to specify that only visible objects
@@ -1916,7 +1916,7 @@ public class View extends Object {
      *
      * @since Java 3D 1.2
      */
-    public void setVisibilityPolicy(int policy) {	
+    public void setVisibilityPolicy(int policy) {
 
 	synchronized(this) {
 	    this.visibilityPolicy = policy;
@@ -1924,7 +1924,7 @@ public class View extends Object {
 	}
 
 	if (activeStatus && isRunning) {
-	    
+
 	    J3dMessage vpMessage = new J3dMessage();
 	    vpMessage.universe = universe;
 	    vpMessage.view = this;
@@ -1954,7 +1954,7 @@ public class View extends Object {
     }
 
     /**
-     * Sets the transparency sorting policy for this view.  This attribute 
+     * Sets the transparency sorting policy for this view.  This attribute
      * is one of:
      *
      * <UL>
@@ -1978,14 +1978,14 @@ public class View extends Object {
      *
      * @since Java 3D 1.3
      */
-    public void setTransparencySortingPolicy(int policy) {	
+    public void setTransparencySortingPolicy(int policy) {
 	if (policy == transparencySortingPolicy) {
 	    return;
 	}
-	
+
 	transparencySortingPolicy = policy;
 	if (activeStatus && isRunning) {
-	    
+
 	    J3dMessage vpMessage = new J3dMessage();
 	    vpMessage.universe = universe;
 	    vpMessage.view = this;
@@ -2021,7 +2021,7 @@ public class View extends Object {
 	    this.trackingEnable = flag;
 	    vDirtyMask |= View.TRACKING_ENABLE_DIRTY;
 	}
-	
+
 	repaint();
     }
 
@@ -2062,13 +2062,13 @@ public class View extends Object {
      * and copies that value into the transform provided.
      * The computed transforms takes points in the sensor's coordinate
      * system and produces the point's corresponding value in
-     * virtual-world coordinates. 
+     * virtual-world coordinates.
      * @param sensor the sensor in question
      * @param t the object that will receive the transform
      */
     public void getSensorToVworld(Sensor sensor, Transform3D t) {
         // grab the first canvas -- not sure for multiple canvases
-        Canvas3D canvas = (Canvas3D) this.canvases.firstElement(); 
+        Canvas3D canvas = (Canvas3D) this.canvases.firstElement();
         Transform3D localTrans = new Transform3D();
         synchronized(canvas.canvasViewCache) {
               t.set(canvas.canvasViewCache.getVworldToTrackerBase());
@@ -2079,7 +2079,7 @@ public class View extends Object {
     }
 
     /**
-     * Retrieves the position of the specified Sensor's 
+     * Retrieves the position of the specified Sensor's
      * hotspot in virtual-world coordinates
      * and copies that value into the position provided.
      * This value is derived from other values and is read-only.
@@ -2089,7 +2089,7 @@ public class View extends Object {
     public void getSensorHotspotInVworld(Sensor sensor,
 					 Point3f position) {
 
-        Canvas3D canvas = (Canvas3D) this.canvases.firstElement(); 
+        Canvas3D canvas = (Canvas3D) this.canvases.firstElement();
         Transform3D sensorToVworld = new Transform3D();
         Point3d hotspot3d = new Point3d();
 
@@ -2100,7 +2100,7 @@ public class View extends Object {
     }
 
     /**
-     * Retrieves the position of the specified Sensor's 
+     * Retrieves the position of the specified Sensor's
      * hotspot in virtual-world coordinates
      * and copies that value into the position provided.
      * This value is derived from other values and is read-only.
@@ -2110,7 +2110,7 @@ public class View extends Object {
     public void getSensorHotspotInVworld(Sensor sensor,
 					 Point3d position) {
 
-        Canvas3D canvas = (Canvas3D) this.canvases.firstElement(); 
+        Canvas3D canvas = (Canvas3D) this.canvases.firstElement();
         Transform3D sensorToVworld = new Transform3D();
 
 	getSensorToVworld(sensor, sensorToVworld);
@@ -2129,17 +2129,17 @@ public class View extends Object {
      * associated with another view
      */
     public void setCanvas3D(Canvas3D canvas3D, int index) {
-	
+
 	if((viewPolicy == HMD_VIEW) &&
 	   (canvas3D.monoscopicViewPolicy == View.CYCLOPEAN_EYE_VIEW) &&
 	   (!canvas3D.useStereo)){
-	    
+
 	    throw new
 		IllegalStateException(J3dI18N.getString("View31"));
 	}
-	
+
 	Canvas3D cv;
-	
+
 	synchronized(canvasList) {
             if (canvas3D.getView() != null)
 		throw new IllegalSharingException(J3dI18N.getString("View10"));
@@ -2155,7 +2155,7 @@ public class View extends Object {
 
 	if (canvas3D.added) {
 	    evaluateActive();
-	} 
+	}
 	if (cv.added) {
 	    evaluateActive();
 	}
@@ -2244,7 +2244,7 @@ public class View extends Object {
 	    throw new
 		IllegalStateException(J3dI18N.getString("View31"));
 	}
-	
+
 	synchronized(canvasList) {
             if (canvas3D.getView() != null)
 	     throw new IllegalSharingException(J3dI18N.getString("View10"));
@@ -2269,7 +2269,7 @@ public class View extends Object {
      * @param index the position of Canvas3D object to be removed
      */
     public void removeCanvas3D(int index) {
-	// index -1 is possible if the view is unregistered first 
+	// index -1 is possible if the view is unregistered first
 	// because viewPlatform is clearLived,
 	// and then removeCanvas from the view
 	if (index == -1)
@@ -2286,7 +2286,7 @@ public class View extends Object {
 	}
 
 	// reset canvas will set view to null also
-	VirtualUniverse.mc.postRequest(MasterControl.RESET_CANVAS, 
+	VirtualUniverse.mc.postRequest(MasterControl.RESET_CANVAS,
                                       cv);
 	cv.pendingView = null;
 
@@ -2363,7 +2363,7 @@ public class View extends Object {
 	    Canvas3D cv = (Canvas3D)iterator.next();
 
 	    // reset canvas will set view to null also
-	    VirtualUniverse.mc.postRequest(MasterControl.RESET_CANVAS, 
+	    VirtualUniverse.mc.postRequest(MasterControl.RESET_CANVAS,
 					   cv);
 	    cv.pendingView = null;
 
@@ -2382,7 +2382,7 @@ public class View extends Object {
     }
 
 
-    // This adds this canvas and its screen to the screen list. 
+    // This adds this canvas and its screen to the screen list.
     // Locks are already acquired before this is called.
     private void addToCanvasList(Canvas3D c) {
 
@@ -2394,7 +2394,7 @@ public class View extends Object {
 		return;
 	    }
 	}
-	
+
 	// Add a screen slot
 	screenList.add(c.screen);
 	ArrayList clist = new ArrayList();
@@ -2412,7 +2412,7 @@ public class View extends Object {
 		// This is the right screen slot
 		ArrayList clist = (ArrayList)canvasList.get(i);
 		clist.remove(clist.indexOf(c));
-	
+
 		if (clist.size() == 0) {
 		    canvasList.remove(i);
 		    screenList.remove(i);
@@ -2455,7 +2455,7 @@ public class View extends Object {
 	    }
 	    len = screenList.size();
 	    Screen3D newCachedScreens[] = new Screen3D[len];
-	
+
 	    for (int i=0; i < len; i++) {
 		newCachedScreens[i] = (Screen3D) screenList.get(i);
 	    }
@@ -2465,9 +2465,9 @@ public class View extends Object {
 	    canvasesDirty = false;
 	}
     }
-    
+
     // This creates a 2 dimentional list of canvases
-    // ONLY MC can call this procedure with canCompute=true, 
+    // ONLY MC can call this procedure with canCompute=true,
     // since MC want the result return by
     // evaluateCanvases and updateWorkThreads agree to each other,
     // so only evaluateCanvases can compute a new list.
@@ -2607,7 +2607,7 @@ public class View extends Object {
                     index = NUMBER_FRAME_START_TIMES - 1;
                 }
             }
-    
+
 	    if (times.length > NUMBER_FRAME_START_TIMES) {
 	        for (; i<times.length; i++) {
 		    times[i] = 0;
@@ -2658,7 +2658,7 @@ public class View extends Object {
      * This adds a frame time to the this of frame times
      */
     void setFrameTimingValues() {
-	
+
 	synchronized (frameStartTimes) {
 	    if (currentFrameIndex == NUMBER_FRAME_START_TIMES) {
 		currentFrameIndex = 0;
@@ -2681,7 +2681,7 @@ public class View extends Object {
 	    isMinCycleTimeAchieve = true;
 	    sleepTime = 0;
 	} else {
-	    sleepTime = minFrameCycleTime - 
+	    sleepTime = minFrameCycleTime -
 		(J3dClock.currentTimeMillis() - startTime);
 	    isMinCycleTimeAchieve = (sleepTime <= 0);
 	}
@@ -2803,14 +2803,14 @@ public class View extends Object {
 	        setUniverse(((ViewPlatformRetained)vp.retained).universe);
 	    }
 	    ((ViewPlatformRetained)vp.retained).setView(this);
-	} 
+	}
 
 	evaluateActive();
 	if ((vp == null) && (universe != null)) {
 	    universe.waitForMC();
 	}
     }
-    
+
     /**
      * Retrieves the currently attached ViewPlatform object
      * @return the currently attached ViewPlatform
@@ -2862,7 +2862,7 @@ public class View extends Object {
 		    universe.behaviorScheduler.userStop = true;
 		}
 	    }
-	} 
+	}
 	stopBehavior = true;
 	return intervalTime;
     }
@@ -2878,21 +2878,21 @@ public class View extends Object {
 	    if (activeStatus && isRunning &&
 		(universe.behaviorScheduler != null)) {
 		universe.behaviorScheduler.startBehaviorScheduler();
-		
+
 	    } else {
-		if ((universe != null) && 
+		if ((universe != null) &&
 		    (universe.behaviorScheduler != null)) {
 		    universe.behaviorScheduler.userStop = false;
 		}
 	    }
-	} 
+	}
 
 	stopBehavior = false;
     }
 
     /**
      * Check if BehaviorScheduler is in valid state to start/stop
-     * itself. 
+     * itself.
      * @param s1 Exception String if method is called from a Canvas3D
      * @param s2 Exception String if method is called from a Behavior method
      * @return true if viewPlatform is live
@@ -3089,27 +3089,27 @@ public class View extends Object {
         // DVR support
 	// This is a back door in j3d to provide DVR support.
 	// A better place to put this code segment is in
-	// ViewCache.snapshot(). Since it consists of some 
+	// ViewCache.snapshot(). Since it consists of some
 	// back door code, I've decided to put it here to isolate
 	// it from the rest of view snapshot code.
 	if(firstTime) {
 	    // System.err.println("View : First Time is " + firstTime);
 	    // viewer = Viewer.getViewer(this);
-	    // Since we've the handler to the viewer, we can remove the entry 
+	    // Since we've the handler to the viewer, we can remove the entry
 	    // now to avoid confusion and prevent memory leak problem.
-	    viewer = Viewer.removeViewerMapEntry(this);	    
+	    viewer = Viewer.removeViewerMapEntry(this);
 	    firstTime = false;
 	}
-	
+
 //	if(viewer != null)  {
 //	    if(viewer.isDvrEnabled()) {
 //		dvrFactor = viewer.getDvrFactor();
-//		dvrResizeCompensation = 
+//		dvrResizeCompensation =
 //		    viewer.getDvrResizeCompensationEnable();
 //		/*
 //		System.err.println("View : dvrFactor is " + dvrFactor);
-//		System.err.println("View : dvrResizeCompensation is " + 
-//				   dvrResizeCompensation);		 
+//		System.err.println("View : dvrResizeCompensation is " +
+//				   dvrResizeCompensation);
 //		*/
 //	    }
 //	    else {
@@ -3120,7 +3120,7 @@ public class View extends Object {
 //	    }
 //	}
 	// End of back door -- DVR.
-	    
+
 	synchronized(this) {
 	    viewCache.snapshot();
 	    viewCache.computeDerivedData();
@@ -3143,7 +3143,7 @@ public class View extends Object {
     }
 
 
-    /** 
+    /**
      * This routine activates or deactivates a view based on various information
      */
     void evaluateActive() {
@@ -3153,7 +3153,7 @@ public class View extends Object {
 		return;
 	    }
 
-	    if ((viewPlatform == null) || 
+	    if ((viewPlatform == null) ||
 		!viewPlatform.isLive() ||
 		!((ViewPlatformRetained)viewPlatform.retained).switchState.currentSwitchOn) {
 		if (activeStatus) {
@@ -3162,8 +3162,8 @@ public class View extends Object {
 		}
 		// Destroy threads from MC
 		if (VirtualUniverse.mc.isRegistered(this) &&
-		    (universe.isEmpty() || 
-		     (canvases.isEmpty() && 
+		    (universe.isEmpty() ||
+		     (canvases.isEmpty() &&
 		      ((viewPlatform == null) ||
 		       !viewPlatform.isLive())))) {
 		    // We can't wait until MC finish unregister view
@@ -3171,7 +3171,7 @@ public class View extends Object {
 		    // holds the universe.sceneGraphLock if branch
 		    // or locale remove in clearLive(). In this way
 		    // There is deadlock since MC also need need
-		    // sceneGraphLock in some threads 
+		    // sceneGraphLock in some threads
 		    // (e.g. TransformStructure update thread)
 		    universe.unRegViewWaiting = this;
 		    resetUnivCount = universeCount;
@@ -3182,7 +3182,7 @@ public class View extends Object {
 
 		// We're on a live view platform.  See what the canvases say
 		// If view not register, MC will register it automatically
-	    
+
 		int i;
 		VirtualUniverse u = null;
 		synchronized (canvasList) {
@@ -3207,13 +3207,13 @@ public class View extends Object {
 		    return;
 		}
 
-		
+
 		if ((i < 0) && activeStatus) {
 		    deactivate();
 		    activeStatus = false;
 		    return;
 		}
-	    
+
 		if (VirtualUniverse.mc.isRegistered(this)) {
 		    // notify MC that canvases state for this view changed
 		    VirtualUniverse.mc.postRequest(
@@ -3224,19 +3224,19 @@ public class View extends Object {
     }
 
     void setUniverse(VirtualUniverse universe) {
-	
-	synchronized (VirtualUniverse.mc.requestObjList) {	
-	    if ((renderBin == null) || 
+
+	synchronized (VirtualUniverse.mc.requestObjList) {
+	    if ((renderBin == null) ||
 		(renderBin.universe != universe)) {
 		if (renderBin != null) {
 		    renderBin.cleanup();
 		}
 		renderBin = new RenderBin(universe, this);
-		renderBin.universe = universe;	
+		renderBin.universe = universe;
 	    }
-	
-	
-	    if ((soundScheduler == null) || 
+
+
+	    if ((soundScheduler == null) ||
 		(soundScheduler.universe !=  universe)) {
 		// create a sound scheduler for this view, with this universe
 		if (soundScheduler != null) {
@@ -3244,9 +3244,9 @@ public class View extends Object {
 		}
 		soundScheduler = new SoundScheduler(universe, this);
 	    }
-	    
-	    
-	    // This has to be the last call before 
+
+
+	    // This has to be the last call before
 	    // RenderBin and SoundScheduler construct. Since it is
 	    // possible that canvas receive paint call and invoked
 	    // evaluateActive in another thread - which check for
@@ -3268,7 +3268,7 @@ public class View extends Object {
 	if (physicalBody != null) {
 	    physicalBody.addUser(this);
 	}
-	
+
 	if (!VirtualUniverse.mc.isRegistered(this)) {
 	    universe.regViewWaiting = this;
 	}
@@ -3281,13 +3281,13 @@ public class View extends Object {
 	}
         if (soundScheduler != null) {
             soundScheduler.reset();
-        }	
+        }
 
 	J3dMessage vpMessage = new J3dMessage();
 	vpMessage.universe = universe;
 	vpMessage.view = this;
 	vpMessage.type = J3dMessage.UPDATE_VIEW;
-	vpMessage.threads = 
+	vpMessage.threads =
 			    J3dThread.SOUND_SCHEDULER |
 			    J3dThread.UPDATE_RENDER |
 			    J3dThread.UPDATE_BEHAVIOR;
@@ -3309,13 +3309,13 @@ public class View extends Object {
 	    physicalBody.removeUser(this);
 	}
 
-	// This is a temporary fix for bug 4267395 
+	// This is a temporary fix for bug 4267395
 	// XXXX:cleanup in RenderBin after View detach
 	// universe.addViewIdToFreeList(viewId);
-	
+
 	// using new property -Dj3d.forceReleaseView to disable bug fix 4267395
-	// this bug fix can produce memory leaks in *some* applications which creates 
-	// and destroy Canvas3D from time to time. This just add the view in the 
+	// this bug fix can produce memory leaks in *some* applications which creates
+	// and destroy Canvas3D from time to time. This just add the view in the
 	// FreeList earlier.
 	if (VirtualUniverse.mc.forceReleaseView) {
 	    universe.addViewIdToFreeList(viewId);
@@ -3326,7 +3326,7 @@ public class View extends Object {
 	vpMessage.universe = universe;
 	vpMessage.view = this;
 	vpMessage.type = J3dMessage.UPDATE_VIEW;
-	vpMessage.threads = 
+	vpMessage.threads =
 			    J3dThread.SOUND_SCHEDULER |
 			    J3dThread.UPDATE_RENDER |
 			    J3dThread.UPDATE_BEHAVIOR;
@@ -3356,10 +3356,10 @@ public class View extends Object {
 	    viewIndex = viewId.intValue();
 	}
     }
-    
+
     /**
      * This method passes window event to SoundScheduler
-     */  
+     */
     void sendEventToSoundScheduler(AWTEvent evt) {
         if (soundScheduler != null) {
             soundScheduler.receiveAWTEvent(evt);
@@ -3378,7 +3378,7 @@ public class View extends Object {
 	soundScheduler.cleanup();
 	soundScheduler = null;
 	soundRenderer = new SoundRenderer();
-	
+
 	viewCache = new ViewCache(this);
 	getCanvasList(true);
 	cleanupViewId();

@@ -30,8 +30,8 @@ import java.util.Vector;
 
 /**
  * Class specifying any number of wakeup conditions ANDed together.
- * This WakeupCondition object specifies that Java 3D should awaken 
- * this Behavior when all of the WakeupCondition's constituent wakeup 
+ * This WakeupCondition object specifies that Java 3D should awaken
+ * this Behavior when all of the WakeupCondition's constituent wakeup
  * criteria become valid.
  * <p>
  * Note that a unique WakeupCriterion object must be used
@@ -57,20 +57,20 @@ public final class WakeupAnd extends WakeupCondition {
 	    //     this.conditionsMet[i] = false;
 	}
     }
-    
+
 
     /**
      * This sets the bit for the given child, then checks if the full condition is met
      */
     void setConditionMet(int id, Boolean checkSchedulingRegion) {
 	conditionsMet[id] = true;
-	
+
 	for (int i=0; i<this.conditionsMet.length; i++) {
 	    if (!conditionsMet[i]) {
 		return;
 	    }
 	}
-	
+
 	if (parent == null) {
 	    super.setConditionMet(this.id, checkSchedulingRegion);
 	} else {
@@ -83,14 +83,14 @@ public final class WakeupAnd extends WakeupCondition {
      */
     void buildTree(WakeupCondition parent, int id, BehaviorRetained b) {
 	super.buildTree(parent, id, b);
-	
+
 	for(int i = 0; i < conditions.length; i++) {
 	    if (conditions[i] != null) {
 		conditions[i].buildTree(this, i, b);
 	    }
 	}
     }
-    
+
     /**
      * This goes through the AndOr tree to remove the various criterion from the
      * BehaviorStructure lists
@@ -101,8 +101,8 @@ public final class WakeupAnd extends WakeupCondition {
 	    conditionsMet[i] = false;
 	}
     }
-    
-    
+
+
     void reInsertElapseTimeCond() {
 	super.reInsertElapseTimeCond();
 	for(int i = 0; i < conditions.length; i++) {
@@ -114,7 +114,7 @@ public final class WakeupAnd extends WakeupCondition {
 
 
    /**
-     * This goes through the AndOr tree to remove the various criterion from the 
+     * This goes through the AndOr tree to remove the various criterion from the
      * BehaviorStructure.
      */
     void resetTree() {
@@ -125,5 +125,5 @@ public final class WakeupAnd extends WakeupCondition {
 	    }
 	}
     }
-    
+
 }

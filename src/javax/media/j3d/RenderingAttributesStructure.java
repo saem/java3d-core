@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * A rendering attributes structure is an object that handles 
+ * A rendering attributes structure is an object that handles
  * NodeComponent object updates.
  */
 
@@ -45,7 +45,7 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
     void processMessages(long referenceTime) {
 	J3dMessage m;
 	boolean addMirrorObj = false;
-	
+
 	J3dMessage messages[] = getMessages(referenceTime);
 	int nMsg = getNumMessage();
 
@@ -85,7 +85,7 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
 	    case J3dMessage.TRANSPARENCYATTRIBUTES_CHANGED:
 	    case J3dMessage.MATERIAL_CHANGED:
 	    case J3dMessage.TEXCOORDGENERATION_CHANGED:
-	    case J3dMessage.SHADER_ATTRIBUTE_CHANGED: 
+	    case J3dMessage.SHADER_ATTRIBUTE_CHANGED:
 	    case J3dMessage.SHADER_ATTRIBUTE_SET_CHANGED:
 		{
 		    // System.err.println("2 RAS : J3dMessage type : " + m.type);
@@ -118,7 +118,7 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
 			m.decRefcount();
 		    }
 		}
-		break;		
+		break;
 	    case J3dMessage.TEXTUREATTRIBUTES_CHANGED:
 		{
 
@@ -136,11 +136,11 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
 		    }
 		}
 		break;
-	    case J3dMessage.TEXTURE_CHANGED: 
+	    case J3dMessage.TEXTURE_CHANGED:
 		{
 		    NodeComponentRetained nc = (NodeComponentRetained)m.args[0];
 		    nc.mirror.changedFrequent = ((Integer)m.args[3]).intValue();
-		    
+
 		    objList.add(m);
 		    nc.mirror.compChanged = 1;
 		    addMirrorObj = true;
@@ -160,7 +160,7 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
 		else {
 		    val = ((Integer)m.args[3]).intValue();
 		    geo.cachedChangedFrequent = val;
-		    m.decRefcount();		    
+		    m.decRefcount();
 		}
 		break;
 	    case J3dMessage.MORPH_CHANGED:
@@ -173,12 +173,12 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
 	}
 	if (addMirrorObj) {
 	    VirtualUniverse.mc.addMirrorObject(this);
-	}	    
+	}
 
 	// clear array to prevent memory leaks
 	Arrays.fill(messages, 0, nMsg, null);
     }
-    
+
     public void updateObject() {
 
 	int size = objList.size();
@@ -224,7 +224,7 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
 
 
     private void updateNodeComponent(Object[] args) {
-	// System.err.println("RAS : updateNodeComponent : " + this);	    
+	// System.err.println("RAS : updateNodeComponent : " + this);
 	NodeComponentRetained n = (NodeComponentRetained)args[0];
 	n.updateMirrorObject(((Integer)args[1]).intValue(), args[2]);
     }
@@ -241,4 +241,4 @@ class RenderingAttributesStructure extends J3dStructure implements ObjectUpdate 
 
 }
 
-  
+

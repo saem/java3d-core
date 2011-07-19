@@ -96,7 +96,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 
     static final void initTextureEnums() {
 	// create some of the enums Integer to be used in the messages
-	// this can be eliminated if the message is modified to take 
+	// this can be eliminated if the message is modified to take
 	// integer itself
 	//
 	// NOTE: check with the actual enum value before using this
@@ -282,7 +282,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	if (table == null) {
 	    sendMessage(TEXTURE_COLOR_TABLE_CHANGED, null, null);
 	} else {
-	    int ctable[] = new int[textureColorTableSize * 
+	    int ctable[] = new int[textureColorTableSize *
 					numTextureColorTableComponents];
 	    System.arraycopy(textureColorTable, 0, ctable, 0,
 				textureColorTable.length);
@@ -357,10 +357,10 @@ class TextureAttributesRetained extends NodeComponentRetained {
     final int getTextureColorTableSize() {
 	return textureColorTableSize;
     }
-    
+
 
     final void initCombineRgbMode(int mode) {
-	combineRgbMode = mode;	
+	combineRgbMode = mode;
     }
 
     final void setCombineRgbMode(int mode) {
@@ -394,7 +394,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	}
 	combineRgbSrc[index] = src;
     }
- 
+
     final void setCombineRgbSource(int index, int src) {
 	initCombineRgbSource(index, src);
         sendMessage(COMBINE_RGB_SRC_CHANGED, enums[index], enums[src]);
@@ -419,7 +419,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	}
 	combineAlphaSrc[index] = src;
     }
- 
+
     final void setCombineAlphaSource(int index, int src) {
 	initCombineAlphaSource(index, src);
         sendMessage(COMBINE_ALPHA_SRC_CHANGED, enums[index], enums[src]);
@@ -514,8 +514,8 @@ class TextureAttributesRetained extends NodeComponentRetained {
     void updateNative(Canvas3D cv, boolean simulate, int textureFormat) {
 
         //System.err.println("TextureAttributes/updateNative:  simulate= " + simulate + " " + this);
-	
-	//if ((cv.textureExtendedFeatures & Canvas3D.TEXTURE_COLOR_TABLE) 
+
+	//if ((cv.textureExtendedFeatures & Canvas3D.TEXTURE_COLOR_TABLE)
 	//	== 0) && textureColorTable != null) {
 	//    System.err.println("TextureColorTable Not supported");
 	//}
@@ -523,10 +523,10 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	//System.err.println("textureMode= " + textureMode);
 	boolean isIdentity =
 			((transform.getType() & Transform3D.IDENTITY) != 0);
-	
+
         if (simulate == false) {
 	    if (VirtualUniverse.mc.useCombiners &&
-		(cv.textureExtendedFeatures & 
+		(cv.textureExtendedFeatures &
 		 Canvas3D.TEXTURE_REGISTER_COMBINERS) != 0) {
                 Pipeline.getPipeline().updateRegisterCombiners(cv.ctx,
                         transform.mat, isIdentity, textureMode, perspCorrectionMode,
@@ -539,7 +539,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	    } else {
 	        if (textureMode == TextureAttributes.COMBINE) {
 
-		if ((cv.textureExtendedFeatures & 
+		if ((cv.textureExtendedFeatures &
 				Canvas3D.TEXTURE_COMBINE) != 0) {
 
 		    // Texture COMBINE is supported by the underlying layer
@@ -556,26 +556,26 @@ class TextureAttributesRetained extends NodeComponentRetained {
 
 
 		    if (((combineRgbMode == TextureAttributes.COMBINE_DOT3) &&
-			  ((cv.textureExtendedFeatures & 
-				Canvas3D.TEXTURE_COMBINE_DOT3) == 0)) || 
+			  ((cv.textureExtendedFeatures &
+				Canvas3D.TEXTURE_COMBINE_DOT3) == 0)) ||
 		        ((combineRgbMode == TextureAttributes.COMBINE_SUBTRACT) &&
-			  ((cv.textureExtendedFeatures & 
+			  ((cv.textureExtendedFeatures &
 				Canvas3D.TEXTURE_COMBINE_SUBTRACT) == 0))) {
 
-			// Combine DOT3/SUBTRACT is not supported by the 
+			// Combine DOT3/SUBTRACT is not supported by the
 			// underlying layer, fallback to COMBINE_REPLACE
 
 			_combineRgbMode = TextureAttributes.COMBINE_REPLACE;
 		    }
 
 		    if (((combineAlphaMode == TextureAttributes.COMBINE_DOT3) &&
-			  ((cv.textureExtendedFeatures & 
+			  ((cv.textureExtendedFeatures &
 				Canvas3D.TEXTURE_COMBINE_DOT3) == 0)) ||
 		        ((combineAlphaMode == TextureAttributes.COMBINE_SUBTRACT) &&
-			  ((cv.textureExtendedFeatures & 
+			  ((cv.textureExtendedFeatures &
 				Canvas3D.TEXTURE_COMBINE_SUBTRACT) == 0))) {
 
-			// Combine DOT3/SUBTRACT is not supported by the 
+			// Combine DOT3/SUBTRACT is not supported by the
 			// underlying layer, fallback to COMBINE_REPLACE
 
 			_combineAlphaMode = TextureAttributes.COMBINE_REPLACE;
@@ -611,10 +611,10 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	    }
 
 
-	    if (((cv.textureExtendedFeatures & Canvas3D.TEXTURE_COLOR_TABLE) 
+	    if (((cv.textureExtendedFeatures & Canvas3D.TEXTURE_COLOR_TABLE)
 			!= 0) && textureColorTable != null) {
 
-		Pipeline.getPipeline().updateTextureColorTable(cv.ctx, 
+		Pipeline.getPipeline().updateTextureColorTable(cv.ctx,
 			numTextureColorTableComponents,
 			textureColorTableSize, textureColorTable);
 	    }
@@ -628,7 +628,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
                     textureBlendColor.x, textureBlendColor.y,
                     textureBlendColor.z, textureBlendColor.w, textureFormat);
 
-	    if (((cv.textureExtendedFeatures & Canvas3D.TEXTURE_COLOR_TABLE) 
+	    if (((cv.textureExtendedFeatures & Canvas3D.TEXTURE_COLOR_TABLE)
 			!= 0) && textureColorTable != null) {
 
 		Pipeline.getPipeline().updateTextureColorTable(cv.ctx, numTextureColorTableComponents,
@@ -671,7 +671,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 
 
    /**
-    * Creates and initializes a mirror object, point the mirror object 
+    * Creates and initializes a mirror object, point the mirror object
     * to the retained object if the object is not editable
     */
     synchronized void createMirrorObject() {
@@ -701,10 +701,10 @@ class TextureAttributesRetained extends NodeComponentRetained {
 
 
     /**
-     * Update the "component" field of the mirror object with the 
+     * Update the "component" field of the mirror object with the
      *  given "value"
      */
-    synchronized void updateMirrorObject(int component, Object value, 
+    synchronized void updateMirrorObject(int component, Object value,
 						Object value2) {
 	TextureAttributesRetained mirrorTa = (TextureAttributesRetained)mirror;
 	mirrorTa.mirrorCompDirty = true;
@@ -725,7 +725,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	}
 	else if ((component & CORRECTION_CHANGED) != 0) {
 	    mirrorTa.perspCorrectionMode = ((Integer)value).intValue();
-	} 
+	}
 	else if ((component & TEXTURE_COLOR_TABLE_CHANGED) != 0) {
 	    if (value == null) {
 		mirrorTa.textureColorTable = null;
@@ -734,9 +734,9 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	    } else {
 		Object args[] = (Object[])value;
 	        mirrorTa.textureColorTable = (int[])args[2];
-		mirrorTa.numTextureColorTableComponents = 
+		mirrorTa.numTextureColorTableComponents =
 			((Integer)args[0]).intValue();
-		mirrorTa.textureColorTableSize = 
+		mirrorTa.textureColorTableSize =
 			((Integer)args[1]).intValue();
 	    }
 	}
@@ -850,7 +850,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	    // tr.textureColorTable != null
             return false;
         } else {
-	    if (tr.textureColorTable.length != this.textureColorTable.length) 
+	    if (tr.textureColorTable.length != this.textureColorTable.length)
 		return false;
 
 	    for (int i = 0; i < this.textureColorTable.length; i++) {
@@ -890,7 +890,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 		 tr.combineAlphaFcn[i] = combineAlphaFcn[i];
 	    }
 	}
-	   
+
 	// other attributes are copied in super.clone()
 	return tr;
     }
@@ -916,7 +916,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	}
 	numTextureColorTableComponents = tr.numTextureColorTableComponents;
 	textureColorTableSize = tr.textureColorTableSize;
- 
+
 
 	// set the combine mode attributes
 
@@ -946,7 +946,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
     final void sendMessage(int attrMask, Object attr1, Object attr2) {
 
        	ArrayList univList = new ArrayList();
-	ArrayList gaList = Shape3DRetained.getGeomAtomsList(mirror.users, univList);  
+	ArrayList gaList = Shape3DRetained.getGeomAtomsList(mirror.users, univList);
 
 
 	// Send to rendering attribute structure, regardless of
@@ -968,7 +968,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	    createMessage = new J3dMessage();
 	    createMessage.threads = J3dThread.UPDATE_RENDER;
 	    createMessage.type = J3dMessage.TEXTUREATTRIBUTES_CHANGED;
-		
+
 	    createMessage.universe = (VirtualUniverse) univList.get(i);
 	    createMessage.args[0] = this;
 	    createMessage.args[1] = new Integer(attrMask);
@@ -978,7 +978,7 @@ class TextureAttributesRetained extends NodeComponentRetained {
 	    GeometryAtom[] gaArr = new GeometryAtom[gL.size()];
 	    gL.toArray(gaArr);
 	    createMessage.args[3] = gaArr;
-	    
+
 	    VirtualUniverse.mc.processMessage(createMessage);
 	}
     }

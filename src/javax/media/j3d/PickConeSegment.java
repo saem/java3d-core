@@ -109,7 +109,7 @@ public final class PickConeSegment extends PickCone {
 	Point4d iPnt = new Point4d();
 	Vector3d vector = new Vector3d();
 	Point3d rayPt = new Point3d();
-    
+
 	double distance;
 	double radius;
 
@@ -119,17 +119,17 @@ public final class PickConeSegment extends PickCone {
 	if (bounds instanceof BoundingSphere) {
 	    Point3d sphCenter = ((BoundingSphere)bounds).getCenter();
 	    double sphRadius = ((BoundingSphere)bounds).getRadius();
-	    double sqDist = 
+	    double sqDist =
 		Distance.pointToSegment (sphCenter, origin, end, rayPt, null);
 
 	    vector.sub (rayPt, origin);
 	    distance = vector.length();
 	    radius = getRadius (distance);
 	    if (sqDist <= (sphRadius+radius)*(sphRadius+radius)) {
-		return true; 
+		return true;
 	    }
 	    return false; // we are too far to intersect
-	}  
+	}
 	//
 	// ================ BOUNDING BOX ================
 	//
@@ -141,7 +141,7 @@ public final class PickConeSegment extends PickCone {
 	    Point3d center = ((BoundingBox)bounds).getCenter ();
 
 	    // First, see if cone is too far away from BoundingBox
-	    double sqDist = 
+	    double sqDist =
 		Distance.pointToSegment (center, origin, end, rayPt, null);
 
 	    vector.sub (rayPt, origin);
@@ -153,7 +153,7 @@ public final class PickConeSegment extends PickCone {
 	    temp = (center.y - lower.y + radius);
 	    boxRadiusSquared += temp*temp;
 	    temp = (center.z - lower.z + radius);
-	    boxRadiusSquared += temp*temp;		
+	    boxRadiusSquared += temp*temp;
 
 	    if (sqDist > boxRadiusSquared) {
 		return false; // we are too far to intersect
@@ -170,7 +170,7 @@ public final class PickConeSegment extends PickCone {
 	    // Ray does not intersect, test for distance with each edge
 	    Point3d upper = new Point3d();
 	    ((BoundingBox)bounds).getUpper (upper);
-      
+
 	    Point3d[][] edges = {
 		// Top horizontal 4
 		{upper, new Point3d (lower.x, upper.y, upper.z)},
@@ -190,8 +190,8 @@ public final class PickConeSegment extends PickCone {
 	    };
 	    for (int i=0;i<edges.length;i++) {
 		//	System.err.println ("Testing edge: "+edges[i][0]+" - "+edges[i][1]);
-		double distToEdge = 
-		    Distance.segmentToSegment (origin, end, edges[i][0], edges[i][1], 
+		double distToEdge =
+		    Distance.segmentToSegment (origin, end, edges[i][0], edges[i][1],
 					       rayPt, null, null);
 
 		vector.sub (rayPt, origin);
@@ -201,7 +201,7 @@ public final class PickConeSegment extends PickCone {
 		   distance+" radius: " + radius +
 		   " distToEdge:" +Math.sqrt(distToEdge));
 		*/
-		
+
 		if (distToEdge <= radius*radius) {
 		    //	  System.err.println ("Intersects!");
 		    return true;
@@ -223,7 +223,7 @@ public final class PickConeSegment extends PickCone {
 	    bsphere.getCenter (sphCenter);
 	    double sphRadius = bsphere.getRadius();
 
-	    double sqDist = 
+	    double sqDist =
 		Distance.pointToSegment (sphCenter, origin, end, rayPt, null);
 
 	    vector.sub (rayPt, origin);
@@ -253,12 +253,12 @@ public final class PickConeSegment extends PickCone {
 		    midpt.y = (ptope.verts[i].y + ptope.verts[j].y) * 0.5;
 		    midpt.z = (ptope.verts[i].z + ptope.verts[j].z) * 0.5;
 
-		    if (! PickCylinder.pointInPolytope (ptope, 
+		    if (! PickCylinder.pointInPolytope (ptope,
 							midpt.x, midpt.y, midpt.z)) {
 			continue;
 		    }
-		    distToEdge = 
-			Distance.segmentToSegment (origin, end, 
+		    distToEdge =
+			Distance.segmentToSegment (origin, end,
 						   ptope.verts[i], ptope.verts[j],
 						   rayPt, null, null);
 		    vector.sub (rayPt, origin);
@@ -280,11 +280,11 @@ public final class PickConeSegment extends PickCone {
     }
 
     // Only use within J3D.
-    // Return a new PickConeSegment that is the transformed (t3d) of this pickConeSegment.  
+    // Return a new PickConeSegment that is the transformed (t3d) of this pickConeSegment.
     PickShape transform(Transform3D t3d) {
-	
+
 	PickConeSegment newPCS = new PickConeSegment();
-	
+
 	newPCS.origin.x = origin.x;
 	newPCS.origin.y = origin.y;
 	newPCS.origin.z = origin.z;
@@ -292,7 +292,7 @@ public final class PickConeSegment extends PickCone {
 	newPCS.end.x = end.x;
 	newPCS.end.y = end.y;
 	newPCS.end.z = end.z;
-	
+
 	t3d.transform(newPCS.origin);
 	t3d.transform(newPCS.end);
 

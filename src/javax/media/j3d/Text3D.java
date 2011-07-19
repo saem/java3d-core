@@ -36,8 +36,8 @@ import javax.vecmath.Point3f;
  * <UL>
  * <LI>Font3D object - describes the font style of the text string,
  * such as the font family (Helvetica, Courier, etc.), style (Italic,
- * bold, etc.), and point size. The size of the resulting characters will 
- * be equal to the point size. For example, a 12 point font will result in 
+ * bold, etc.), and point size. The size of the resulting characters will
+ * be equal to the point size. For example, a 12 point font will result in
  * a Font3D with characters 12 meters tall.  </LI><P>
  * <LI>Text string - the text string to be written.</LI><P>
  * <LI>Position - determines the initial placement of the Text3D string
@@ -482,7 +482,7 @@ public class Text3D extends Geometry {
      *
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     * 
+     *
      * @see #getPosition
      */
     public void setAlignment(int alignment) {
@@ -618,7 +618,7 @@ public class Text3D extends Geometry {
      * the current node.  This method is called from the
      * <code>duplicateNode</code> method. This routine does
      * the actual duplication of all "local data" (any data defined in
-     * this object). 
+     * this object).
      *
      * @param originalNodeComponent the original node to duplicate.
      * @param forceDuplicate when set to <code>true</code>, causes the
@@ -630,7 +630,7 @@ public class Text3D extends Geometry {
      * @see Node#cloneTree
      * @see NodeComponent#setDuplicateOnCloneTree
      */
-    void duplicateAttributes(NodeComponent originalNodeComponent, 
+    void duplicateAttributes(NodeComponent originalNodeComponent,
 			     boolean forceDuplicate) {
 	super.duplicateAttributes(originalNodeComponent, forceDuplicate);
 

@@ -160,7 +160,7 @@ class JoglContext implements Context {
   private int        glslVertexAttrOffset;
 
   // Only used when Cg shader library is active
-  private CGcontext  cgContext; 
+  private CGcontext  cgContext;
   private int        cgVertexProfile;
   private int        cgFragmentProfile;
 

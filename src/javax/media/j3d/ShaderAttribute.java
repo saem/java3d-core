@@ -69,7 +69,7 @@ public abstract class ShaderAttribute extends NodeComponent {
      * Package scope constructor
      *
      */
-    ShaderAttribute(String attrName) {   
+    ShaderAttribute(String attrName) {
 	if (attrName == null) {
 	    throw new NullPointerException();
 	}
@@ -85,7 +85,7 @@ public abstract class ShaderAttribute extends NodeComponent {
     public String getAttributeName() {
 
  	return ((ShaderAttributeRetained)this.retained).getAttributeName();
- 
+
    }
 
 }

@@ -90,7 +90,7 @@ public class PhysicalEnvironment extends Object {
 		       | View.PE_TRACKING_AVAILABLE_DIRTY
 		       | View.PE_COE_CENTER_IN_PWORLD_POLICY_DIRTY);
 
-    
+
 ////    /**
 ////     * The offset in the user's dominant-hand-tracker coordinates
 ////     * to that hand's hot spot. This value is a calibration constant.
@@ -113,10 +113,10 @@ public class PhysicalEnvironment extends Object {
     //
     Sensor[] sensors;
 
-    // Audio device associated with this PhysicalEnvironment    
+    // Audio device associated with this PhysicalEnvironment
     AudioDevice audioDevice = null;
 
-    boolean sensorListChanged = false;    
+    boolean sensorListChanged = false;
 
     Sensor[] sensorList = null;
 
@@ -194,7 +194,7 @@ public class PhysicalEnvironment extends Object {
 	}
     }
 
-   
+
 
     /**
      * Returns copy of Sensor references.  Returns null for zero
@@ -215,18 +215,18 @@ public class PhysicalEnvironment extends Object {
         }
     }
 
- 
-    /** 
+
+    /**
      * Sets the specified AudioDevice object as the device through
      * which audio rendering for this PhysicalEnvironment will be
      * performed.
-     * @param device audio device object to be associated with this 
+     * @param device audio device object to be associated with this
      * PhysicalEnvironment
      */
     public void setAudioDevice(AudioDevice device) {
         audioDevice = device;
     }
-       
+
     /**
      * Gets the audioDevice for this PhysicalEnvironment.
      * @return audio device object associated with this PhysicalEnvironment
@@ -238,14 +238,14 @@ public class PhysicalEnvironment extends Object {
     /**
      * Create an enumerator that produces all input devices.
      * @return an enumerator of all available devices
-     */  
+     */
     public Enumeration getAllInputDevices() {
 	return devices.elements();
     }
 
     /**
-     * Add an input device to the list of input devices.  User is 
-     * responsible for initializing the device and setting the 
+     * Add an input device to the list of input devices.  User is
+     * responsible for initializing the device and setting the
      * processing mode (streaming or polling).
      * @param device  the device to be added to the list of input devices
      * @exception IllegalArgumentException if InputDevice.getProcessingMode()
@@ -255,7 +255,7 @@ public class PhysicalEnvironment extends Object {
 
         int driver_type = device.getProcessingMode();
 
-        if ((driver_type == InputDevice.BLOCKING) || 
+        if ((driver_type == InputDevice.BLOCKING) ||
             (driver_type == InputDevice.NON_BLOCKING) ||
             (driver_type == InputDevice.DEMAND_DRIVEN)) {
                 synchronized (devices) {
@@ -375,7 +375,7 @@ public class PhysicalEnvironment extends Object {
 
     /**
      * Set the sensor specified by the index to sensor provided; sensors are
-     * indexed starting at 0.  All sensors must be registered via this 
+     * indexed starting at 0.  All sensors must be registered via this
      * method.
      * @param index the sensor's index
      * @param sensor the new sensor
@@ -399,8 +399,8 @@ public class PhysicalEnvironment extends Object {
      * @param index the sensor's index
      */
     public Sensor getSensor(int index){
-           // not synchronized, since the only way to write to sensors is 
-           // via a public API call, and user shouldn't call Sensor with 
+           // not synchronized, since the only way to write to sensors is
+           // via a public API call, and user shouldn't call Sensor with
            // two threads
 	   return sensors[index];
     }
@@ -422,7 +422,7 @@ public class PhysicalEnvironment extends Object {
 	    coexistenceToTrackerBase.setWithLock(t);
 	    peDirtyMask |= View.PE_COE_TO_TRACKER_BASE_DIRTY;
 	}
-	
+
 	notifyUsers();
     }
 
@@ -460,7 +460,7 @@ public class PhysicalEnvironment extends Object {
 	case View.NOMINAL_HEAD:
 	case View.NOMINAL_FEET:
 	    break;
-	    
+
 	default:
 	    throw new IllegalArgumentException(J3dI18N.getString("PhysicalEnvironment2"));
 	}
@@ -471,7 +471,7 @@ public class PhysicalEnvironment extends Object {
 	}
 	notifyUsers();
     }
-    
+
     /**
      * Returns the current coexistence center in physical world policy.
      * @return one of: View.NOMINAL_SCREEN, View.NOMINAL_HEAD, or
@@ -491,7 +491,7 @@ public class PhysicalEnvironment extends Object {
 
     /**
      * Set the number of sensor objects per PhysicalEnvironmnet. This is a
-     * calibration parameter that should be set before setting any sensors 
+     * calibration parameter that should be set before setting any sensors
      * in the PhysicalEnvironment object.  This call associates 'count'
      * Sensors with this object, and they are indexed from 0 to count-1.
      * @param count the new sensor  count
@@ -512,7 +512,7 @@ public class PhysicalEnvironment extends Object {
             sensorCount = count;
             sensorListChanged = true;
             sensors = tmp;
-        } 
+        }
 	notifyUsers();
     }
 

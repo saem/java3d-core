@@ -29,54 +29,54 @@ package javax.media.j3d;
 import javax.vecmath.*;
 
 class BHLeafNode extends BHNode {
-    
+
     BHLeafInterface leafIF;
-    
+
     BHLeafNode() {
 	super();
 	nodeType = BH_TYPE_LEAF;
 	leafIF = null;
     }
-    
+
     BHLeafNode(BHNode parent) {
 	super(parent);
 	nodeType = BH_TYPE_LEAF;
     }
-    
+
     BHLeafNode(BHLeafInterface lIF) {
 	super();
 	nodeType = BH_TYPE_LEAF;
 	leafIF = lIF;
     }
-    
+
     BHLeafNode(BHNode parent, BHLeafInterface lIF) {
 	super(parent);
 	leafIF = lIF;
 	nodeType = BH_TYPE_LEAF;
     }
-    
+
     BHLeafNode(BHNode parent, BoundingBox bHull) {
 	super(parent, bHull);
-	nodeType = BH_TYPE_LEAF; 
+	nodeType = BH_TYPE_LEAF;
     }
-    
+
     BHLeafNode(BHNode parent, BHLeafInterface lIF, BoundingBox bHull) {
 	super(parent, bHull);
 	leafIF = lIF;
 	nodeType = BH_TYPE_LEAF;
     }
-    
-    void computeBoundingHull() {	
+
+    void computeBoundingHull() {
 	bHull = leafIF.computeBoundingHull();
     }
 
     void updateMarkedBoundingHull() {
-	
+
 	if(mark == false)
 	    return;
 
 	computeBoundingHull();
-	mark = false;	
+	mark = false;
     }
 
     boolean isEnable() {
@@ -86,7 +86,7 @@ class BHLeafNode extends BHNode {
     boolean isEnable(int vis) {
 	return leafIF.isEnable(vis);
     }
-    
+
     Locale getLocale() {
 	return leafIF.getLocale2();
     }
@@ -98,8 +98,8 @@ class BHLeafNode extends BHNode {
 	}
 
 	parent = null;
-	bhArr[index[0]] = this;	
+	bhArr[index[0]] = this;
 	index[0]++;
     }
-	    
+
 }

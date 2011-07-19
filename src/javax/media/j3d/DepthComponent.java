@@ -50,7 +50,7 @@ public abstract class DepthComponent extends NodeComponent {
         ALLOW_SIZE_READ,
         ALLOW_DATA_READ
     };
-    
+
     /**
      * default constructor
      */
@@ -85,5 +85,5 @@ public abstract class DepthComponent extends NodeComponent {
 	return ((DepthComponentRetained)this.retained).getHeight();
     }
 
-  
+
 }

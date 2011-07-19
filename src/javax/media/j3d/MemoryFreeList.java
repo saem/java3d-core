@@ -46,7 +46,7 @@ class MemoryFreeList {
     int minBlockSize = 0;
     boolean justShrunk = false;
     int initcap = 10;
-    
+
     // the minimum size since the last shrink
     int minSize = 0;
 
@@ -68,7 +68,7 @@ class MemoryFreeList {
 	catch (Exception e) {
  	    System.err.println(e);
 	}
-	
+
 	initcap = initialCapacity;
 	currBlockSize = initialCapacity;
 	minBlockSize = currBlockSize;
@@ -81,25 +81,25 @@ class MemoryFreeList {
     }
 
     /*
-    MemoryFreeList(String className, Collection collection) { 
-	try { 
-	    c = Class.forName(className); 
-	}  
-	catch (Exception e) { 
+    MemoryFreeList(String className, Collection collection) {
+	try {
+	    c = Class.forName(className);
+	}
+	catch (Exception e) {
 // 	    System.err.println(e);
-	} 
+	}
 
-	size = collection.size(); 
-	initcap = size; 
-	currBlockSize = size; 
-	minBlockSize = currBlockSize; 
-	elementData = new ArrayList(); 
-	currBlock = new Object[currBlockSize]; 
-	collection.toArray(currBlock); 
-	elementData.add(currBlock); 
-	numBlocks++; 
-	capacity += currBlockSize; 
-	spaceUsed = size; 
+	size = collection.size();
+	initcap = size;
+	currBlockSize = size;
+	minBlockSize = currBlockSize;
+	elementData = new ArrayList();
+	currBlock = new Object[currBlockSize];
+	collection.toArray(currBlock);
+	elementData.add(currBlock);
+	numBlocks++;
+	capacity += currBlockSize;
+	spaceUsed = size;
     }
     */
 
@@ -137,7 +137,7 @@ class MemoryFreeList {
 	int index = spaceUsed++;
 	currBlock[index] = o;
 	size++;
-	
+
 	return true;
 	}
     }
@@ -174,13 +174,13 @@ class MemoryFreeList {
 //  			   minSize);
 	if ((minSize > minBlockSize) && (numBlocks > 1)) {
 	    justShrunk = true;
-	    
+
 //  	    System.err.println("removing a block");
 // 	    Runtime r = Runtime.getRuntime();
 // 	    r.gc();
 // 	    System.err.println("numBlocks = " + numBlocks + " size = " + size);
 // 	    System.err.println("free memory before shrink: " + r.freeMemory());
-	    
+
 	    // remove the last block
 	    Object[] block = (Object[])elementData.remove(numBlocks-1);
 	    numBlocks--;
@@ -196,9 +196,9 @@ class MemoryFreeList {
 		currBlockSize = currBlock.length;
 
 		spaceUsed = currBlockSize;
-		
+
 	    }
-	    
+
 // 	    r.gc();
 // 	    System.err.println("free memory after  shrink: " + r.freeMemory());
 // 	    System.err.println("numBlocks = " + numBlocks + " size = " + size);
@@ -214,7 +214,7 @@ class MemoryFreeList {
 // 			   elementData.length);
 // 	System.err.println("minCapacity = " + minCapacity + " capacity = "
 // 			   + capacity);
-	
+
 	if (minCapacity > capacity) {
 // 	    System.err.println("adding a block: numBlocks = " + numBlocks);
 	    int lastBlockSize =
@@ -273,6 +273,6 @@ class MemoryFreeList {
 	    }
 	}
     }
-	    
+
 }
 

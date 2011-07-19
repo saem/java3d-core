@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * SoundRetained is an abstract class that contains instance varables common
  * to all retained sounds.
  */
- 
+
 abstract class SoundRetained extends LeafRetained
 {
 
@@ -46,45 +46,45 @@ abstract class SoundRetained extends LeafRetained
 
     /**
      *  sound data associated with sound source
-     */  
+     */
     MediaContainer  soundData = null;
 
     /**
      *  Overall Scale Factor applied to sound.
-     */  
+     */
     float     initialGain = 1.0f;  // Valid values are >= 0.0.
 
     /**
      *  Number of times sound is looped/repeated during play
-     */ 
+     */
     int       loopCount = 0;  //  Range from 0 to POSITIVE_INFINITY(-1)
 
     /**
      *  Switch for turning sound on or off while the sound is "active"
-     */  
+     */
     boolean   enable = false;
 
     /**
      * Type of release when sound is disabled.
      *     If true, sound plays thru to end of sample before disabled
      *     Otherwise, sound is disabled immediately.
-     */  
+     */
     boolean   release = false;
 
     /**
      * Flag denoting if sound silently continues playing when it's deactivated.
-     */  
+     */
     boolean   continuous = false;
 
     /**
      * Flag denoting if sound is explicitly muted, so that if begins playing
      * it will be played silently.
-     */  
+     */
     boolean   mute = false;
 
     /**
      * Flag denoting if sound is paused from playing - waiting to be resumed
-     */  
+     */
     boolean   pause = false;
 
     /**
@@ -104,7 +104,7 @@ abstract class SoundRetained extends LeafRetained
      */
     Bounds    schedulingRegion = null;
 
-    /** 
+    /**
      * The bounding leaf reference
      */
     BoundingLeafRetained boundingLeaf = null;
@@ -125,35 +125,35 @@ abstract class SoundRetained extends LeafRetained
     static final int SOUND_DATA_DIRTY_BIT          = 0x0001;
     static final int INITIAL_GAIN_DIRTY_BIT        = 0x0002;
     static final int LOOP_COUNT_DIRTY_BIT          = 0x0004;
-    static final int BOUNDS_DIRTY_BIT              = 0x0008; 
-    static final int BOUNDING_LEAF_DIRTY_BIT       = 0x0010; 
-    static final int PRIORITY_DIRTY_BIT            = 0x0020; 
-    static final int POSITION_DIRTY_BIT            = 0x0040; 
-    static final int DISTANCE_GAIN_DIRTY_BIT       = 0x0080; 
-    static final int BACK_DISTANCE_GAIN_DIRTY_BIT  = 0x0100; 
-    static final int DIRECTION_DIRTY_BIT           = 0x0200; 
-    static final int ANGULAR_ATTENUATION_DIRTY_BIT = 0x0400; 
-    static final int RATE_DIRTY_BIT                = 0x0800; 
+    static final int BOUNDS_DIRTY_BIT              = 0x0008;
+    static final int BOUNDING_LEAF_DIRTY_BIT       = 0x0010;
+    static final int PRIORITY_DIRTY_BIT            = 0x0020;
+    static final int POSITION_DIRTY_BIT            = 0x0040;
+    static final int DISTANCE_GAIN_DIRTY_BIT       = 0x0080;
+    static final int BACK_DISTANCE_GAIN_DIRTY_BIT  = 0x0100;
+    static final int DIRECTION_DIRTY_BIT           = 0x0200;
+    static final int ANGULAR_ATTENUATION_DIRTY_BIT = 0x0400;
+    static final int RATE_DIRTY_BIT                = 0x0800;
 
-    static final int BOUNDS_CHANGED                = 
+    static final int BOUNDS_CHANGED                =
                          BOUNDS_DIRTY_BIT      | BOUNDING_LEAF_DIRTY_BIT;
 
-    static final int ATTRIBUTE_DIRTY_BITS          =  
-                         SOUND_DATA_DIRTY_BIT  | INITIAL_GAIN_DIRTY_BIT  | 
-                         LOOP_COUNT_DIRTY_BIT  | PRIORITY_DIRTY_BIT    | 
+    static final int ATTRIBUTE_DIRTY_BITS          =
+                         SOUND_DATA_DIRTY_BIT  | INITIAL_GAIN_DIRTY_BIT  |
+                         LOOP_COUNT_DIRTY_BIT  | PRIORITY_DIRTY_BIT    |
                          RATE_DIRTY_BIT;
 
-    static final int POSITIONAL_DIRTY_BITS         = 
+    static final int POSITIONAL_DIRTY_BITS         =
                          ATTRIBUTE_DIRTY_BITS  |
                          POSITION_DIRTY_BIT    | DISTANCE_GAIN_DIRTY_BIT;
 
-    static final int DIRECTIONAL_DIRTY_BITS        = 
+    static final int DIRECTIONAL_DIRTY_BITS        =
                          POSITIONAL_DIRTY_BITS | BACK_DISTANCE_GAIN_DIRTY_BIT |
                          DIRECTION_DIRTY_BIT   | ANGULAR_ATTENUATION_DIRTY_BIT;
 
     // All attribute bits that are specifically set or cleared for any node */
     static final int ALL_ATTIBS_DIRTY_BITS         = 0x0FFF;
-    
+
     // State Dirty bit flags
     // This bitmask is set when scene graph state is changed.
     static final int LIVE_DIRTY_BIT                = 0x0001;
@@ -189,7 +189,7 @@ abstract class SoundRetained extends LeafRetained
     /**
      * Array of references to sound scheduler atoms associated with this node.
      * For each view that a sound node is associated with a sound scheduler
-     * atom is created and maintained 
+     * atom is created and maintained
      */
     // for a particular view that are playing either audibly or silently.
     private SoundSchedulerAtom[] loadedAtoms = new SoundSchedulerAtom[1];
@@ -197,12 +197,12 @@ abstract class SoundRetained extends LeafRetained
 
     /**
      * This is true when this sound is referenced in an immediate mode context
-     */  
+     */
     boolean   inImmCtx = false;
 
     /**
      * Load Sound Data Status
-     */  
+     */
     static final int LOAD_COMPLETE = 2;
     // load requested but could not be performed due because sound not live
     static final int LOAD_PENDING = 1;
@@ -280,7 +280,7 @@ abstract class SoundRetained extends LeafRetained
 
     /**
      * Associates sound data with this sound source node
-     * Attempt to load sound 
+     * Attempt to load sound
      * @param soundData descrition of sound source data
      */
     void setSoundData(MediaContainer soundData) {
@@ -321,7 +321,7 @@ abstract class SoundRetained extends LeafRetained
         return ( this.soundData );
     }
 
-    
+
     /**
      * Set the gain scale factor applied to this sound
      * @param amplitude gain scale factor
@@ -329,7 +329,7 @@ abstract class SoundRetained extends LeafRetained
     void setInitialGain(float scaleFactor) {
         if (scaleFactor < 0.0f)
             this.initialGain = 0.0f;
-        else 
+        else
 	    this.initialGain = scaleFactor;
 
         dispatchAttribChange(INITIAL_GAIN_DIRTY_BIT, (new Float(scaleFactor)));
@@ -357,7 +357,7 @@ abstract class SoundRetained extends LeafRetained
 	    this.loopCount = (int) loopCount;
         if (debugFlag)
             debugPrint("setLoopCount called with " + this.loopCount);
- 
+
         dispatchAttribChange(LOOP_COUNT_DIRTY_BIT, (new Integer(loopCount)));
 	if (source != null && source.isLive()) {
 	    notifySceneGraphChanged(false);
@@ -489,11 +489,11 @@ abstract class SoundRetained extends LeafRetained
 
     /**
      * Set the Sound's scheduling region to the specified Leaf node.
-     */  
+     */
     void setSchedulingBoundingLeaf(BoundingLeaf region) {
         int i;
         int numSnds = numMirrorSounds;
-        if (numMirrorSounds == 0)  
+        if (numMirrorSounds == 0)
             numSnds = 1;
 
         if ((boundingLeaf != null) &&
@@ -515,7 +515,7 @@ abstract class SoundRetained extends LeafRetained
 	} else {
 	    boundingLeaf = null;
 	}
-        // XXXX: since BoundingLeaf constructor only takes Bounds 
+        // XXXX: since BoundingLeaf constructor only takes Bounds
         //       test if region passed into dispatchAttribChange correctly.
         dispatchAttribChange(BOUNDING_LEAF_DIRTY_BIT, region);
 	if (source != null && source.isLive()) {
@@ -525,7 +525,7 @@ abstract class SoundRetained extends LeafRetained
 
     /**
      * Get the Sound's scheduling region
-     */  
+     */
     BoundingLeaf getSchedulingBoundingLeaf() {
 	if (boundingLeaf != null) {
 	    return((BoundingLeaf)boundingLeaf.source);
@@ -565,11 +565,11 @@ abstract class SoundRetained extends LeafRetained
         }
     }
 
- 
-    /**  
+
+    /**
      * Set sound's proirity value.
      * @param priority value used to order sound's importance for playback.
-     */  
+     */
     void setPriority(float rank) {
         if (rank == this.priority)
             // changing priority is expensive in the sound scheduler(s)
@@ -582,20 +582,20 @@ abstract class SoundRetained extends LeafRetained
 	if (source != null && source.isLive()) {
 	    notifySceneGraphChanged(false);
 	}
-    }  
- 
-    /**  
+    }
+
+    /**
      * Retrieves sound's priority value.
-     * @return sound priority value    
-     */  
-    float getPriority() { 
+     * @return sound priority value
+     */
+    float getPriority() {
         return (this.priority);
     }
 
 
     /**
      * Retrieves sound's duration in milliseconds
-     * @return sound's duration, returns DURATION_UNKNOWN if duration could 
+     * @return sound's duration, returns DURATION_UNKNOWN if duration could
      * not be queried from the audio device
      */
     long getDuration() {
@@ -603,23 +603,23 @@ abstract class SoundRetained extends LeafRetained
     }
 
 
-    /**  
-     * Set scale factor 
+    /**
+     * Set scale factor
      * @param scaleFactor applied to sound playback rate
-     */  
+     */
     void setRateScaleFactor(float scaleFactor) {
         this.rate = scaleFactor;
         dispatchAttribChange(RATE_DIRTY_BIT, (new Float(scaleFactor)));
 	if (source != null && source.isLive()) {
 	    notifySceneGraphChanged(false);
 	}
-    }  
- 
-    /**  
+    }
+
+    /**
      * Retrieves sound's rate scale factor
      * @return sound rate scale factor
-     */  
-    float getRateScaleFactor() { 
+     */
+    float getRateScaleFactor() {
         return (this.rate);
     }
 
@@ -651,7 +651,7 @@ abstract class SoundRetained extends LeafRetained
             // remove atom from array of playing atoms if it is in list
             boolean atomFound = false;
             int i;
-            for (i=0; i<atomCount; i++) { 
+            for (i=0; i<atomCount; i++) {
                 if (atom == loadedAtoms[i])  {
                     atomFound = true;
                     continue;
@@ -661,10 +661,10 @@ abstract class SoundRetained extends LeafRetained
                 return;
 
             // otherwise remove atom from list by close up list
-            for (int j=i; j<atomCount; j++) { 
+            for (int j=i; j<atomCount; j++) {
                 loadedAtoms[j] = loadedAtoms[j+1];
             }
-            atomCount--; 
+            atomCount--;
             if (atomCount == 0)
                 this.duration = Sound.DURATION_UNKNOWN; // clear sound duration
         }
@@ -677,11 +677,11 @@ abstract class SoundRetained extends LeafRetained
      * true only if the following are true for all views/sound schedulers:
      *
      * <ul>
-     * 1) the Sound node has a non-null sound data and this data has 
+     * 1) the Sound node has a non-null sound data and this data has
      *    sucessfully been loaded/opened/copied/attached;<br>
      * 2) the Sound node is live;<br>
      * 3) there is at least one active View in the Universe; and<br>
-     * 4) an instance of an AudioDevice is attached to the current 
+     * 4) an instance of an AudioDevice is attached to the current
      *    PhysicalEnvironment.
      * </ul>
      *
@@ -699,7 +699,7 @@ abstract class SoundRetained extends LeafRetained
             else
             if (atom.loadStatus == SoundRetained.LOAD_COMPLETE) {
                 atomFoundReady = true;
-                continue;  
+                continue;
             }
             else
                 return false;
@@ -718,11 +718,11 @@ abstract class SoundRetained extends LeafRetained
      * true only if the following are true for the given view:
      *
      * <ul>
-     * 1) the Sound node has a non-null sound data and this data has 
+     * 1) the Sound node has a non-null sound data and this data has
      *    sucessfully been loaded/opened/copied/attached;<br>
      * 2) the Sound node is live;<br>
      * 3) the given View is active in the Universe; and<br>
-     * 4) an instance of an AudioDevice is attached to the current 
+     * 4) an instance of an AudioDevice is attached to the current
      *    PhysicalEnvironment.
      * </ul>
      *
@@ -748,7 +748,7 @@ abstract class SoundRetained extends LeafRetained
                 continue;
         }
         return false;  // sound scheduler atom for given view not found
-  
+
     }
 
     // *******************************
@@ -762,7 +762,7 @@ abstract class SoundRetained extends LeafRetained
      * @return sound playing flag
      */
     boolean isPlaying()  {
-        for (int i=0; i<atomCount; i++) { 
+        for (int i=0; i<atomCount; i++) {
             SoundSchedulerAtom atom = loadedAtoms[i];
             if (atom == null || atom.soundScheduler == null)
                 continue;
@@ -770,7 +770,7 @@ abstract class SoundRetained extends LeafRetained
                 return true;
             else
                 continue; // look for at lease one atom that is playing
-        } 
+        }
         // not even one atom is associated with this node so none are playing
         return false;
     }
@@ -786,7 +786,7 @@ abstract class SoundRetained extends LeafRetained
     boolean isPlaying(View viewRef)  {
         if (viewRef == null)
             return false;
-        for (int i=0; i<atomCount; i++) { 
+        for (int i=0; i<atomCount; i++) {
             SoundSchedulerAtom atom = loadedAtoms[i];
             if (atom == null || atom.soundScheduler == null)
                 continue;
@@ -809,16 +809,16 @@ abstract class SoundRetained extends LeafRetained
      * @return sound playing flag
      */
     boolean isPlayingSilently()  {
-       for (int i=0; i<atomCount; i++) { 
-           SoundSchedulerAtom atom = loadedAtoms[i]; 
+       for (int i=0; i<atomCount; i++) {
+           SoundSchedulerAtom atom = loadedAtoms[i];
            if (atom == null || atom.soundScheduler == null)
                continue;
            if (atom.status == SoundSchedulerAtom.SOUND_SILENT)
                return true;
            else
                return false;
-       }   
-       return false;  // atom not found in list or not playing audibilly 
+       }
+       return false;  // atom not found in list or not playing audibilly
     }
 
     /**
@@ -832,10 +832,10 @@ abstract class SoundRetained extends LeafRetained
     boolean isPlayingSilently(View viewRef)  {
         if (viewRef == null)
             return false;
-        for (int i=0; i<atomCount; i++) { 
+        for (int i=0; i<atomCount; i++) {
             SoundSchedulerAtom atom = loadedAtoms[i];
             if (atom == null || atom.soundScheduler == null)
-                continue;   
+                continue;
             if (atom.soundScheduler.view == viewRef) {
                 if (atom.status == SoundSchedulerAtom.SOUND_SILENT)
                     return true;
@@ -856,7 +856,7 @@ abstract class SoundRetained extends LeafRetained
     int getNumberOfChannelsUsed()  {
        // retrieves the number of channels used by the atom that is:
        //     loaded, and
-       //     playing either audibily or silently 
+       //     playing either audibily or silently
        // on the device associated with the primary view.
        View primaryView = this.universe.getCurrentView();
        if (primaryView == null)
@@ -864,15 +864,15 @@ abstract class SoundRetained extends LeafRetained
 
        // find atom associated with primary view (VirtualUniverse currentView)
        // then return the number of channels associated with that atom
-       SoundSchedulerAtom atom; 
-       for (int i=0; i<atomCount; i++) { 
-           atom = loadedAtoms[i]; 
+       SoundSchedulerAtom atom;
+       for (int i=0; i<atomCount; i++) {
+           atom = loadedAtoms[i];
            if (atom == null || atom.soundScheduler == null)
                continue;
            if (atom.soundScheduler.view == primaryView) {
                    return atom.numberChannels;
            }
-       }   
+       }
        return 0; // atom associated with primary view not found
     }
 
@@ -885,19 +885,19 @@ abstract class SoundRetained extends LeafRetained
     int getNumberOfChannelsUsed(View viewRef)  {
        // retrieves the number of channels used by the atom that is:
        //     loaded, and
-       //     playing either audibily or silently 
+       //     playing either audibily or silently
        // on the device associated with the given view.
        if (viewRef == null)
            return 0;
        SoundSchedulerAtom atom;
-       for (int i=0; i<atomCount; i++) { 
-           atom = loadedAtoms[i]; 
+       for (int i=0; i<atomCount; i++) {
+           atom = loadedAtoms[i];
            if (atom == null || atom.soundScheduler == null)
                continue;
            if (atom.soundScheduler.view == viewRef) {
                    return atom.numberChannels;
            }
-       }   
+       }
        return 0; // atom associated with primary view not found
     }
 
@@ -909,23 +909,23 @@ abstract class SoundRetained extends LeafRetained
      */
     void setMute(boolean state) {
         this.mute = state;
-        dispatchAttribChange(MUTE_DIRTY_BIT, (state ? Boolean.TRUE: Boolean.FALSE));         
+        dispatchAttribChange(MUTE_DIRTY_BIT, (state ? Boolean.TRUE: Boolean.FALSE));
         if (source != null && source.isLive()) {
             notifySceneGraphChanged(false);
         }
-    }    
-     
-    /**  
+    }
+
+    /**
      * Retrieves sound Mute state.
-     * A return value of true does not imply that the sound has  
-     * been started playing or is still playing silently. 
+     * A return value of true does not imply that the sound has
+     * been started playing or is still playing silently.
      * @return mute state flag
      * @since Java 3D 1.3
-     */  
+     */
     boolean getMute() {
         return (boolean) this.mute;
     }
- 
+
     /**
      * Set pause state flag.  If the sound is playing it will be paused
      * @param state flag
@@ -933,19 +933,19 @@ abstract class SoundRetained extends LeafRetained
      */
     void setPause(boolean state) {
         this.pause = state;
-        dispatchAttribChange(PAUSE_DIRTY_BIT, (state ? Boolean.TRUE: Boolean.FALSE));         
+        dispatchAttribChange(PAUSE_DIRTY_BIT, (state ? Boolean.TRUE: Boolean.FALSE));
         if (source != null && source.isLive()) {
             notifySceneGraphChanged(false);
         }
-    }    
-     
-    /**  
+    }
+
+    /**
      * Retrieves sound Pause state.
-     * A return value of true does not imply that the sound has  
+     * A return value of true does not imply that the sound has
      * been started playing auditibly or silently.
      * @return mute state flag
      * @since Java 3D 1.3
-     */  
+     */
     boolean getPause() {
         return (boolean) this.pause;
     }
@@ -953,14 +953,14 @@ abstract class SoundRetained extends LeafRetained
 
     /**
      * This sets the immedate mode context flag
-     */  
+     */
     void setInImmCtx(boolean inCtx) {
         inImmCtx = inCtx;
     }
 
     /**
      * This gets the immedate mode context flag
-     */  
+     */
     boolean getInImmCtx() {
         return (inImmCtx);
     }
@@ -984,9 +984,9 @@ abstract class SoundRetained extends LeafRetained
 		    newSounds[i] = mirrorSounds[i];
 		}
 		mirrorSounds = newSounds;
-	    } 
+	    }
 	    //	    mirrorSounds[numMirrorSounds] = (SoundRetained) this.clone();
-	    mirrorSounds[numMirrorSounds] = (SoundRetained) this.clone();	    
+	    mirrorSounds[numMirrorSounds] = (SoundRetained) this.clone();
 	    //mirrorSounds[numMirrorSounds].key = new HashKey(key);
 	    mirrorSounds[numMirrorSounds].key = key;
 	    mirrorSounds[numMirrorSounds].sgSound = this;
@@ -1038,7 +1038,7 @@ abstract class SoundRetained extends LeafRetained
         else {
             ms.boundingLeaf = null;
         }
- 
+
         if (schedulingRegion != null) {
             ms.schedulingRegion = (Bounds) schedulingRegion.clone();
             // Assign region only if bounding leaf is null
@@ -1047,7 +1047,7 @@ abstract class SoundRetained extends LeafRetained
                 ms.transformedRegion.transform(ms.schedulingRegion,
                                     ms.getLastLocalToVworld());
             }
-                 
+
         }
         else {
             ms.schedulingRegion = null;
@@ -1060,9 +1060,9 @@ abstract class SoundRetained extends LeafRetained
 
         if (debugFlag)
             debugPrint("Sound.setLive");
-	
+
 	if (inImmCtx) {
-            throw new 
+            throw new
                IllegalSharingException(J3dI18N.getString("SoundRetained2"));
         }
         super.setLive(s);
@@ -1086,11 +1086,11 @@ abstract class SoundRetained extends LeafRetained
                 ms = this.getMirrorSound(s.keys[i]);
                 ms.localToVworld = new Transform3D[1][];
                 ms.localToVworldIndex = new int[1][];
-		
+
 		j = s.keys[i].equals(localToVworldKeys, 0,
 				     localToVworldKeys.length);
 		if(j < 0) {
-		    System.err.println("SoundRetained : Can't find hashKey"); 
+		    System.err.println("SoundRetained : Can't find hashKey");
 		}
 
                 ms.localToVworld[0] = localToVworld[j];
@@ -1250,7 +1250,7 @@ abstract class SoundRetained extends LeafRetained
         sound.sgSound = sgSound;
         sound.key = key;
         sound.numMirrorSounds = numMirrorSounds;
-        for (int index=0; index<numMirrorSounds; index++) 
+        for (int index=0; index<numMirrorSounds; index++)
              sound.mirrorSounds = mirrorSounds;
         sound.universe = universe;
         if (universe.sounds.contains(sound) == false) {
@@ -1277,7 +1277,7 @@ abstract class SoundRetained extends LeafRetained
             }
         }
         dispatchStateChange(XFORM_DIRTY_BIT, null);
-    }    
+    }
 
 // QUESTION:
 //     Clone method (from 1.1.1 version) removed!?!?!? yet LightRetained has it
@@ -1304,8 +1304,8 @@ abstract class SoundRetained extends LeafRetained
 		    break;
 		}
 	    }
-	    
+
 	}
     }
-    
+
 }

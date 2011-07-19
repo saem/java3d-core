@@ -43,7 +43,7 @@ class RendererStructure extends J3dStructure{
     }
 
     /**
-     * Returns all messages in the queue. 
+     * Returns all messages in the queue.
      */
     J3dMessage[] getMessages() {
 	int sz;

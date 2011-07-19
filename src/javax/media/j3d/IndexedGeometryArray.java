@@ -45,7 +45,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
         // set default read capabilities
         setDefaultReadCapabilities(readCapabilities);
     }
-    
+
   /**
    * Specifies that this IndexedGeometryArray allows reading the array of
    * coordinate indices.
@@ -524,7 +524,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     int format = ((IndexedGeometryArrayRetained)this.retained).vertexFormat;
     if ((format & BY_REFERENCE_INDICES) != 0)
       throw new IllegalStateException(J3dI18N.getString("IndexedGeometryArray31"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).setCoordinateIndex(index, coordinateIndex);
   }
 
@@ -561,7 +561,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     int format = ((IndexedGeometryArrayRetained)this.retained).vertexFormat;
     if ((format & BY_REFERENCE_INDICES) != 0)
       throw new IllegalStateException(J3dI18N.getString("IndexedGeometryArray31"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).setCoordinateIndices(index, coordinateIndices);
   }
 
@@ -632,7 +632,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_COLOR_INDEX_WRITE))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray3"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).setColorIndex(index, colorIndex);
   }
 
@@ -662,7 +662,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_COLOR_INDEX_WRITE))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray3"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).setColorIndices(index, colorIndices);
   }
 
@@ -692,7 +692,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_NORMAL_INDEX_WRITE))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray5"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).setNormalIndex(index, normalIndex);
   }
 
@@ -722,7 +722,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_NORMAL_INDEX_WRITE))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray5"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).setNormalIndices(index, normalIndices);
   }
 
@@ -769,7 +769,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
 	if (isLiveOrCompiled())
 	    if(!this.getCapability(ALLOW_TEXCOORD_INDEX_WRITE))
 		throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray7"));
-  
+
 	((IndexedGeometryArrayRetained)this.retained).setTextureCoordinateIndex(texCoordSet, index, texCoordIndex);
     }
 
@@ -816,7 +816,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
 	if (isLiveOrCompiled())
 	    if(!this.getCapability(ALLOW_TEXCOORD_INDEX_WRITE))
 		throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray7"));
-  
+
 	((IndexedGeometryArrayRetained)this.retained).setTextureCoordinateIndices(texCoordSet, index, texCoordIndices);
     }
 
@@ -894,7 +894,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
 		throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray28"));
             }
         }
-  
+
 	((IndexedGeometryArrayRetained)this.retained).setVertexAttrIndices(vertexAttrNum, index, vertexAttrIndices);
     }
 
@@ -919,7 +919,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     int format = ((IndexedGeometryArrayRetained)this.retained).vertexFormat;
     if ((format & BY_REFERENCE_INDICES) != 0)
       throw new IllegalStateException(J3dI18N.getString("IndexedGeometryArray31"));
-  
+
     return ((IndexedGeometryArrayRetained)this.retained).getCoordinateIndex(index);
   }
 
@@ -944,7 +944,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     int format = ((IndexedGeometryArrayRetained)this.retained).vertexFormat;
     if ((format & BY_REFERENCE_INDICES) != 0)
       throw new IllegalStateException(J3dI18N.getString("IndexedGeometryArray31"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).getCoordinateIndices(index, coordinateIndices);
   }
 
@@ -963,13 +963,13 @@ public abstract class IndexedGeometryArray extends GeometryArray {
      */
   public int[] getCoordIndicesRef() {
 	if (isLiveOrCompiled())
-	    if (!this.getCapability(ALLOW_REF_DATA_READ)) 
+	    if (!this.getCapability(ALLOW_REF_DATA_READ))
 		throw new CapabilityNotSetException(J3dI18N.getString("GeometryArray87"));
 
 	int format = ((IndexedGeometryArrayRetained)this.retained).vertexFormat;
 	if ((format & BY_REFERENCE_INDICES) == 0)
 	    throw new IllegalStateException(J3dI18N.getString("IndexedGeometryArray32"));
-  
+
     return ((IndexedGeometryArrayRetained)this.retained).getCoordIndicesRef();
   }
 
@@ -988,7 +988,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_COLOR_INDEX_READ))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray11"));
-  
+
     return ((IndexedGeometryArrayRetained)this.retained).getColorIndex(index);
   }
 
@@ -1009,7 +1009,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_COLOR_INDEX_READ))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray11"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).getColorIndices(index, colorIndices);
   }
 
@@ -1028,7 +1028,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_NORMAL_INDEX_READ))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray13"));
-  
+
     return ((IndexedGeometryArrayRetained)this.retained).getNormalIndex(index);
   }
 
@@ -1037,7 +1037,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
    * the specified index for this object. The normal indicies are
    * copied into the specified array. The array must be large enough
    * to hold all of the normal indicies.
-   * 
+   *
    * @param index the vertex index
    * @param normalIndices array that will receive the normal indices
      * @exception CapabilityNotSetException if appropriate capability is
@@ -1050,7 +1050,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
     if (isLiveOrCompiled())
     if(!this.getCapability(ALLOW_NORMAL_INDEX_READ))
       throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray13"));
-  
+
     ((IndexedGeometryArrayRetained)this.retained).getNormalIndices(index, normalIndices);
   }
 
@@ -1111,7 +1111,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
      *
      * @param texCoordSet texture coordinate set in this geometry array
      * @param index the vertex index
-     * @param texCoordIndices array that will receive the texture coordinate 
+     * @param texCoordIndices array that will receive the texture coordinate
      * indices
      *
      * @exception CapabilityNotSetException if appropriate capability is
@@ -1133,7 +1133,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
 	if (isLiveOrCompiled())
 	    if(!this.getCapability(ALLOW_COORDINATE_INDEX_READ))
 		throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray15"));
-  
+
 	((IndexedGeometryArrayRetained)this.retained).getTextureCoordinateIndices(texCoordSet, index, texCoordIndices);
     }
 
@@ -1199,7 +1199,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
 		throw new CapabilityNotSetException(J3dI18N.getString("IndexedGeometryArray29"));
             }
         }
-  
+
 	((IndexedGeometryArrayRetained)this.retained).getVertexAttrIndices(vertexAttrNum, index, vertexAttrIndices);
     }
 
@@ -1208,7 +1208,7 @@ public abstract class IndexedGeometryArray extends GeometryArray {
      * the current node.  This method is called from the
      * <code>duplicateNode</code> method. This routine does
      * the actual duplication of all "local data" (any data defined in
-     * this object). 
+     * this object).
      *
      * @param originalNodeComponent the original node to duplicate.
      * @param forceDuplicate when set to <code>true</code>, causes the
@@ -1220,17 +1220,17 @@ public abstract class IndexedGeometryArray extends GeometryArray {
      * @see Node#cloneTree
      * @see NodeComponent#setDuplicateOnCloneTree
      */
-    void duplicateAttributes(NodeComponent originalNodeComponent, 
+    void duplicateAttributes(NodeComponent originalNodeComponent,
 			     boolean forceDuplicate) {
 	super.duplicateAttributes(originalNodeComponent, forceDuplicate);
-	// vertexFormat, vertexCount and indexCount are copied in 
+	// vertexFormat, vertexCount and indexCount are copied in
 	//  subclass when constructor
-	//  public IndexedGeometryArray(int vertexCount, int vertexFormat, 
-	//                              int indexCount) 
+	//  public IndexedGeometryArray(int vertexCount, int vertexFormat,
+	//                              int indexCount)
 	// is used in cloneNodeComponent()
-	IndexedGeometryArrayRetained ga = 
+	IndexedGeometryArrayRetained ga =
 	    (IndexedGeometryArrayRetained) originalNodeComponent.retained;
-	IndexedGeometryArrayRetained rt = 
+	IndexedGeometryArrayRetained rt =
 	    (IndexedGeometryArrayRetained) retained;
 
         int vformat = ga.getVertexFormat();

@@ -154,7 +154,7 @@ public class PointArray extends GeometryArray {
 	this.retained.setSource(this);
     }
 
-  
+
     /**
      * @deprecated replaced with cloneNodeComponent(boolean forceDuplicate)
      */

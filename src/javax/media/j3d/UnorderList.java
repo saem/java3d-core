@@ -31,7 +31,7 @@ import java.util.Arrays;
  * A strongly type unorder array list.
  * The operation add(Object o) & remove(int i) take O(1) time.
  * The class is designed to optimize speed. So many reductance
- * procedures call and range check as found in ArrayList are 
+ * procedures call and range check as found in ArrayList are
  * removed.
  *
  * <p>
@@ -70,7 +70,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
      * set(), remove() when -O flag turn on.
      */
     transient Object elementData[];
-    
+
     /**
      * Clone copy of elementData return by toArray(true);
      */
@@ -134,7 +134,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
     UnorderList() {
 	this(10, Object.class);
     }
-  
+
     /**
      * Returns the number of elements in this list.
      *
@@ -144,9 +144,9 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	return size;
     }
 
-  
+
     /**
-     * Returns the size of entry use in toArray() number of elements 
+     * Returns the size of entry use in toArray() number of elements
      * in this list.
      *
      * @return  the number of elements in this list.
@@ -200,8 +200,8 @@ class UnorderList implements Cloneable, java.io.Serializable  {
     }
 
     /**
-     * Searches for the last occurence of the given argument, testing 
-     * for equality using the <tt>equals</tt> method. 
+     * Searches for the last occurence of the given argument, testing
+     * for equality using the <tt>equals</tt> method.
      *
      * @param   o   an object.
      * @return  the index of the first occurrence of the argument in this
@@ -228,14 +228,14 @@ class UnorderList implements Cloneable, java.io.Serializable  {
      * @return  a clone of this <tt>ArrayList</tt> instance.
      */
     synchronized protected final Object clone() {
-	try { 
+	try {
 	    UnorderList v = (UnorderList)super.clone();
 	    v.elementData =  (Object[])java.lang.reflect.Array.newInstance(
 						   componentType, size);
 	    System.arraycopy(elementData, 0, v.elementData, 0, size);
 	    isDirty = true; // can't use the old cloneData reference
 	    return v;
-	} catch (CloneNotSupportedException e) { 
+	} catch (CloneNotSupportedException e) {
 	    // this shouldn't happen, since we are Cloneable
 	    throw new InternalError();
 	}
@@ -245,7 +245,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
     /**
      * Returns an array containing all of the elements in this list.
      * The size of the array may longer than the actual size. Use
-     * arraySize() to retrieve the size. 
+     * arraySize() to retrieve the size.
      * The array return is a copied of internal array. if copy
      * is true.
      *
@@ -267,13 +267,13 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	    cloneSize = size;
 	    return elementData;
 	}
- 
+
     }
 
     /**
      * Returns an array containing all of the elements in this list.
      * The size of the array may longer than the actual size. Use
-     * arraySize() to retrieve the size. 
+     * arraySize() to retrieve the size.
      * The array return is a copied of internal array. So another
      * thread can continue add/delete the current list. However,
      * it should be noticed that two call to toArray() may return
@@ -288,10 +288,10 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 
     /**
      * Returns an array containing elements starting from startElement
-     * all of the elements in this list. A new array of exact size 
+     * all of the elements in this list. A new array of exact size
      * is always allocated.
      *
-     * @param startElement starting element to copy 
+     * @param startElement starting element to copy
      *
      * @return an array containing elements starting from
      *         startElement, null if element not found.
@@ -314,7 +314,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	System.arraycopy(elementData, 0, objs, 0, size);
 	Arrays.fill(elementData, 0, size, null);
 	size = 0;
-	isDirty = true;	
+	isDirty = true;
     }
 
 
@@ -332,7 +332,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	    System.arraycopy(oldData, 0, elementData, 0, size);
 	}
     }
-   
+
 
     // Positional Access Operations
 
@@ -383,7 +383,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	isDirty = true;
     }
 
-  
+
     /**
      * Removes the element at the specified position in this list.
      * Replace the removed element by the last one.
@@ -393,7 +393,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
      * 		  &lt; 0 || index &gt;= size())</tt>.
      */
     synchronized final void remove(int index) {
-	elementData[index] = elementData[--size];   
+	elementData[index] = elementData[--size];
 	elementData[size] = null;
 	isDirty = true;
 	/*
@@ -403,7 +403,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	*/
     }
 
-  
+
     /**
      * Removes the element at the specified position in this list.
      * The order is keep.
@@ -415,7 +415,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
     synchronized final void removeOrdered(int index) {
 	size--;
 	if (index < size) {
-	    System.arraycopy(elementData, index+1, 
+	    System.arraycopy(elementData, index+1,
 			     elementData, index, size-index);
 
 	}
@@ -424,7 +424,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	isDirty = true;
     }
 
- 
+
    /**
      * Removes the element at the last position in this list.
      * @return    The element remove
@@ -486,7 +486,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	    for (int i=size; i >= 0; i--)
 		if (elementData[i]==null) {
 		    elementData[i] = elementData[size];
-		    elementData[size] = null;		    
+		    elementData[size] = null;
 		    /*
 		    if ((cloneData != null) && (i < cloneData.length)) {
 			cloneData[i] = null; // for gc
@@ -515,7 +515,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 
     synchronized final void clearMirror() {
 	if (cloneData != null) {
-	    Arrays.fill(cloneData, 0, cloneData.length, null);	    
+	    Arrays.fill(cloneData, 0, cloneData.length, null);
 	}
 	cloneSize = 0;
 	isDirty = true;
@@ -529,7 +529,7 @@ class UnorderList implements Cloneable, java.io.Serializable  {
 	StringBuffer sb = new StringBuffer("Size = " + size + "\n[");
 	int len = size-1;
 	Object obj;
-	
+
 	for (int i=0; i < size; i++) {
 	    obj = elementData[i];
 	    if (obj != null) {

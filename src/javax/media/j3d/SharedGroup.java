@@ -91,13 +91,13 @@ public class SharedGroup extends Group {
      */
     public SharedGroup() {
         // set default read capabilities
-        setDefaultReadCapabilities(readCapabilities);                
+        setDefaultReadCapabilities(readCapabilities);
     }
 
 
     /**
      * Returns the list of Link nodes that refer to this SharedGroup node.
-     * @return An array of Link nodes that refer to this SharedGroup node. 
+     * @return An array of Link nodes that refer to this SharedGroup node.
      *
      * @since Java 3D 1.3
      */
@@ -107,7 +107,7 @@ public class SharedGroup extends Group {
 			throw new CapabilityNotSetException(J3dI18N.getString("SharedGroup1"));
             }
         }
-        return ((SharedGroupRetained)retained).getLinks();	
+        return ((SharedGroupRetained)retained).getLinks();
     }
 
 
@@ -119,7 +119,7 @@ public class SharedGroup extends Group {
         this.retained = new SharedGroupRetained();
         this.retained.setSource(this);
     }
-  
+
 
     /**
      * Compiles the source SharedGroup associated with this object and
@@ -138,7 +138,7 @@ public class SharedGroup extends Group {
 	    // will throw SceneGraphCycleException if there is a cycle
 	    // in the scene graph
 	    checkForCycle();
-	    
+
             ((SharedGroupRetained)this.retained).compile();
         }
     }

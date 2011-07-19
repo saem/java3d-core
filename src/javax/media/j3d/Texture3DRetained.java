@@ -30,8 +30,8 @@ import java.util.BitSet;
 
 /**
  * Texture3D is a subclass of Texture class. It extends Texture
- * class by adding a third co-ordinate, constructor and a mutator 
- * method for setting a 3D texture image. 
+ * class by adding a third co-ordinate, constructor and a mutator
+ * method for setting a 3D texture image.
  */
 
 class Texture3DRetained extends TextureRetained {
@@ -69,7 +69,7 @@ class Texture3DRetained extends TextureRetained {
     }
 
     /**
-     * This method updates the native context. 
+     * This method updates the native context.
      */
     void bindTexture(Context ctx, int objectId, boolean enable) {
         Pipeline.getPipeline().bindTexture3D(ctx, objectId, enable);
@@ -123,7 +123,7 @@ class Texture3DRetained extends TextureRetained {
             int width, int height, int depth,
             int boundaryWidth, int imageDataType,
             Object imageData) {
-        
+
         Pipeline.getPipeline().updateTexture3DImage(cv.ctx,
                 numLevels, level,
                 textureFormat, imageFormat,
@@ -148,8 +148,8 @@ class Texture3DRetained extends TextureRetained {
                 imageDataType, imageData, useAutoMipMapGeneration(cv));
     }
 
-    
-    // get an ID for Texture3D 
+
+    // get an ID for Texture3D
 
     int getTextureId() {
         return (VirtualUniverse.mc.getTexture3DId());
@@ -209,11 +209,11 @@ class Texture3DRetained extends TextureRetained {
 
 /*
         System.err.println("Texture3D.reloadTextureImage: level= " + level +
-		" image.imageYup= " + image.imageYup + " w= " + image.width + 
-		" h= " + image.height + " d= " + depth + 
+		" image.imageYup= " + image.imageYup + " w= " + image.width +
+		" h= " + image.height + " d= " + depth +
 		" numLevels= " + numLevels);
 */
-        
+
         // Texture3D does not need to support Raster
         ImageComponentRetained.ImageData imageData = image.getImageData(false);
 
@@ -236,9 +236,9 @@ class Texture3DRetained extends TextureRetained {
 
         int xoffset = x;
         int yoffset = y;
-        // Texture3D does not need to support Raster        
+        // Texture3D does not need to support Raster
         ImageComponentRetained.ImageData imageData = image.getImageData(false);
-        
+
         updateTextureSubImage(cv,
                 0, level, xoffset, yoffset, z,
                 format, image.getImageFormatTypeIntValue(false),

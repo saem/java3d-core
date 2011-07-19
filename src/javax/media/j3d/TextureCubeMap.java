@@ -41,7 +41,7 @@ import javax.vecmath.*;
  *
  * The TextureCubeMap image is defined by specifying the images for each
  * face of the cube. The cube map texture can be thought of as centered at
- * the orgin of and aligned to an XYZ coordinate system. The names 
+ * the orgin of and aligned to an XYZ coordinate system. The names
  * of the cube faces are:
  *
  * <UL>
@@ -51,7 +51,7 @@ import javax.vecmath.*;
  * <LI>NEGATIVE_Y</LI>
  * <LI>POSITIVE_Z</LI>
  * <LI>NEGATIVE_Z</LI>
- * </UL> 
+ * </UL>
  *
  * <p>
  * Note that as of Java 3D 1.5, the texture width and height are no longer
@@ -69,39 +69,39 @@ public class TextureCubeMap extends Texture {
     // TODO KCR : NPOT
 
     /**
-     * Specifies the face of the cube that is pierced by the positive x axis 
+     * Specifies the face of the cube that is pierced by the positive x axis
      */
     public static final int POSITIVE_X = 0;
 
     /**
-     * Specifies the face of the cube that is pierced by the negative x axis 
+     * Specifies the face of the cube that is pierced by the negative x axis
      */
     public static final int NEGATIVE_X = 1;
- 
+
     /**
-     * Specifies the face of the cube that is pierced by the positive y axis 
+     * Specifies the face of the cube that is pierced by the positive y axis
      */
     public static final int POSITIVE_Y = 2;
 
     /**
-     * Specifies the face of the cube that is pierced by the negative y axis 
+     * Specifies the face of the cube that is pierced by the negative y axis
      */
     public static final int NEGATIVE_Y = 3;
 
     /**
-     * Specifies the face of the cube that is pierced by the positive z axis 
+     * Specifies the face of the cube that is pierced by the positive z axis
      */
     public static final int POSITIVE_Z = 4;
- 
+
     /**
-     * Specifies the face of the cube that is pierced by the negative z axis 
+     * Specifies the face of the cube that is pierced by the negative z axis
      */
     public static final int NEGATIVE_Z = 5;
 
 
     /**
      * Constructs a texture object using default values.
-     * Note that the default constructor creates a texture object with 
+     * Note that the default constructor creates a texture object with
      * a width of 0 and is, therefore, not useful.
      */
     public TextureCubeMap() {
@@ -110,12 +110,12 @@ public class TextureCubeMap extends Texture {
 
     /**
      * Constructs an empty TextureCubeMap object with specified mipmapMode
-     * format, and width. Image at base level 
-     * must be set by 
+     * format, and width. Image at base level
+     * must be set by
      * the application using 'setImage' method. If mipmapMode is
      * set to MULTI_LEVEL_MIPMAP, images for base level through maximum level
      * must be set.
-     * Note that cube map is square in dimensions, hence specifying width 
+     * Note that cube map is square in dimensions, hence specifying width
      * is sufficient.
      * Note also that a texture with a non-power-of-two width will
      * only be rendered on a graphics device that supports non-power-of-two
@@ -139,12 +139,12 @@ public class TextureCubeMap extends Texture {
 
     /**
      * Constructs an empty TextureCubeMap object with specified mipmapMode
-     * format, width, and boundary width. Image at base level 
-     * must be set by 
+     * format, width, and boundary width. Image at base level
+     * must be set by
      * the application using 'setImage' method. If mipmapMode is
      * set to MULTI_LEVEL_MIPMAP, images for base level through maximum level
      * must be set.
-     * Note that cube map is square in dimensions, hence specifying width 
+     * Note that cube map is square in dimensions, hence specifying width
      * is sufficient.
      * Note also that a texture with a non-power-of-two width will
      * only be rendered on a graphics device that supports non-power-of-two
@@ -175,15 +175,15 @@ public class TextureCubeMap extends Texture {
      * of the cube map
      *
      * @param level mipmap level
-     * @param face face of the cube map. One of: 
-     * <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,     
+     * @param face face of the cube map. One of:
+     * <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,
      * <code>POSITIVE_Y</code>, <code>NEGATIVE_Y</code>,
      * <code>POSITIVE_Z</code> or <code>NEGATIVE_Z</code>.
      * @param image ImageComponent2D object containing the image
      *
-     * @exception IllegalArgumentException if 
+     * @exception IllegalArgumentException if
      * <code>face</code> has a value other
-     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>, 
+     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,
      * <code>POSITIVE_Y</code>, <code>NEGATIVE_Y</code>,
      * <code>POSITIVE_Z</code> or <code>NEGATIVE_Z</code>.
      *
@@ -203,9 +203,9 @@ public class TextureCubeMap extends Texture {
             throw new CapabilityNotSetException(
 			J3dI18N.getString("TextureCubeMap1"));
         }
-        
+
         validateImageIllegalSharing(image);
-        
+
         if (isLive())
             ((TextureCubeMapRetained)this.retained).setImage(level, face, image);
         else
@@ -216,15 +216,15 @@ public class TextureCubeMap extends Texture {
      * Sets the array of images for mipmap levels from base level through
      * max level for a specified face of the cube map
      *
-     * @param face face of the cube map. One of: 
-     * <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,     
+     * @param face face of the cube map. One of:
+     * <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,
      * <code>POSITIVE_Y</code>, <code>NEGATIVE_Y</code>,
      * <code>POSITIVE_Z</code> or <code>NEGATIVE_Z</code>.
      * @param images array of ImageComponent2D objects containing the images
      *
-     * @exception IllegalArgumentException if 
+     * @exception IllegalArgumentException if
      * <code>face</code> has a value other
-     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>, 
+     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,
      * <code>POSITIVE_Y</code>, <code>NEGATIVE_Y</code>,
      * <code>POSITIVE_Z</code> or <code>NEGATIVE_Z</code>.
      *
@@ -247,11 +247,11 @@ public class TextureCubeMap extends Texture {
                         J3dI18N.getString("TextureCubeMap1"));
         }
 
-         // Do illegal sharing check     
+         // Do illegal sharing check
         for(int i=0; i<images.length; i++) {
             validateImageIllegalSharing(images[i]);
         }
-        
+
         if (isLive())
             ((TextureCubeMapRetained)this.retained).setImages(face, images);
         else
@@ -264,16 +264,16 @@ public class TextureCubeMap extends Texture {
      * Retrieves the image for a specified mipmap level of a particular
      * face of the cube map.
      * @param level mipmap level to get.
-     * @param face face of the cube map. One of: 
-     * <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,     
+     * @param face face of the cube map. One of:
+     * <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,
      * <code>POSITIVE_Y</code>, <code>NEGATIVE_Y</code>,
      * <code>POSITIVE_Z</code> or <code>NEGATIVE_Z</code>.
      * @return the ImageComponent object containing the texture image at
      * the specified mipmap level.
      *
-     * @exception IllegalArgumentException if 
+     * @exception IllegalArgumentException if
      * <code>face</code> has a value other
-     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>, 
+     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,
      * <code>POSITIVE_Y</code>, <code>NEGATIVE_Y</code>,
      * <code>POSITIVE_Z</code> or <code>NEGATIVE_Z</code>.
      *
@@ -300,9 +300,9 @@ public class TextureCubeMap extends Texture {
      * @return an array of ImageComponent object for the particular face of
      * of the cube map.
      *
-     * @exception IllegalArgumentException if 
+     * @exception IllegalArgumentException if
      * <code>face</code> has a value other
-     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>, 
+     * than <code>POSITIVE_X</code>, <code>NEGATIVE_X</code>,
      * <code>POSITIVE_Y</code>, <code>NEGATIVE_Y</code>,
      * <code>POSITIVE_Z</code> or <code>NEGATIVE_Z</code>.
      *

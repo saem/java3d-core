@@ -146,7 +146,7 @@ class GeneralizedStrip {
 	/**
 	 * A list of indices into the vertices of the original generalized
 	 * strip.  It specifies the order in which vertices in the original
-	 * strip should be followed to build GeometryArray objects.  
+	 * strip should be followed to build GeometryArray objects.
 	 */
 	IntList vertices ;
 
@@ -280,7 +280,7 @@ class GeneralizedStrip {
 		}
 	    }
 	}
-	    
+
 	// Finish off the last strip or fan.
 	// If v > size then the strip is degenerate.
 	if (v == size)
@@ -299,7 +299,7 @@ class GeneralizedStrip {
 	    if (v > size)
 		System.err.println(" ended with a degenerate triangle:" +
 				   " number of vertices: " + (v-size)) ;
-	    
+
 	    System.err.println("\n number of strips: " + stripCounts.count) ;
 	    if (stripCounts.count > 0) {
 		System.err.println(" number of vertices: " + stripVerts.count) ;
@@ -318,7 +318,7 @@ class GeneralizedStrip {
 		// System.err.println(" indices: " + fanVerts.toString()) ;
 	    }
 	    System.err.println("\n total vertices: " +
-			       (stripVerts.count + fanVerts.count) + 
+			       (stripVerts.count + fanVerts.count) +
 			       "\n original number of vertices: " + size +
 			       "\n") ;
 	}
@@ -329,7 +329,7 @@ class GeneralizedStrip {
     // have counter-clockwise (CCW) winding order when projected to
     // the view surface. Polygons with clockwise (CW) vertex winding
     // will be culled as back-facing by default.
-    // 
+    //
     // Generalized triangle strips can flip the orientation of their
     // triangles with the RESTART_CW and RESTART_CCW vertex flags.
     // Strips flagged with an orientation opposite to what has been
@@ -379,7 +379,7 @@ class GeneralizedStrip {
 	    }
 	}
     }
-	
+
     private static void addFan(IntList fanVerts,
 			       IntList fanCounts,
 			       int start, int length,
@@ -458,12 +458,12 @@ class GeneralizedStrip {
 	StripArray sa = new StripArray(stripVerts, stripCounts) ;
 
 	if (debug) {
-	    System.err.println("GeneralizedStrip.toTriangleStrips" + 
+	    System.err.println("GeneralizedStrip.toTriangleStrips" +
 			       "\n number of strips: " +
 			       sa.stripCounts.count) ;
 	    if (sa.stripCounts.count > 0) {
 		System.err.println(" number of vertices: " +
-				   sa.vertices.count + 
+				   sa.vertices.count +
 				   "\n vertices/strip: " +
 				   ((float)sa.vertices.count /
 				    (float)sa.stripCounts.count)) ;
@@ -485,7 +485,7 @@ class GeneralizedStrip {
 	    // Construct a strip by criss-crossing across the interior.
 	    stripCounts.add(length) ;
 	    stripVerts.add(fans[v]) ;
-	    
+
 	    int j = v + 1 ;
 	    int k = v + (length - 1) ;
 	    while (j <= k) {
@@ -696,7 +696,7 @@ class GeneralizedStrip {
 		    System.err.print(" long strip counts: [") ;
 		    for (int i = 0 ; i < longStripCount-1 ; i++)
 			System.err.print(newStripCounts[i++] + ", ") ;
-		    
+
 		    System.err.println
 			(newStripCounts[longStripCount-1] + "]\n") ;
 		}
@@ -711,7 +711,7 @@ class GeneralizedStrip {
      *
      * RESTART_CW and RESTART_CCW are treated as equivalent, as are
      * REPLACE_MIDDLE and REPLACE_OLDEST.
-     * 
+     *
      * @param vertices an object implementing GeneralizedStripFlags
      * @return a StripArray representing an array of line strips
      */
@@ -748,7 +748,7 @@ class GeneralizedStrip {
 		v += 2 ;
 	    }
 	}
-	    
+
 	// Finish off the last strip.
 	// If v > size then the strip is degenerate.
 	if (v == size) {
@@ -783,7 +783,7 @@ class GeneralizedStrip {
 
     /**
      * Counts the number of lines defined by arrays of line strips.
-     * 
+     *
      * @param stripCounts array of strip counts, as used by the
      * GeometryStripArray object
      * @return number of lines in the strips
@@ -826,7 +826,7 @@ class GeneralizedStrip {
 
     /**
      * Breaks up triangle strips into separate triangles.
-     * 
+     *
      * @param stripCounts array of strip counts, as used by the
      * GeometryStripArray object
      * @return array of ints which index into the original vertex array; each
@@ -847,7 +847,7 @@ class GeneralizedStrip {
 
     /**
      * Breaks up triangle fans into separate triangles.
-     * 
+     *
      * @param stripCounts array of strip counts, as used by the
      * GeometryStripArray object
      * @return array of ints which index into the original vertex array; each
@@ -868,7 +868,7 @@ class GeneralizedStrip {
 
     /**
      * Takes a fan and converts it to one or more strips.
-     * 
+     *
      * @param v index into the fans array of the first vertex in the fan
      * @param length number of vertices in the fan
      * @param fans array of vertex indices representing one or more fans

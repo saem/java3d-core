@@ -139,8 +139,8 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 		    nullGeo = (interleavedFloatBufferImpl == null);
 		}
 	    }
-	}	    
-	    
+	}
+
 	for (i=0; i<num-1; i++) {
 	    this.stripVertexCounts[i] = stripVertexCounts[i];
 	    stripStartVertexIndices[i+1] = stripStartVertexIndices[i] +
@@ -152,10 +152,10 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
             geomLock.unLock();
         }
 	if (!inUpdater && isLive) {
-	    processCoordsChanged(nullGeo);    
+	    processCoordsChanged(nullGeo);
 	    sendDataChangedMessage(true);
 	}
-	
+
     }
     void unIndexify(IndexedGeometryStripArrayRetained src) {
 	if ((src.vertexFormat & GeometryArray.USE_NIO_BUFFER) == 0) {
@@ -177,7 +177,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 
 	    if ((src.vertexFormat & GeometryArray.BY_REFERENCE) == 0) {
 		vdata = src.vertexData;
-		if ((src.vertexFormat & GeometryArray.COLOR) != 0) 
+		if ((src.vertexFormat & GeometryArray.COLOR) != 0)
 		    colorStride = 4;
 	    }
 	    else if ((src.vertexFormat & GeometryArray.INTERLEAVED) != 0) {
@@ -224,7 +224,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 					* src.stride + src.textureOffset +
 					src.texCoordSetMapOffset[k],
                             	vertexData,
-                            	vOffset + textureOffset + 
+                            	vOffset + textureOffset +
 					texCoordSetMapOffset[k],
                             	texCoordStride);
                         }
@@ -254,8 +254,8 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 	    if ((vertexFormat & GeometryArray.NORMALS) != 0){
 		base = src.initialIndexIndex;
 		vOffset = normalOffset;
-		switch ((src.vertexType & NORMAL_DEFINED)) { 
-		case NF: 
+		switch ((src.vertexType & NORMAL_DEFINED)) {
+		case NF:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = j+base;
@@ -268,7 +268,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case N3F: 
+		case N3F:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexNormal[j+base];
@@ -291,8 +291,8 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 		int multiplier = 3;
 		if ((src.vertexFormat & GeometryArray.WITH_ALPHA) != 0)
 		    multiplier = 4;
-		
-		switch ((src.vertexType & COLOR_DEFINED)) { 
+
+		switch ((src.vertexType & COLOR_DEFINED)) {
 		case CF:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
@@ -316,7 +316,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case CUB: 
+		case CUB:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexColor[j+base] * multiplier;
@@ -334,7 +334,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case C3F: 
+		case C3F:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexColor[j+base];
@@ -347,7 +347,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case C4F: 
+		case C4F:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexColor[j+base];
@@ -360,7 +360,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case C3UB: 
+		case C3UB:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexColor[j+base];
@@ -368,13 +368,13 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			    vertexData[vOffset+1] = (src.c3bRefColors[index].y & 0xff) * ByteToFloatScale;
 			    vertexData[vOffset+2] = (src.c3bRefColors[index].z & 0xff) * ByteToFloatScale;
 			    vertexData[vOffset+3] = 1.0f;
-			    
+
 			    vOffset += stride;
 			}
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case C4UB: 
+		case C4UB:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexColor[j+base];
@@ -401,7 +401,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = j+base;
 
-			    for (k = 0, tOffset = vOffset; 
+			    for (k = 0, tOffset = vOffset;
 					k < texCoordSetCount; k++) {
                                  System.arraycopy(src.refTexCoords[k],
                                      src.indexTexCoord[k][index]
@@ -414,13 +414,13 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case T2F: 
+		case T2F:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = j+base;
 			    for (k = 0, tOffset = vOffset;
 				    k < texCoordSetCount; k++) {
-                             	 srcOffset = 
+                             	 srcOffset =
 				    src.indexTexCoord[k][index];
                                  vertexData[tOffset] = ((TexCoord2f[])
 					src.refTexCoords[k])[srcOffset].x;
@@ -433,13 +433,13 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case T3F: 
+		case T3F:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = j+base;
 			    for (k = 0, tOffset = vOffset;
 				    k < texCoordSetCount; k++) {
-                             	 srcOffset = 
+                             	 srcOffset =
 				    src.indexTexCoord[k][index];
                                  vertexData[tOffset] = ((TexCoord3f[])
 					src.refTexCoords[k])[srcOffset].x;
@@ -487,7 +487,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 	    if ((vertexFormat & GeometryArray.COORDINATES) != 0){
 		vOffset = coordinateOffset;
 		base = src.initialIndexIndex;
-		switch ((src.vertexType & VERTEX_DEFINED)) { 
+		switch ((src.vertexType & VERTEX_DEFINED)) {
 		case PF:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
@@ -499,9 +499,9 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			    vOffset += stride;
 			}
 			base += src.stripIndexCounts[i];
-		    }			
+		    }
 		    break;
-		case PD: 
+		case PD:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexCoord[j+base] * 3;
@@ -513,7 +513,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case P3F: 
+		case P3F:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexCoord[j+base];
@@ -525,7 +525,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case P3D: 
+		case P3D:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexCoord[j+base];
@@ -540,7 +540,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 		default:
 		    break;
 		}
-	    }		
+	    }
 	}
     }
 
@@ -548,9 +548,9 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
         int vOffset = 0, srcOffset, tOffset = 0;
         int base = src.initialIndexIndex;
 	int i,j, k, index, colorStride = 0;
-	
-	
-	// interleaved case 
+
+
+	// interleaved case
 	if ((src.vertexFormat & GeometryArray.INTERLEAVED) != 0) {
 	    if ((src.vertexFormat & GeometryArray.WITH_ALPHA) != 0)
 		colorStride = 4;
@@ -569,7 +569,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			src.interleavedFloatBufferImpl.get(vertexData, vOffset + colorOffset, colorStride);
 		    } else if (colorStride == 3) {
 			src.interleavedFloatBufferImpl.position(src.indexColor[index]*src.stride + src.colorOffset);
-			src.interleavedFloatBufferImpl.get(vertexData, vOffset + colorOffset, colorStride);			
+			src.interleavedFloatBufferImpl.get(vertexData, vOffset + colorOffset, colorStride);
 			vertexData[vOffset + colorOffset + 3] = 1.0f;
 		    }
 
@@ -578,7 +578,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			    src.interleavedFloatBufferImpl.position((src.indexTexCoord[k][index])
 					*src.stride + src.textureOffset +
 					src.texCoordSetMapOffset[k]);
-			    
+
 			    src.interleavedFloatBufferImpl.get(vertexData,
 							       vOffset + textureOffset + texCoordSetMapOffset[k], texCoordStride);
                         }
@@ -616,8 +616,8 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 		int multiplier = 3;
 		if ((src.vertexFormat & GeometryArray.WITH_ALPHA) != 0)
 		    multiplier = 4;
-		
-		switch ((src.vertexType & COLOR_DEFINED)) { 
+
+		switch ((src.vertexType & COLOR_DEFINED)) {
 		case CF:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
@@ -626,12 +626,12 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			    if ((src.vertexFormat & GeometryArray.WITH_ALPHA) != 0) {
 				src.floatBufferRefColors.position(src.indexColor[index]*multiplier);
 				src.floatBufferRefColors.get(vertexData, vOffset, 4);
-	
+
 			    }
 			    else {
 				src.floatBufferRefColors.position(src.indexColor[index]*multiplier);
 				src.floatBufferRefColors.get(vertexData, vOffset, 3);
-				
+
 				vertexData[vOffset+3] = 1.0f;
 			    }
 			    vOffset += stride;
@@ -639,7 +639,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			base += src.stripIndexCounts[i];
 		    }
 		    break;
-		case CUB: 
+		case CUB:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexColor[j+base] * multiplier;
@@ -671,7 +671,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = j+base;
 
-			    for (k = 0, tOffset = vOffset; 
+			    for (k = 0, tOffset = vOffset;
 					k < texCoordSetCount; k++) {
 				texBuffer = (FloatBufferWrapper)(((J3DBuffer) (src.refTexCoordsBuffer[k])).getBufferImpl());
 				texBuffer.position(src.indexTexCoord[k][index]*texCoordStride);
@@ -709,7 +709,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 	    if ((vertexFormat & GeometryArray.COORDINATES) != 0) {
 		vOffset = coordinateOffset;
 		base = src.initialIndexIndex;
-		switch ((src.vertexType & VERTEX_DEFINED)) { 
+		switch ((src.vertexType & VERTEX_DEFINED)) {
 		case PF:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
@@ -720,9 +720,9 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 			    vOffset += stride;
 			}
 			base += src.stripIndexCounts[i];
-		    }			
+		    }
 		    break;
-		case PD: 
+		case PD:
 		    for (i=0; i < src.stripIndexCounts.length; i++) {
 			for (j=0; j < src.stripIndexCounts[i]; j++) {
 			    index = src.indexCoord[j+base] * 3;
@@ -738,7 +738,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 		default:
 		    break;
 		}
-	    }		
+	    }
 	}
     }
 
@@ -781,10 +781,10 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
     void mergeGeometryArrays(ArrayList list) {
 	int numMerge = list.size();
 	int numStrips = 0;
-	
+
 
 	for (int i = 0; i < numMerge; i++) {
-	    numStrips += 
+	    numStrips +=
 		((GeometryStripArrayRetained)list.get(i)).stripVertexCounts.length;
 	}
 	stripVertexCounts = new int[numStrips];
@@ -795,12 +795,12 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 	int[] curStripVertexCounts;
 	int[]  curStripStartIndices ;
 	int[]  curStripOffsetIndices ;
-	
+
 
 	compileNumStrips = new int[numMerge];
 	compileStripCountOffset = new int[numMerge];
 	for (int i = 0; i < numMerge; i++) {
-	    GeometryStripArrayRetained strip = 
+	    GeometryStripArrayRetained strip =
 				(GeometryStripArrayRetained)list.get(i);
 	    curStripVertexCounts = strip.stripVertexCounts;
 	    curStripStartIndices = strip.stripStartVertexIndices;
@@ -823,7 +823,7 @@ abstract class GeometryStripArrayRetained extends GeometryArrayRetained {
 	 }
 	// Assign the merged validVertexCount
 	validVertexCount = curStripIndexOffset;
-	
+
 	// call the super to merge the vertex data
 	super.mergeGeometryArrays(list);
     }

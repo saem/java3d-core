@@ -50,5 +50,5 @@ class IntegerFreeList extends MemoryFreeList {
 	super.clear();
 	count = 0;
     }
-    
+
 }

@@ -37,10 +37,10 @@ class PointLightRetained extends LightRetained {
     static final int LAST_POINTLIGHT_DEFINED_BIT    = ATTENUATION_CHANGED;
 
     /**
-     * The attenuation vector consisting of 
+     * The attenuation vector consisting of
      * constant, linear, and quadratic coefficients.
      */
-    Point3f attenuation = new Point3f(1.0f, 0.0f, 0.0f); 
+    Point3f attenuation = new Point3f(1.0f, 0.0f, 0.0f);
 
     // The position at which this light source exists.
     Point3f position = new Point3f();
@@ -182,7 +182,7 @@ class PointLightRetained extends LightRetained {
         attenuation.set(this.attenuation);
      }
 
-    /** 
+    /**
      * This update function, and its native counterpart,
      * updates a point light.  This includes its color, attenuation,
      * and its transformed position.
@@ -221,7 +221,7 @@ class PointLightRetained extends LightRetained {
 	objs[8] = new Point3f(attenuation);
 	return createMessage;
     }
-	
+
 
     // Note : if you add any more fields here , you need to update
     // updateLight() in RenderingEnvironmentStructure
@@ -240,9 +240,9 @@ class PointLightRetained extends LightRetained {
 		    PointLightRetained ml = (PointLightRetained)mLgts[i];
 		    mlLastLocalToVworld = ml.getLastLocalToVworld();
 		    ml.position = (Point3f) objs[4];
-		    mlLastLocalToVworld.transform(ml.position, 
+		    mlLastLocalToVworld.transform(ml.position,
 						      ml.xformPosition);
-		    ml.localToVworldScale = 
+		    ml.localToVworldScale =
 			mlLastLocalToVworld.getDistanceScale();
 		}
 	    }
@@ -262,9 +262,9 @@ class PointLightRetained extends LightRetained {
 		    ml.position = (Point3f)((Object[]) objs[4])[7];
 		    ml.attenuation.set((Point3f)((Object[]) objs[4])[8]);
 		    mlLastLocalToVworld = ml.getLastLocalToVworld();
-		    mlLastLocalToVworld.transform(ml.position, 
+		    mlLastLocalToVworld.transform(ml.position,
 						      ml.xformPosition);
-		    ml.localToVworldScale = 
+		    ml.localToVworldScale =
 			mlLastLocalToVworld.getDistanceScale();
 		}
 	    }
@@ -276,14 +276,14 @@ class PointLightRetained extends LightRetained {
 
     void validateAttenuationInEc(double vworldToCoexistenceScale) {
         double localToEcScale = localToVworldScale * vworldToCoexistenceScale;
- 
+
         linearAttenuationInEc = (float)(attenuation.y / localToEcScale);
         quadraticAttenuationInEc =
                 (float)(attenuation.z / (localToEcScale * localToEcScale));
     }
 
 
-    
+
     // Clones only the retained side, internal use only
      protected Object clone() {
          PointLightRetained pr =
@@ -293,7 +293,7 @@ class PointLightRetained extends LightRetained {
          pr.position = new Point3f(position);
          pr.xformPosition = new Point3f();
          return pr;
-     }   
+     }
 
 
     // Called on the mirror object

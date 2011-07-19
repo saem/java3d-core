@@ -61,10 +61,10 @@ abstract class LightRetained extends LeafRetained {
 
     /**
      * The Boundary object defining the lights's region of influence.
-     */  
+     */
     Bounds regionOfInfluence = null;
- 
-    /** 
+
+    /**
      * The bounding leaf reference
      */
     BoundingLeafRetained boundingLeaf = null;
@@ -74,7 +74,7 @@ abstract class LightRetained extends LeafRetained {
      */
     Bounds region = null;
 
-    /** 
+    /**
      * This bitmask is set when something changes in the light
      */
     int lightDirty = 0xffff;
@@ -109,7 +109,7 @@ abstract class LightRetained extends LeafRetained {
     boolean isScoped = false;
 
    // The object that contains the dynamic HashKey - a string type object
-    // Used in scoping 
+    // Used in scoping
     HashKey tempKey = new HashKey(250);
 
     /**
@@ -147,7 +147,7 @@ abstract class LightRetained extends LeafRetained {
      */
     void setEnable(boolean state) {
 	initEnable(state);
-	sendMessage(ENABLE_CHANGED, 
+	sendMessage(ENABLE_CHANGED,
 		    (state ? Boolean.TRUE: Boolean.FALSE));
     }
 
@@ -200,7 +200,7 @@ abstract class LightRetained extends LeafRetained {
     /**
      * Replaces the specified scope with the scope provided and
      * send a message
-     * @param scope the new scope 
+     * @param scope the new scope
      * @param index which scope to replace
      */
     void setScope(Group scope, int index) {
@@ -213,7 +213,7 @@ abstract class LightRetained extends LeafRetained {
 	tempKey.reset();
 	group.removeAllNodesForScopedLight((inSharedGroup?numMirrorLights:1), mirrorLights, removeScopeList, tempKey);
 
-	
+
         group = (GroupRetained)scope.retained;
 	tempKey.reset();
 	// If its a group, then add the scope to the group, if
@@ -221,7 +221,7 @@ abstract class LightRetained extends LeafRetained {
 	// updateMirrorObject
 	group.addAllNodesForScopedLight((inSharedGroup?numMirrorLights:1), mirrorLights,addScopeList, tempKey);
 
-	
+
 	initScope(scope, index);
 	J3dMessage createMessage = new J3dMessage();
 	scopeInfo[0] = addScopeList;
@@ -229,7 +229,7 @@ abstract class LightRetained extends LeafRetained {
 	scopeInfo[2] = (scopes.size() > 0 ? Boolean.TRUE: Boolean.FALSE);
 	sendMessage(SCOPE_CHANGED, scopeInfo);
     }
-    
+
     /**
      * Inserts the specified scope at specified index.
      * @param scope the new scope
@@ -254,7 +254,7 @@ abstract class LightRetained extends LeafRetained {
 
 	tempKey.reset();
 	group.addAllNodesForScopedLight((inSharedGroup?numMirrorLights:1), mirrorLights,addScopeList, tempKey);
-	
+
 	initInsertScope(scope, index);
 	scopeInfo[0] = addScopeList;
 	scopeInfo[1] = null;
@@ -262,7 +262,7 @@ abstract class LightRetained extends LeafRetained {
 	sendMessage(SCOPE_CHANGED, scopeInfo);
     }
 
-    
+
     /**
      * Removes the scope at specified index.
      * @param index which scope to remove
@@ -273,7 +273,7 @@ abstract class LightRetained extends LeafRetained {
 	group.removeLightScope();
     }
 
-    
+
     /**
      * Removes the scope at specified index.
      * @param index which scope to remove
@@ -282,7 +282,7 @@ abstract class LightRetained extends LeafRetained {
 
 	Object[] scopeInfo = new Object[3];
 	ArrayList removeScopeList = new ArrayList();
-      
+
         GroupRetained group = (GroupRetained)scopes.elementAt(index);
 	tempKey.reset();
 	group.removeAllNodesForScopedLight((inSharedGroup?numMirrorLights:1), mirrorLights, removeScopeList, tempKey);
@@ -292,7 +292,7 @@ abstract class LightRetained extends LeafRetained {
 	sendMessage(SCOPE_CHANGED, scopeInfo);
     }
 
-      
+
     /**
      * Removes the specified scope
      * @param scope to be removed
@@ -332,10 +332,10 @@ abstract class LightRetained extends LeafRetained {
 
     void initRemoveAllScopes() {
       int n = scopes.size();
-      for(int i = n-1; i >= 0; i--) 
+      for(int i = n-1; i >= 0; i--)
 	initRemoveScope(i);
   }
-     
+
     /**
      * Returns the scope specified by the index.
      * @param index of the scope to be returned
@@ -344,11 +344,11 @@ abstract class LightRetained extends LeafRetained {
     Group getScope(int index) {
       return (Group)(((GroupRetained)(scopes.elementAt(index))).source);
     }
-  
+
     /**
      * Returns an enumeration object of the scope
      * @return an enumeration object of the scope
-     */  
+     */
     Enumeration getAllScopes() {
 	Enumeration elm = scopes.elements();
 	Vector v = new Vector(scopes.size());
@@ -385,7 +385,7 @@ abstract class LightRetained extends LeafRetained {
 	scopeInfo[2] = (scopes.size() > 0 ? Boolean.TRUE: Boolean.FALSE);
 	sendMessage(SCOPE_CHANGED,  scopeInfo);
     }
-    
+
     /**
      * Returns a count of this nodes' scopes.
      * @return the number of scopes descendant from this node
@@ -404,11 +404,11 @@ abstract class LightRetained extends LeafRetained {
     else
       return scopes.indexOf(null);
   }
-  
+
     /**
      * Initializes the Light's region of influence.
      * @param region a region that contains the Light's new region of influence
-     */  
+     */
     void initInfluencingBounds(Bounds region) {
 	if (region != null) {
 	    regionOfInfluence = (Bounds) region.clone();
@@ -424,17 +424,17 @@ abstract class LightRetained extends LeafRetained {
     /**
      * Set the Light's region of influence and send a message
      * @param region a region that contains the Light's new region of influence
-     */  
+     */
     void setInfluencingBounds(Bounds region) {
 	initInfluencingBounds(region);
-	sendMessage(BOUNDS_CHANGED,  
+	sendMessage(BOUNDS_CHANGED,
 		    (region != null ? region.clone() : null));
     }
 
     /**
      * Get the Light's region of influence
      * @return this Light's region of influence information
-     */  
+     */
     Bounds getInfluencingBounds() {
 	Bounds b = null;
 
@@ -450,7 +450,7 @@ abstract class LightRetained extends LeafRetained {
 
     /**
      * Initializes the Light's region of influence to the specified Leaf node.
-     */  
+     */
     void initInfluencingBoundingLeaf(BoundingLeaf region) {
 	if (region != null) {
 	    boundingLeaf = (BoundingLeafRetained)region.retained;
@@ -461,12 +461,12 @@ abstract class LightRetained extends LeafRetained {
 
     /**
      * Set the Light's region of influence to the specified Leaf node.
-     */  
+     */
     void setInfluencingBoundingLeaf(BoundingLeaf region) {
 	int i, numLgts;
 
 	numLgts = numMirrorLights;
-	if (numMirrorLights == 0)  
+	if (numMirrorLights == 0)
 	    numLgts = 1;
 
 	if (boundingLeaf != null) {
@@ -486,14 +486,14 @@ abstract class LightRetained extends LeafRetained {
 	    boundingLeaf = null;
 	}
 
-	sendMessage(BOUNDINGLEAF_CHANGED, 
+	sendMessage(BOUNDINGLEAF_CHANGED,
 		     (boundingLeaf != null ?
 		      boundingLeaf.mirrorBoundingLeaf : null));
     }
 
-    /**  
+    /**
      * Get the Light's region of influence.
-     */  
+     */
     BoundingLeaf getInfluencingBoundingLeaf() {
 	return  (boundingLeaf != null ?
 		 (BoundingLeaf)boundingLeaf.source : null);
@@ -525,7 +525,7 @@ abstract class LightRetained extends LeafRetained {
 	int numLgts = ((Integer)args[2]).intValue();
 	LightRetained[] mLgts = (LightRetained[]) args[3];
 	int k;
-	
+
 	for ( k = 0; k < numLgts; k++) {
 	    for (int i = 0; i < gAtomList.size(); i++) {
 		shape = ((GeometryAtom)gAtomList.get(i)).source;
@@ -533,7 +533,7 @@ abstract class LightRetained extends LeafRetained {
 	    }
 	    mLgts[k].isScoped = scoped.booleanValue();
 	}
-	
+
 	for (k = 0; k < numLgts; k++) {
 	    mLgts[k].inBackgroundGroup = ((Boolean)((Object[])args[4])[2]).booleanValue();
 	    mLgts[k].geometryBackground = (BackgroundRetained)((Object[])args[4])[3];
@@ -546,7 +546,7 @@ abstract class LightRetained extends LeafRetained {
 		mLgts[k].boundingLeaf = null;
 		mLgts[k].region = null;
 	    }
-	    
+
 	    if (bnds != null) {
 		mLgts[k].regionOfInfluence = bnds;
 		if (mLgts[k].region == null) {
@@ -567,10 +567,10 @@ abstract class LightRetained extends LeafRetained {
 		mLgts[i].color.set(clr);
 	    }
 	}
-	    
+
     }
-    
-    /** 
+
+    /**
      * This method is implemented by each light for rendering
      * context updates.  This default one does nothing.
      */
@@ -593,7 +593,7 @@ abstract class LightRetained extends LeafRetained {
 	    }
 	}
 	else if ((component & ENABLE_CHANGED) != 0) {
-	    for (int i = 0; i < numLgts; i++) 
+	    for (int i = 0; i < numLgts; i++)
 		mLgts[i].lightOn = ((Boolean)objs[4]).booleanValue();
 	}
 	else if ((component & BOUNDS_CHANGED) != 0) {
@@ -601,7 +601,7 @@ abstract class LightRetained extends LeafRetained {
 		mLgts[i].regionOfInfluence = (Bounds) objs[4];
 		if (mLgts[i].boundingLeaf == null) {
 		    if (objs[4] != null) {
-			mLgts[i].region = 
+			mLgts[i].region =
 			    ((Bounds)mLgts[i].regionOfInfluence).copy(mLgts[i].region);
 			mLgts[i].region.transform(mLgts[i].regionOfInfluence,
 						  mLgts[i].getCurrentLocalToVworld());
@@ -618,11 +618,11 @@ abstract class LightRetained extends LeafRetained {
 		if (objs[4] != null) {
 		    mLgts[i].region = (Bounds)mLgts[i].boundingLeaf.transformedRegion;
 		}
-		else { // evaluate regionOfInfluence if not null 
+		else { // evaluate regionOfInfluence if not null
 		    if (mLgts[i].regionOfInfluence != null) {
-			mLgts[i].region = 
+			mLgts[i].region =
 			    ((Bounds)mLgts[i].regionOfInfluence).copy(mLgts[i].region);
-			mLgts[i].region.transform(mLgts[i].regionOfInfluence, 
+			mLgts[i].region.transform(mLgts[i].regionOfInfluence,
 						  mLgts[i].getCurrentLocalToVworld());
 		    }
 		    else {
@@ -639,7 +639,7 @@ abstract class LightRetained extends LeafRetained {
 	    ArrayList addList = (ArrayList)scopeList[0];
 	    ArrayList removeList = (ArrayList)scopeList[1];
 	    boolean isScoped = ((Boolean)scopeList[2]).booleanValue();
-	    
+
 	    if (addList != null) {
 		for (i = 0; i < numLgts; i++) {
 		    mLgts[i].isScoped = isScoped;
@@ -649,7 +649,7 @@ abstract class LightRetained extends LeafRetained {
 		    }
 		}
 	    }
-	    
+
 	    if (removeList != null) {
 		for (i = 0; i < numLgts; i++) {
 		    mLgts[i].isScoped = isScoped;
@@ -664,8 +664,8 @@ abstract class LightRetained extends LeafRetained {
 
     }
 
-    
-    
+
+
     // The update Object function called during RenderingEnv objUpdate
     // Note : if you add any more fields here , you need to update
     // updateLight() in RenderingEnvironmentStructure
@@ -692,7 +692,7 @@ abstract class LightRetained extends LeafRetained {
 
     /** Note: This routine will only be called on
      * the mirror object - will update the object's
-     * cached region and transformed region 
+     * cached region and transformed region
      */
 
     void updateBoundingLeaf() {
@@ -720,7 +720,7 @@ abstract class LightRetained extends LeafRetained {
 		    break;
 		}
 	    }
-	    
+
 	}
     }
     /**
@@ -742,7 +742,7 @@ abstract class LightRetained extends LeafRetained {
 		    newLights[i] = mirrorLights[i];
 		}
 		mirrorLights = newLights;
-	    } 
+	    }
 	    //	    mirrorLights[numMirrorLights] = (LightRetained)
 	    //	    this.clone(true);
 	    mirrorLights[numMirrorLights] = (LightRetained) this.clone();
@@ -766,7 +766,7 @@ abstract class LightRetained extends LeafRetained {
 		if (boundingLeaf != null) {
 		    mirrorLights[0].boundingLeaf = this.boundingLeaf.mirrorBoundingLeaf;
 		    if (mirrorLights[0].boundingLeaf != null)
-			mirrorLights[0].boundingLeaf.addUser(mirrorLights[0]);	        
+			mirrorLights[0].boundingLeaf.addUser(mirrorLights[0]);
 		}
 		mirrorLights[0].sgLight = this;
 	    }
@@ -793,9 +793,9 @@ abstract class LightRetained extends LeafRetained {
 		j = s.keys[i].equals(localToVworldKeys, 0,
 				     localToVworldKeys.length);
 		if(j < 0) {
-		    System.err.println("LightRetained : Can't find hashKey"); 
+		    System.err.println("LightRetained : Can't find hashKey");
 		}
-		
+
 		ml.localToVworld[0] = localToVworld[j];
 		ml.localToVworldIndex[0] = localToVworldIndex[j];
 		// If its view Scoped, then add this list
@@ -806,7 +806,7 @@ abstract class LightRetained extends LeafRetained {
 		} else {
 		    s.nodeList.add(ml);
 		}
-		
+
 		newlyAddedMirrorLights.add(ml);
 		if (boundingLeaf != null) {
 		    boundingLeaf.mirrorBoundingLeaf.addUser(ml);
@@ -821,7 +821,7 @@ abstract class LightRetained extends LeafRetained {
                     s.switchTargets[i].addNode(ml, Targets.ENV_TARGETS);
                 }
 	        ml.switchState = (SwitchState)s.switchStates.get(j);
-		
+
 	    }
 	} else {
 	    ml = this.getMirrorLight(null);
@@ -829,7 +829,7 @@ abstract class LightRetained extends LeafRetained {
 	    ml.localToVworldIndex = new int[1][];
 	    ml.localToVworld[0] = this.localToVworld[0];
 	    ml.localToVworldIndex[0] = this.localToVworldIndex[0];
-	    // Initialization of the mirror object 
+	    // Initialization of the mirror object
 	    // If its view Scoped, then add this list
 	    // to be sent to Rendering Env
 	    //	    System.err.println("lightSetLive, s.viewList = "+s.viewLists);
@@ -898,7 +898,7 @@ abstract class LightRetained extends LeafRetained {
 	obj[6] = clr;
 	createMessage.args[4] = obj;
 	return createMessage;
-	
+
     }
 
     // The default set of clearLive actions
@@ -916,7 +916,7 @@ abstract class LightRetained extends LeafRetained {
 		    s.notifyThreads |= J3dThread.UPDATE_TRANSFORM;
                 }
 		newlyAddedMirrorLights.add(ml);
-		// Remove this mirror light as users of the bounding leaf 
+		// Remove this mirror light as users of the bounding leaf
 		if (ml.boundingLeaf != null) {
 		    ml.boundingLeaf.removeUser(ml);
 		    ml.boundingLeaf = null;
@@ -934,8 +934,8 @@ abstract class LightRetained extends LeafRetained {
 	    }
 	} else {
 	    ml = this.getMirrorLight(null);
-	    
-	    // Remove this mirror light as users of the bounding leaf 
+
+	    // Remove this mirror light as users of the bounding leaf
 	    if (ml.boundingLeaf != null) {
 	        ml.boundingLeaf.removeUser(ml);
 		ml.boundingLeaf = null;
@@ -946,7 +946,7 @@ abstract class LightRetained extends LeafRetained {
 	    }
 	    if ((s.viewScopedNodeList != null) && (s.viewLists != null)) {
 		s.viewScopedNodeList.add(ml);
-		//System.err.println("s.viewList is " + s.viewLists); 
+		//System.err.println("s.viewList is " + s.viewLists);
 		s.scopedNodesViewList.add(s.viewLists.get(0));
 	    } else {
 		s.nodeList.add(ml);
@@ -964,8 +964,8 @@ abstract class LightRetained extends LeafRetained {
 	    J3dThread.UPDATE_RENDER;
 
 
-	
-	if (scopes.size() > 0) { 
+
+	if (scopes.size() > 0) {
 	    J3dMessage createMessage = new J3dMessage();
 	    LightRetained[] mlts = new LightRetained[newlyAddedMirrorLights.size()];
 	    for (int i = 0; i < mlts.length; i++) {
@@ -1006,9 +1006,9 @@ abstract class LightRetained extends LeafRetained {
 	}
 
     }
-    
 
-   
+
+
     /**
      * Clones only the retained side, internal use only
      */
@@ -1045,7 +1045,7 @@ abstract class LightRetained extends LeafRetained {
 		region.transform(regionOfInfluence,
 				 getCurrentLocalToVworld());
 	    }
-	    
+
 	}
     }
 
@@ -1073,4 +1073,4 @@ abstract class LightRetained extends LeafRetained {
         }
     }
 }
- 
+
