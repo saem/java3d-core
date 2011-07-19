@@ -159,7 +159,7 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
 	// If renderAtom is not scoped to this view, don't even
 	// bother creating the renderAtom
 
-	synchronized (renderAtoms) {
+	synchronized (lockObj) {
 	    index = view.viewIndex;
 	    if (index >= renderAtoms.length) {
 
