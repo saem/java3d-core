@@ -26,7 +26,7 @@
 
 package javax.media.j3d;
 
-import com.sun.opengl.cg.*;
+import com.sun.opengl.cg.CGprogram;
 
 class JoglCgShaderInfo extends JoglShaderObject {
   private CGprogram cgShader;

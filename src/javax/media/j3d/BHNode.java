@@ -26,7 +26,6 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
 
 abstract class BHNode {
 

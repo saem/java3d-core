@@ -26,8 +26,6 @@
 
 package javax.media.j3d;
 
-import java.util.Vector;
-import java.util.Hashtable;
 
 /**
  * SceneGraphObjectRetained is a superclass, which has things that

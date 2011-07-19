@@ -26,8 +26,9 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.Color3f;
 import java.util.Enumeration;
+
+import javax.vecmath.Color3f;
 
 /**
  * Color interpolation behavior.  This class defines a behavior that

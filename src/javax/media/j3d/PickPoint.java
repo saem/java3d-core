@@ -26,7 +26,8 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point4d;
 
 /**
  * PickPoint is a pick shape defined as a single point.  It can

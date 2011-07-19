@@ -26,7 +26,7 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Color3f;
 
 /**
  * The Background leaf node defines a solid background color

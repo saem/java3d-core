@@ -26,7 +26,11 @@
 
 package javax.media.j3d;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.AbstractSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 
 /**

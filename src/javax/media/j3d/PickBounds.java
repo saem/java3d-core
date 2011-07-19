@@ -26,7 +26,8 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point4d;
 
 /**
  * PickBounds is a finite pick shape defined with a Bounds object.  It can

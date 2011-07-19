@@ -26,8 +26,6 @@
 
 package javax.media.j3d;
 
-import java.awt.Dimension;
-import javax.vecmath.*;
 
 /**
  * The ScreenViewCache class is used to cache all API data

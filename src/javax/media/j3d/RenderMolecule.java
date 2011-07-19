@@ -26,8 +26,7 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.util.*;
+import javax.vecmath.Vector3d;
 
 /**
  * The RenderMolecule manages a collection of RenderAtoms.

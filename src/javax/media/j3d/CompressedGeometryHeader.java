@@ -26,7 +26,7 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
 
 /**
  * The CompressedGeometrHeader object is used in conjunction with

@@ -25,8 +25,8 @@
  */
 
 package javax.media.j3d;
-import javax.vecmath.*;
-import java.lang.Math;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 /**
  * The IndexedLineStripArray object draws an array of vertices as a set of

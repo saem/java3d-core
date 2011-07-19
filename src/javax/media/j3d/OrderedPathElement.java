@@ -26,7 +26,6 @@
 
 package javax.media.j3d;
 
-import java.util.ArrayList;
 
 class OrderedPathElement extends Object {
     OrderedGroupRetained orderedGroup;

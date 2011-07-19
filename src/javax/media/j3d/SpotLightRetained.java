@@ -26,7 +26,7 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector3f;
 
 /**
  * A local spot light source object.

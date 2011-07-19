@@ -26,8 +26,8 @@
 
 package javax.media.j3d;
 
-import java.util.BitSet;
 import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  *  The switch node controls which one of its children will be rendered.

@@ -26,7 +26,6 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
 
 /**
  * The BoundingLeaf node defines a bounding region object that can be

@@ -26,9 +26,9 @@
 
 package javax.media.j3d;
 
-import java.util.Vector;
-import java.util.Enumeration;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * Group node.

@@ -26,8 +26,11 @@
 
 package javax.media.j3d;
 
-import java.util.*;
-import javax.vecmath.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
+import javax.vecmath.Vector3d;
 
 /**
  * A rendering environment structure is an object that organizes lights,

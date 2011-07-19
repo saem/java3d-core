@@ -26,7 +26,7 @@
 
 package javax.media.j3d;
 
-import com.sun.opengl.cg.*;
+import com.sun.opengl.cg.CGparameter;
 
 class JoglCgShaderParameter extends JoglShaderObject {
   private CGparameter vParam;

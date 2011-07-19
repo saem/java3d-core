@@ -26,7 +26,6 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.Color4f;
 import java.util.ArrayList;
 
 class TextureUnitStateRetained extends NodeComponentRetained {

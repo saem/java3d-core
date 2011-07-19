@@ -26,8 +26,9 @@
 
 package javax.media.j3d;
 
-import java.util.*;
-import javax.vecmath.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * The ShaderProgramRetained object is a component object of an AppearanceRetained

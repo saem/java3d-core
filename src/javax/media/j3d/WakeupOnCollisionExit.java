@@ -25,7 +25,6 @@
  */
 
 package javax.media.j3d;
-import java.util.*;
 
 /**
  * Class specifying a wakeup when the specified object

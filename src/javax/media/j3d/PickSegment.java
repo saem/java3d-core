@@ -26,7 +26,8 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point4d;
 
 /**
  * PickSegment is a line segment pick shape.  It can

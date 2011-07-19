@@ -26,8 +26,6 @@
 
 package javax.media.j3d;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A renderer structure is an object that organizes messages

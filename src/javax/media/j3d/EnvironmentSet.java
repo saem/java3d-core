@@ -26,8 +26,9 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.util.*;
+import java.util.ArrayList;
+
+import javax.vecmath.Color3f;
 
 /**
  * The LightBin manages a collection of EnvironmentSet objects.

@@ -26,8 +26,10 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * The TextureBin manages a collection of TextureSetting objects.

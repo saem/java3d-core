@@ -26,8 +26,9 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.Color3f;
 import java.util.ArrayList;
+
+import javax.vecmath.Color3f;
 
 /**
  * The ColoringAttributesRetained object defines attributes that apply to
