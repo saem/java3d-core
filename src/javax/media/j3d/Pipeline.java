@@ -36,10 +36,6 @@ import java.awt.GraphicsDevice;
 abstract class Pipeline {
     // Supported rendering pipelines
     enum Type {
-        // Native rendering pipelines using OGL or D3D library
-        NATIVE_OGL,
-        NATIVE_D3D,
-
         // Java rendering pipeline using Java Bindings for OpenGL
         JOGL,
 
@@ -47,7 +43,6 @@ abstract class Pipeline {
         NOOP,
     }
 
-    private static final String CLASSNAME_NATIVE = "javax.media.j3d.NativePipeline";
     private static final String CLASSNAME_JOGL = "javax.media.j3d.JoglPipeline";
     private static final String CLASSNAME_NOOP = "javax.media.j3d.NoopPipeline";
 
@@ -72,10 +67,6 @@ abstract class Pipeline {
     static void createPipeline(Type pipelineType) {
         String className = null;
         switch (pipelineType) {
-        case NATIVE_OGL:
-        case NATIVE_D3D:
-            className = CLASSNAME_NATIVE;
-            break;
         case JOGL:
             className = CLASSNAME_JOGL;
             break;
@@ -139,10 +130,6 @@ abstract class Pipeline {
      */
     String getPipelineName() {
         switch (pipelineType) {
-        case NATIVE_OGL:
-            return "NATIVE_OGL";
-        case NATIVE_D3D:
-            return "NATIVE_D3D";
         case JOGL:
             return "JOGL";
         case NOOP:
@@ -158,11 +145,8 @@ abstract class Pipeline {
      */
     String getRendererName() {
         switch (pipelineType) {
-        case NATIVE_OGL:
         case JOGL:
             return "OpenGL";
-        case NATIVE_D3D:
-            return "DirectX";
         case NOOP:
             return "None";
         default:

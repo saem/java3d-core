@@ -916,20 +916,12 @@ class MasterControl {
         // XXXX : We should consider adding support for a more flexible,
         // dynamic selection scheme via an API call.
 
-        // Default rendering pipeline is the JOGL pipeline on MacOS and the
-        // native OpenGL pipeline on all other platforms.
-        Pipeline.Type pipelineType =
-                isMacOs ? Pipeline.Type.JOGL : Pipeline.Type.NATIVE_OGL;
+        // Default rendering pipeline is the JOGL
+        Pipeline.Type pipelineType = Pipeline.Type.JOGL;
 
         final String rendStr = getProperty("j3d.rend");
-        boolean nativeOglRequested = false;
         if (rendStr == null) {
             // Use default pipeline
-        } else if (rendStr.equals("ogl") && !isMacOs) {
-            pipelineType = Pipeline.Type.NATIVE_OGL;
-            nativeOglRequested = true;
-        } else if (rendStr.equals("d3d") && isWindowsOs) {
-            pipelineType = Pipeline.Type.NATIVE_D3D;
         } else if (rendStr.equals("jogl")) {
             pipelineType = Pipeline.Type.JOGL;
         } else if (rendStr.equals("noop")) {
@@ -1271,7 +1263,7 @@ class MasterControl {
      * TODO: most code that cares about this should move into the pipeline
      */
     final boolean isD3D() {
-	return Pipeline.getPipeline().getPipelineType() == Pipeline.Type.NATIVE_D3D;
+	return false;
     }
 
     /**
