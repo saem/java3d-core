@@ -26,7 +26,7 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
 
 /**
  * The CompressedGeometrHeader object is used in conjunction with
@@ -58,7 +58,7 @@ public class CompressedGeometryHeader extends Object {
      * bufferType: compressed geometry is made up of triangles.
      */
     public static final int TRIANGLE_BUFFER = 2 ;
-    
+
     // Valid values for the bufferDataPresent field.
 
     /**
@@ -138,7 +138,7 @@ public class CompressedGeometryHeader extends Object {
      * Offset in bytes of the start of the compressed geometry from the
      * beginning of the compressed geometry byte array passed to the
      * CompressedGeometry constructor. <p>
-     * 
+     *
      * If the CompressedGeometry is created with reference access semantics,
      * then this allow external compressors or file readers to embed several
      * blocks of compressed geometry in a single large byte array, possibly
@@ -188,7 +188,7 @@ public class CompressedGeometryHeader extends Object {
      * in by the application.
      *
      * @see CompressedGeometry
-     */ 
+     */
     public CompressedGeometryHeader() {
     }
 
@@ -224,7 +224,7 @@ public class CompressedGeometryHeader extends Object {
 	case LINE_BUFFER:     type = "LINE_BUFFER" ;     break ;
 	case TRIANGLE_BUFFER: type = "TRIANGLE_BUFFER" ; break ;
 	}
-	
+
 	String data = "" ;
 	if ((bufferDataPresent & NORMAL_IN_BUFFER) != 0)
 	    data = data + "NORMALS " ;
@@ -232,7 +232,7 @@ public class CompressedGeometryHeader extends Object {
 	    data = data + "COLORS " ;
 	if ((bufferDataPresent & ALPHA_IN_BUFFER) != 0)
 	    data = data + "ALPHA " ;
-	
+
 	String lbound = "null" ;
 	if (lowerBound != null)
 	    lbound = lowerBound.toString() ;

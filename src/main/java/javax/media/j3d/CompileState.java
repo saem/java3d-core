@@ -26,8 +26,12 @@
 
 package javax.media.j3d;
 
-import java.util.*;
-import java.security.*;
+import java.security.AccessControlException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * The CompileState holds information used during a compile.  It is
@@ -65,25 +69,25 @@ class CompileState {
     static final int BOUNDS_READ		= 0x00001;
     static final int GEOMETRY_READ		= 0x00002;
 
-    
+
     // scene graph flattening
 
     boolean keepTG = false;	// used to force the immediate transform
 				// group to stay around
 
-    boolean needNormalsTransform = false;  // true if the current transform 
+    boolean needNormalsTransform = false;  // true if the current transform
 		 			   // needs to push down normals
 					   // transform to geometries
-				 
+
 				// the current static transform group
     TransformGroupRetained staticTransform = null;
-    
+
 				// parent group
     GroupRetained parentGroup = null;
 
 				// list of transform group
 				// for the current transform group
-    ArrayList transformGroupChildrenList = null; 
+    ArrayList transformGroupChildrenList = null;
 
 				// list of objects that have a static
 				// transform that can be deferenced
@@ -109,7 +113,7 @@ class CompileState {
 	    compileVerbose = false;
 	}
 	initShapeMerge();
-    } 
+    }
 
     // Appearance mapping:
     /**
@@ -170,7 +174,7 @@ class CompileState {
 	    while (geometry == null && i < shape.geometryList.size()) {
 		geometry = (GeometryRetained) shape.geometryList.get(i);
 		i++;
-	    }	    
+	    }
 	    if (shape.parent instanceof GroupRetained && ((GroupRetained)shape.parent).isStaticChildren() && geometry.geoType < GeometryArrayRetained.GEO_TYPE_RASTER) {
 		list.add(shape);
 	    }
@@ -199,15 +203,15 @@ class CompileState {
 
 	//	System.err.println("doShapeMerge, shapeList = "+shapeLists);
 	if (shapeLists != null) {
-	    // loop over the shapes in each list, creating a single shape 
-	    // for each.  Add the shape to the group 
+	    // loop over the shapes in each list, creating a single shape
+	    // for each.  Add the shape to the group
 	    Collection lists = shapeLists.values();
 	    Iterator listIterator = lists.iterator();
 	    Shape3DRetained mergeShape;
 	    GeometryRetained firstGeo;
 	    int num = 0;
 	    int compileFlags = 0;
-	    
+
 	    while (listIterator.hasNext()) {
 		Vector curList = (Vector)listIterator.next();
 		int numShapes = curList.size();
@@ -230,7 +234,7 @@ class CompileState {
 			int numMerge = 0;
 			mergeShape = shapes[i];
 			GeometryArrayRetained mergeGeo = (GeometryArrayRetained)firstGeo;
-			
+
 			toBeMergedShapes[numMerge++] = mergeShape;
 			// Determine if all mergeable shapes have the same boundsCompute
 			// and collisionBounds set the same way
@@ -252,11 +256,11 @@ class CompileState {
 				shapes[j].isEquivalent(mergeShape) &&
 				firstGeo.isEquivalenceClass(mergeGeo) &&
 				((GeometryArrayRetained)firstGeo).vertexFormat == mergeGeo.vertexFormat) {
-				    // got one to merge, add shapes to merge, 
+				    // got one to merge, add shapes to merge,
 				    toBeMergedShapes[numMerge++] = shapes[j];
 
 				    compileFlags |= getCompileFlags(shapes[j]);
-				    
+
 				    // remove from shapes
 				    shapes[j] = null;
 			    }
@@ -280,10 +284,10 @@ class CompileState {
 				if (!found) {
 				    System.err.println("ShapeSet.add(): Can't remove " +
 						       "shape from parent, can't find shape!");
-				}				    
-				
+				}
+
 			    }
-				
+
 			    mergeShape = new Shape3DCompileRetained(toBeMergedShapes, numMerge, compileFlags);
 
 			    if (J3dDebug.devPhase && J3dDebug.debug) {
@@ -331,9 +335,9 @@ class CompileState {
 	    (shape.boundsAutoCompute &&
 	     shape.source.getCapability(Shape3D.ALLOW_BOUNDS_READ)))
 	    cflag |= GEOMETRY_READ;
- 
+
 	return cflag;
-			
+
     }
 
 }

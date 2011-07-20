@@ -26,8 +26,8 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.lang.Math;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 /**
  * The LineStripArray object draws an array of vertices as a set of
@@ -60,7 +60,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	case PickShape.PICKRAY:
 	    PickRay pickRay= (PickRay) pickShape;
 
-	    while(i < stripVertexCounts.length) {  
+	    while(i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 vtxIndexArr[0] = j;
@@ -80,13 +80,13 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                             y = iPnt.y;
                             z = iPnt.z;
                             if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                                storeInterestData(pickInfo, flags, geom, geomIndex, 
+                                storeInterestData(pickInfo, flags, geom, geomIndex,
                                                   vtxIndexArr, iPnt, sdist[0]);
                             }
                         }
                         if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                              vtxIndexArr, iPnt, sdist[0]);                      
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
+                                              vtxIndexArr, iPnt, sdist[0]);
        		        }
                     }
 		    pnts[0].set(pnts[1]);
@@ -96,11 +96,11 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    break;
 	case PickShape.PICKSEGMENT:
 	    PickSegment pickSegment = (PickSegment) pickShape;
-	    Vector3d dir = 
-		new Vector3d(pickSegment.end.x - pickSegment.start.x, 
+	    Vector3d dir =
+		new Vector3d(pickSegment.end.x - pickSegment.start.x,
 			     pickSegment.end.y - pickSegment.start.y,
 			     pickSegment.end.z - pickSegment.start.z);
-	    
+
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
@@ -110,7 +110,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                     vtxIndexArr[1] = j;
 		    getVertexData(j++, pnts[1]);
 		    if (intersectLineAndRay(pnts[0], pnts[1],
-					    pickSegment.start, 
+					    pickSegment.start,
 					    dir, sdist, iPnt) &&
 			(sdist[0] <= 1.0)) {
 			if (flags == 0) {
@@ -122,30 +122,30 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                             y = iPnt.y;
                             z = iPnt.z;
                             if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                                storeInterestData(pickInfo, flags, geom, geomIndex, 
+                                storeInterestData(pickInfo, flags, geom, geomIndex,
                                                   vtxIndexArr, iPnt, sdist[0]);
                             }
                         }
                         if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                              vtxIndexArr, iPnt, sdist[0]);                      
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
+                                              vtxIndexArr, iPnt, sdist[0]);
        		        }
 		    }
-		    pnts[0].set(pnts[1]);			
+		    pnts[0].set(pnts[1]);
                     vtxIndexArr[0] = vtxIndexArr[1];
 		}
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGBOX:
-	    BoundingBox bbox = (BoundingBox) 
+	    BoundingBox bbox = (BoundingBox)
 		               ((PickBounds) pickShape).bounds;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 vtxIndexArr[0] = j;
 		getVertexData(j++, pnts[0]);
-		while (j < end) {	 
+		while (j < end) {
                     vtxIndexArr[1] = j;
 		    getVertexData(j++, pnts[1]);
 		    if (intersectBoundingBox(pnts, bbox, sdist, iPnt)) {
@@ -158,26 +158,26 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                             y = iPnt.y;
                             z = iPnt.z;
                             if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                                storeInterestData(pickInfo, flags, geom, geomIndex, 
+                                storeInterestData(pickInfo, flags, geom, geomIndex,
                                                   vtxIndexArr, iPnt, sdist[0]);
                             }
                         }
                         if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                              vtxIndexArr, iPnt, sdist[0]);                      
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
+                                              vtxIndexArr, iPnt, sdist[0]);
        		        }
 		    }
-		    pnts[0].set(pnts[1]);			   
+		    pnts[0].set(pnts[1]);
                     vtxIndexArr[0] = vtxIndexArr[1];
 		}
 	    }
 
 	    break;
 	case PickShape.PICKBOUNDINGSPHERE:
-	    BoundingSphere bsphere = (BoundingSphere) 
+	    BoundingSphere bsphere = (BoundingSphere)
 		                     ((PickBounds) pickShape).bounds;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 vtxIndexArr[0] = j;
@@ -195,25 +195,25 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                             y = iPnt.y;
                             z = iPnt.z;
                             if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                                storeInterestData(pickInfo, flags, geom, geomIndex, 
+                                storeInterestData(pickInfo, flags, geom, geomIndex,
                                                   vtxIndexArr, iPnt, sdist[0]);
                             }
                         }
                         if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                              vtxIndexArr, iPnt, sdist[0]);                      
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
+                                              vtxIndexArr, iPnt, sdist[0]);
        		        }
 		    }
-		    pnts[0].set(pnts[1]);			   
+		    pnts[0].set(pnts[1]);
                     vtxIndexArr[0] = vtxIndexArr[1];
 		}
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGPOLYTOPE:
-	    BoundingPolytope bpolytope = (BoundingPolytope) 
+	    BoundingPolytope bpolytope = (BoundingPolytope)
 		                      ((PickBounds) pickShape).bounds;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 vtxIndexArr[0] = j;
@@ -231,16 +231,16 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                             y = iPnt.y;
                             z = iPnt.z;
                             if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                                storeInterestData(pickInfo, flags, geom, geomIndex, 
+                                storeInterestData(pickInfo, flags, geom, geomIndex,
                                                   vtxIndexArr, iPnt, sdist[0]);
                             }
                         }
                         if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                              vtxIndexArr, iPnt, sdist[0]);                      
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
+                                              vtxIndexArr, iPnt, sdist[0]);
        		        }
 		    }
-		    pnts[0].set(pnts[1]);			   
+		    pnts[0].set(pnts[1]);
                     vtxIndexArr[0] = vtxIndexArr[1];
 		}
 	    }
@@ -248,7 +248,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	case PickShape.PICKCYLINDER:
 	    PickCylinder pickCylinder= (PickCylinder) pickShape;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 vtxIndexArr[0] = j;
@@ -266,16 +266,16 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                             y = iPnt.y;
                             z = iPnt.z;
                             if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                                storeInterestData(pickInfo, flags, geom, geomIndex, 
+                                storeInterestData(pickInfo, flags, geom, geomIndex,
                                                   vtxIndexArr, iPnt, sdist[0]);
                             }
                         }
                         if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                              vtxIndexArr, iPnt, sdist[0]);                      
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
+                                              vtxIndexArr, iPnt, sdist[0]);
        		        }
 		    }
-		    pnts[0].set(pnts[1]);			   
+		    pnts[0].set(pnts[1]);
                     vtxIndexArr[0] = vtxIndexArr[1];
 		}
 	    }
@@ -283,7 +283,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	case PickShape.PICKCONE:
 	    PickCone pickCone= (PickCone) pickShape;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 vtxIndexArr[0] = j;
@@ -301,16 +301,16 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
                             y = iPnt.y;
                             z = iPnt.z;
                             if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                                storeInterestData(pickInfo, flags, geom, geomIndex, 
+                                storeInterestData(pickInfo, flags, geom, geomIndex,
                                                   vtxIndexArr, iPnt, sdist[0]);
                             }
                         }
                         if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                              vtxIndexArr, iPnt, sdist[0]);                      
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
+                                              vtxIndexArr, iPnt, sdist[0]);
        		        }
 		    }
-		    pnts[0].set(pnts[1]);			   
+		    pnts[0].set(pnts[1]);
                     vtxIndexArr[0] = vtxIndexArr[1];
 		}
 	    }
@@ -319,8 +319,8 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    // Should not happen since API already check for this
 	    throw new IllegalArgumentException(J3dI18N.getString("LineStripArrayRetained0"));
 	default:
-	    throw new RuntimeException ("PickShape not supported for intersection"); 
-	} 
+	    throw new RuntimeException ("PickShape not supported for intersection");
+	}
 
 	if (minDist < Double.MAX_VALUE) {
 	    iPnt.x = x;
@@ -328,9 +328,9 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    iPnt.z = z;
 	    return true;
 	}
-	return false;  
+	return false;
     }
-  
+
     boolean intersect(Point3d[] pnts) {
 	int j, end;
 	Point3d[] points = new Point3d[2];
@@ -349,9 +349,9 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, points[0]);		
+		getVertexData(j++, points[0]);
 		while (j < end) {
-		    getVertexData(j++, points[1]);		
+		    getVertexData(j++, points[1]);
 		    if (intersectSegment(pnts, points[0], points[1],
 					 dist, null)) {
 			return true;
@@ -365,9 +365,9 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, points[0]);		
+		getVertexData(j++, points[0]);
 		while (j < end) {
-		    getVertexData(j++, points[1]);		
+		    getVertexData(j++, points[1]);
 		    dir.x = points[1].x - points[0].x;
 		    dir.y = points[1].y - points[0].y;
 		    dir.z = points[1].z - points[0].z;
@@ -377,7 +377,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 			return true;
 		    }
 		    points[0].set(points[1]);
-		}		
+		}
 	    }
 	    break;
 	case 1: // Point
@@ -385,9 +385,9 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, points[0]);		
+		getVertexData(j++, points[0]);
 		while (j < end) {
-		    getVertexData(j++, points[1]);		
+		    getVertexData(j++, points[1]);
 		    dir.x = points[1].x - points[0].x;
 		    dir.y = points[1].y - points[0].y;
 		    dir.z = points[1].z - points[0].z;
@@ -396,7 +396,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 			(dist[0] <= 1.0)) {
 			return true;
 		    }
-		    points[0].set(points[1]); 
+		    points[0].set(points[1]);
 		}
 	    }
 	    break;
@@ -416,10 +416,10 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	while (i < stripVertexCounts.length) {
 	    j = stripStartVertexIndices[i];
 	    end = j + stripVertexCounts[i++];
-	    getVertexData(j++, pnts[0]);		
+	    getVertexData(j++, pnts[0]);
 	    thisToOtherVworld.transform(pnts[0]);
 	    while (j < end) {
-		getVertexData(j++, pnts[1]);		
+		getVertexData(j++, pnts[1]);
 		thisToOtherVworld.transform(pnts[1]);
 		if (geom.intersect(pnts)) {
 		    return true;
@@ -447,9 +447,9 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, pnts[0]);		
+		getVertexData(j++, pnts[0]);
 		while ( j < end) {
-		    getVertexData(j++, pnts[1]);		
+		    getVertexData(j++, pnts[1]);
 		    if (intersectBoundingBox(pnts, box, null, null)) {
 			return true;
 		    }
@@ -462,9 +462,9 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, pnts[0]);		
+		getVertexData(j++, pnts[0]);
 		while ( j < end) {
-		    getVertexData(j++, pnts[1]);		
+		    getVertexData(j++, pnts[1]);
 		    if (intersectBoundingSphere(pnts, bsphere, null,
 						null)) {
 			return true;
@@ -479,9 +479,9 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, pnts[0]);		
+		getVertexData(j++, pnts[0]);
 		while ( j < end) {
-		    getVertexData(j++, pnts[1]);		
+		    getVertexData(j++, pnts[1]);
 		    if (intersectBoundingPolytope(pnts, bpolytope,
 						  null, null)) {
 			return true;
@@ -492,7 +492,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 	    break;
 	default:
 	    throw new RuntimeException("Bounds not supported for intersection "
-				       + targetBound); 
+				       + targetBound);
 	}
 
 	return false;
@@ -515,7 +515,7 @@ class LineStripArrayRetained extends GeometryStripArrayRetained {
 
 
 
-	while (i < stripVertexCounts.length) {  
+	while (i < stripVertexCounts.length) {
 	    j = stripStartVertexIndices[i];
 	    end = j + stripVertexCounts[i++];
 	    getVertexData(j++, pnt0);

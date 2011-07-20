@@ -26,11 +26,15 @@
 
 package javax.media.j3d;
 
-import java.awt.Point;
-import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.IllegalComponentStateException;
-import javax.vecmath.*;
+
+import javax.vecmath.Matrix4d;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point4d;
+import javax.vecmath.SingularMatrixException;
+import javax.vecmath.Vector3d;
+import javax.vecmath.Vector4d;
 
 /**
  * The CanvasViewCache class is used to cache all data, both API data
@@ -412,7 +416,7 @@ class CanvasViewCache extends Object {
         int dirtyIndex = (frustumBBox != null) ?
             Canvas3D.RENDER_BIN_DIRTY_IDX : Canvas3D.RENDERER_DIRTY_IDX;
         int scrvcDirtyMask;
-        
+
         // Issue 109 : read/clear the dirty bits for the correct index
         synchronized (screenViewCache) {
             scrvcDirtyMask = screenViewCache.scrvcDirtyMask[dirtyIndex];

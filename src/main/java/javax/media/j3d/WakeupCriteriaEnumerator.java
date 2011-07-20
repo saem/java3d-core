@@ -100,7 +100,7 @@ class WakeupCriteriaEnumerator implements Enumeration {
 
 	      for (i=0; i<condOrOfAnds.conditions.length; i++) {
 		 for (j=0; j<condOrOfAnds.conditions[i].conditions.length; j++) {
-		     if (condOrOfAnds.conditions[i].conditions[j].triggered || 
+		     if (condOrOfAnds.conditions[i].conditions[j].triggered ||
 			 type == WakeupCondition.ALL_ELEMENTS) {
 			criterion[length++] = condOrOfAnds.conditions[i].conditions[j];
 		     }
@@ -120,7 +120,7 @@ class WakeupCriteriaEnumerator implements Enumeration {
 
 	      for (i=0; i<condAndOfOrs.conditions.length; i++) {
 		 for (j=0; j<condAndOfOrs.conditions[i].conditions.length; j++) {
-		     if (condAndOfOrs.conditions[i].conditions[j].triggered || 
+		     if (condAndOfOrs.conditions[i].conditions[j].triggered ||
 			 type == WakeupCondition.ALL_ELEMENTS) {
 			criterion[length++] = condAndOfOrs.conditions[i].conditions[j];
 		     }

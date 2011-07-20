@@ -26,7 +26,6 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
 
 /**
  * A SensorRead encapsulates all the information associated with a single
@@ -79,7 +78,7 @@ public class SensorRead {
     /**
      * Constructs a SensorRead object with the specified number
      * of buttons.
-     * @param numButtons the number of buttons for this SensorRead 
+     * @param numButtons the number of buttons for this SensorRead
      */
     public SensorRead(int numButtons){
 	this.read = new Transform3D();
@@ -132,10 +131,10 @@ public class SensorRead {
     }
 
    /**
-    *  Sets the values of all buttons for this SensorRead object.  
+    *  Sets the values of all buttons for this SensorRead object.
     *  @param values array contining the new buttons for this SensorRead
-    *  @exception ArrayIndexOutOfBoundsException if this object 
-    *  has 0 buttons or if values.length is less than the number of 
+    *  @exception ArrayIndexOutOfBoundsException if this object
+    *  has 0 buttons or if values.length is less than the number of
     *  buttons in this object.
     */
     public void setButtons(int[] values) {
@@ -149,7 +148,7 @@ public class SensorRead {
           System.arraycopy(values, 0, buttonValues, 0, numButtons);
     }
 
-    
+
    /**
     * Copies the array of button values for this SensorRead object into
     * the specified array.
@@ -162,7 +161,7 @@ public class SensorRead {
     public void getButtons(int[] values) {
 	if(numButtons > 0)
 	    System.arraycopy(buttonValues, 0, values, 0, numButtons);
-    } 
+    }
 
 
     /**

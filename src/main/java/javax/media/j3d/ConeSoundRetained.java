@@ -26,21 +26,20 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.Vector3f;
-import javax.vecmath.Vector3d;
 import javax.vecmath.Point2f;
 import javax.vecmath.Point3f;
+import javax.vecmath.Vector3f;
 
 
 
 /**
  * A ConeSoundRetained node defines a point sound source located at some
- * location 
+ * location
  * in space whose amplitude is constrained not only by maximum and minimum
  * amplitude
  * spheres but by two concentric cone volumes directed down an vector radiating
  * from the sound's location.
- */ 
+ */
 
 class ConeSoundRetained extends PointSoundRetained {
     /**
@@ -85,14 +84,14 @@ class ConeSoundRetained extends PointSoundRetained {
     // *********************
 
     /**
-     * Sets this sound's distance gain elliptical attenuation - 
+     * Sets this sound's distance gain elliptical attenuation -
      * where gain scale factor is applied to sound based on distance listener
      * is from sound source.
      * @param frontAttenuation defined by pairs of (distance,gain-scale-factor)
      * @param backAttenuation defined by pairs of (distance,gain-scale-factor)
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     void setDistanceGain(Point2f[] frontAttenuation,
                                       Point2f[] backAttenuation ) {
 
@@ -108,7 +107,7 @@ class ConeSoundRetained extends PointSoundRetained {
      * @param backGain array of non-negative scale factors
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     void setDistanceGain(float[] frontDistance, float[] frontGain,
                                       float[] backDistance, float[] backGain) {
         this.setDistanceGain(frontDistance, frontGain);
@@ -116,13 +115,13 @@ class ConeSoundRetained extends PointSoundRetained {
     }
 
     /**
-     * Sets this sound's back distance gain attenuation - where gain scale 
+     * Sets this sound's back distance gain attenuation - where gain scale
      * factor is applied to sound based on distance listener along the negative
      * sound direction axis from sound source.
      * @param attenuation defined by pairs of (distance,gain-scale-factor)
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     void setBackDistanceGain(Point2f[] attenuation)
     {
         // if attenuation array null set both attenuation components to null
@@ -157,7 +156,7 @@ class ConeSoundRetained extends PointSoundRetained {
      * @param gain array of non-negative scale factors
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     void setBackDistanceGain(float[] distance, float[] gain)
     {
         int distanceLength = 0;
@@ -179,10 +178,10 @@ class ConeSoundRetained extends PointSoundRetained {
                 this.backAttenuationGain = new float[distanceLength];
                 // Copy the distance array into nodes field
                 System.arraycopy(distance, 0, this.backAttenuationDistance,
-                                           0, distanceLength);      
+                                           0, distanceLength);
                 // Copy the gain array an array of same length as the distance array
                 if (distanceLength <= gainLength) {
-                    System.arraycopy(gain, 0, this.backAttenuationGain, 
+                    System.arraycopy(gain, 0, this.backAttenuationGain,
                                            0, distanceLength);
                 }
                 else {
@@ -195,12 +194,12 @@ class ConeSoundRetained extends PointSoundRetained {
                 }
             }
         }
- 
-        Point2f [] attenuation = new Point2f[distanceLength]; 
-        for (int i=0; i<distanceLength; i++) { 
+
+        Point2f [] attenuation = new Point2f[distanceLength];
+        for (int i=0; i<distanceLength; i++) {
              attenuation[i] = new Point2f(this.backAttenuationDistance[i],
                                           this.backAttenuationGain[i]);
-        } 
+        }
         dispatchAttribChange(BACK_DISTANCE_GAIN_DIRTY_BIT, attenuation);
 	if (source != null && source.isLive()) {
 	    notifySceneGraphChanged(false);
@@ -213,9 +212,9 @@ class ConeSoundRetained extends PointSoundRetained {
      * @param backAttenuation arrays containing backward distances attenuation pairs
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */ 
+     */
     void getDistanceGain(Point2f[] frontAttenuation,
-                    Point2f[] backAttenuation) { 
+                    Point2f[] backAttenuation) {
         this.getDistanceGain(frontAttenuation);
         this.getBackDistanceGain(backAttenuation);
     }
@@ -228,19 +227,19 @@ class ConeSoundRetained extends PointSoundRetained {
      * @param backGain array of non-negative scale factors associated with back distances
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */ 
+     */
     void getDistanceGain(float[] frontDistance, float[] frontGain,
-                                      float[] backDistance, float[] backGain) { 
+                                      float[] backDistance, float[] backGain) {
         this.getDistanceGain( frontDistance, frontGain);
         this.getBackDistanceGain( backDistance, backGain);
     }
 
-    /**  
+    /**
      * Retieves sound's back distance attenuation
      * Put the contents of the two separate distance and gain arrays into
      * an array of Point2f.
      * @param attenuation containing distance attenuation pairs
-     */  
+     */
     void getBackDistanceGain(Point2f[] attenuation) {
         // Write into arrays passed in, don't do a new
         if (attenuation == null)
@@ -260,17 +259,17 @@ class ConeSoundRetained extends PointSoundRetained {
         }
     }
 
-    /**  
-     * Retieves this sound's back attenuation distance and gain arrays, 
+    /**
+     * Retieves this sound's back attenuation distance and gain arrays,
      * returned in separate arrays.
      * @param distance array of monotonically-increasing floats.
      * @param gain array of amplitude scale factors associated with distances.
-     */  
+     */
     void getBackDistanceGain(float[] distance, float[] gain) {
         // write into arrays passed in, don't do a new
         if (distance == null || gain == null)
             return;
-        if (this.backAttenuationDistance == null || 
+        if (this.backAttenuationDistance == null ||
             this.backAttenuationGain == null)
             return;
         // backAttenuationDistance and backAttenuationGain array length should
@@ -303,9 +302,9 @@ class ConeSoundRetained extends PointSoundRetained {
 	if (staticTransform != null) {
 	    staticTransform.transform.transform(direction, this.direction);
 	} else {
-	    this.direction.set(direction);	
+	    this.direction.set(direction);
 	}
-        dispatchAttribChange(DIRECTION_DIRTY_BIT, 
+        dispatchAttribChange(DIRECTION_DIRTY_BIT,
 				(new Vector3f(this.direction)));
 
 	if (source != null && source.isLive()) {
@@ -325,7 +324,7 @@ class ConeSoundRetained extends PointSoundRetained {
 	direction.z = z;
 	if (staticTransform != null) {
 	    staticTransform.transform.transform(direction);
-	} 
+	}
         dispatchAttribChange(DIRECTION_DIRTY_BIT, (new Vector3f(direction)));
 
 	if (source != null && source.isLive()) {
@@ -361,10 +360,10 @@ class ConeSoundRetained extends PointSoundRetained {
     //
     // ***************************
 
-    /**  
+    /**
      * Sets this sound's angular gain attenuation (not including filter)
      * @param attenuation array containing angular distance and gain
-     */  
+     */
     void setAngularAttenuation(Point2f[] attenuation) {
         int attenuationLength = 0;
         this.filterType = NO_FILTERING;
@@ -387,11 +386,11 @@ class ConeSoundRetained extends PointSoundRetained {
                 }
             } // lengths not zero
         } // arrays not null
-        Point3f [] attenuation3f = new Point3f[attenuationLength]; 
-        for (int i=0; i<attenuationLength; i++) { 
+        Point3f [] attenuation3f = new Point3f[attenuationLength];
+        for (int i=0; i<attenuationLength; i++) {
              attenuation3f[i] = new Point3f(this.angularDistance[i],
-                                            this.angularGain[i], 
-                                            Sound.NO_FILTER); 
+                                            this.angularGain[i],
+                                            Sound.NO_FILTER);
         }
         dispatchAttribChange(ANGULAR_ATTENUATION_DIRTY_BIT, attenuation3f);
 
@@ -400,10 +399,10 @@ class ConeSoundRetained extends PointSoundRetained {
 	}
      }
 
-    /**  
+    /**
      * Sets this sound's angular attenuation including both gain and filter.
      * @param attenuation array containing angular distance, gain and filter
-     */  
+     */
     void setAngularAttenuation(Point3f[] attenuation) {
         if (attenuation == null) {
             this.angularDistance = null;
@@ -441,7 +440,7 @@ class ConeSoundRetained extends PointSoundRetained {
      * Sets angular attenuation including gain and filter using separate arrays
      * @param distance array containing angular distance
      * @param filter array containing angular low-pass frequency cutoff values
-     */  
+     */
     void setAngularAttenuation(float[] distance, float[] gain, float[] filter) {
         int distanceLength = 0;
         if (distance == null || gain == null || filter == null) {
@@ -475,7 +474,7 @@ class ConeSoundRetained extends PointSoundRetained {
                     /**
                      * Extend gain array to length of distance array by
                      * replicate last gain values.
-                     */  
+                     */
                     for (int i=gainLength; i< distanceLength; i++) {
                         this.angularGain[i] = gain[gainLength - 1];
                     }
@@ -523,19 +522,19 @@ class ConeSoundRetained extends PointSoundRetained {
      * All arrays are forced to same size
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     int getAngularAttenuationLength() {
 
        if (angularDistance == null)
            return 0;
-       else 
+       else
            return (this.angularDistance.length);
     }
- 
+
     /**
      * Retrieves angular attenuation including gain and filter in a single array
      * @param attenuation applied to gain when listener is between cones
-     */  
+     */
     void getAngularAttenuation(Point3f[] attenuation) {
         /// use attenuation array allocated by user - don't new it
         // The three angular attenuation arrays length should be the same
@@ -557,12 +556,12 @@ class ConeSoundRetained extends PointSoundRetained {
     }
 
     /**
-     * Retrieves angular attenuation including gain and filter 
+     * Retrieves angular attenuation including gain and filter
      * returned as separate arrays
      * @param distance array containing angular distance
      * @param gain array containing angular gain attenuation
      * @param filter array containing angular low-pass frequency cutoff values
-     */  
+     */
     void getAngularAttenuation(float[] distance, float[] gain, float[] filter) {
         // use attenuation array allocated by user - don't new it
         if (distance == null || gain == null || filter == null)
@@ -588,7 +587,7 @@ class ConeSoundRetained extends PointSoundRetained {
                 filterLength = filter.length;
         }
         if (filterType == NO_FILTERING || this.frequencyCutoff == null) {
-            for (int i=0; i< filterLength; i++) 
+            for (int i=0; i< filterLength; i++)
                 filter[i] = Sound.NO_FILTER;
         }
         if (filterType == LOW_PASS) {
@@ -597,18 +596,18 @@ class ConeSoundRetained extends PointSoundRetained {
     }
 
 
-    /**  
+    /**
      * This updates the Direction fields of cone sound.
      *
      * Neither Angular gain Attenuation and Filtering fields, nor
      * back distance gain not maintained in mirror object
-     */  
+     */
     void updateMirrorObject(Object[] objs) {
         if (debugFlag)
             debugPrint("PointSoundRetained:updateMirrorObj()");
         Transform3D trans = null;
         int component = ((Integer)objs[1]).intValue();
-        int numSnds = ((Integer)objs[2]).intValue(); 
+        int numSnds = ((Integer)objs[2]).intValue();
         SoundRetained[] mSnds = (SoundRetained[]) objs[3];
         if (component == -1) {
             // update every field
@@ -616,7 +615,7 @@ class ConeSoundRetained extends PointSoundRetained {
             return;
         }
         if ((component & DIRECTION_DIRTY_BIT) != 0) {
-            for (int i = 0; i < numSnds; i++) {    
+            for (int i = 0; i < numSnds; i++) {
                 ConeSoundRetained cone = (ConeSoundRetained)mSnds[i];
                 cone.direction = (Vector3f)objs[4];
                 cone.getLastLocalToVworld().transform(cone.direction,
@@ -641,12 +640,12 @@ class ConeSoundRetained extends PointSoundRetained {
         super.updateTransformChange();
         lastLocalToVworld.transform(direction, xformDirection);
         xformDirection.normalize();
-        // set flag looked at by Scheduler to denote Transform change  
-        // this flag will force resneding transformed direction to AudioDevice 
-        if (debugFlag) 
+        // set flag looked at by Scheduler to denote Transform change
+        // this flag will force resneding transformed direction to AudioDevice
+        if (debugFlag)
             debugPrint("ConeSound xformDirection is (" + xformDirection.x + ", "
-                    + xformDirection.y + ", "+ xformDirection.z + ")"); 
-    } 
+                    + xformDirection.y + ", "+ xformDirection.z + ")");
+    }
 
     void mergeTransform(TransformGroupRetained xform) {
         super.mergeTransform(xform);

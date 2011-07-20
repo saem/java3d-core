@@ -26,8 +26,9 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
 import java.util.ArrayList;
+
+import javax.vecmath.Point3d;
 
 /**
  * ViewPlatform object (retained side)
@@ -65,10 +66,10 @@ class ViewPlatformRetained extends LeafRetained {
     // dirty flag for viewList
     boolean viewListDirty = true;
 
-    /** 
+    /**
      * The current cached view platform transform (vworldToVpc) and
      * its inverse (vpcToVworld).
-     */ 
+     */
     Transform3D vworldToVpc = null;
     Transform3D vpcToVworld = new Transform3D();
 
@@ -114,7 +115,7 @@ class ViewPlatformRetained extends LeafRetained {
      * This setting determines how Java 3D places the
      * user's eye point as a function of head position.  The variable can
      * contain one of NOMINAL_SCREEN, NOMINAL_HEAD, or NOMINAL_FEET.
-     * @param policy the new policy, one of NOMINAL_SCREEN, NOMINAL_HEAD, 
+     * @param policy the new policy, one of NOMINAL_SCREEN, NOMINAL_HEAD,
      * or NOMINAL_FEET
      */
     void setViewAttachPolicy(int policy) {
@@ -122,7 +123,7 @@ class ViewPlatformRetained extends LeafRetained {
 	    this.viewAttachPolicy = policy;
 	    vprDirtyMask |= View.VPR_VIEW_ATTACH_POLICY_DIRTY;
 	}
-	
+
 	if (source != null && source.isLive()) {
 	    repaint();
 	}
@@ -167,7 +168,7 @@ class ViewPlatformRetained extends LeafRetained {
 	}
 
     }
- 
+
     /**
      * Get the ViewPlatform's activation radius
      */
@@ -195,9 +196,9 @@ class ViewPlatformRetained extends LeafRetained {
 	    viewListDirty = true;
 	}
     }
-  
+
     Transform3D getVworldToVpc() {
-	if (vworldToVpc == null) 
+	if (vworldToVpc == null)
 	    vworldToVpc = new Transform3D();
 	vworldToVpc.set(getCurrentLocalToVworld(null));
        	vworldToVpc.invert();
@@ -248,9 +249,9 @@ class ViewPlatformRetained extends LeafRetained {
 	    lastLocalToVworld = getLastLocalToVworld();
 
 	    if (lastLocalToVworld.equals(identity)) {
-		// lastLocalToVworld not yet updated 
+		// lastLocalToVworld not yet updated
 		// for Renderer viewCache when startup
-		evaluateInitViewPlatformTransform((NodeRetained)this, 
+		evaluateInitViewPlatformTransform((NodeRetained)this,
 						  lastLocalToVworld);
 	    }
 	}
@@ -284,7 +285,7 @@ class ViewPlatformRetained extends LeafRetained {
 	for (int i = views.length-1; i>=0; i--) {
 	    views[i].checkView();
 	}
-	
+
         super.doSetLive(s);
 
         if (inBackgroundGroup) {
@@ -300,7 +301,7 @@ class ViewPlatformRetained extends LeafRetained {
 	if (s.viewLists != null) {
 	    throw new
 		IllegalSceneGraphException(J3dI18N.getString("ViewPlatformRetained3"));
-	}	    
+	}
 	/*
 	if (false) {
 	    System.err.println("setLive: vworldToVpc = ");
@@ -310,7 +311,7 @@ class ViewPlatformRetained extends LeafRetained {
 	}
 	*/
 	this.locale = s.locale;
-		
+
 
 	if (s.transformTargets != null && s.transformTargets[0] != null) {
             s.transformTargets[0].addNode(this, Targets.VPF_TARGETS);
@@ -333,7 +334,7 @@ class ViewPlatformRetained extends LeafRetained {
 	universe.addViewPlatform(this);
 	s.traverseFlags |= NodeRetained.CONTAINS_VIEWPLATFORM;
     }
- 
+
     /**
      * This clearLive routine first calls the superclass's method, then
      * it deactivates all canvases that are associated with the attached
@@ -354,9 +355,9 @@ class ViewPlatformRetained extends LeafRetained {
 	if (s.transformTargets != null && s.transformTargets[0] != null) {
             s.transformTargets[0].addNode(this, Targets.VPF_TARGETS);
 	    s.notifyThreads |= J3dThread.UPDATE_TRANSFORM;
-	    
+
 	}
-	s.notifyThreads |= (J3dThread.UPDATE_BEHAVIOR | 
+	s.notifyThreads |= (J3dThread.UPDATE_BEHAVIOR |
 			    J3dThread.SOUND_SCHEDULER);
 	universe.removeViewPlatform(this);
     }

@@ -25,8 +25,12 @@
  */
 
 package javax.media.j3d;
-import javax.vecmath.* ;
-import java.util.* ;
+import java.util.ArrayList;
+
+import javax.vecmath.Color3f;
+import javax.vecmath.Color4f;
+import javax.vecmath.Point3f;
+import javax.vecmath.Vector3f;
 
 /**
  * The GeneralizedVertexList class is a variable-size list used to
@@ -48,10 +52,10 @@ class GeneralizedVertexList implements GeneralizedStripFlags {
     private boolean hasColor3 = false ;
     private boolean hasColor4 = false ;
     private boolean hasNormals = false ;
-    
+
     // Indicates the vertex winding of front-facing triangles in this strip.
     private int frontFace ;
-    
+
     /**
      * Count of number of strips generated after conversion to GeometryArray.
      */
@@ -85,7 +89,7 @@ class GeneralizedVertexList implements GeneralizedStripFlags {
     GeneralizedVertexList(int vertexFormat, int frontFace, int initSize) {
 	this.frontFace = frontFace ;
 	setVertexFormat(vertexFormat) ;
-	
+
 	if (initSize == 0)
 	    vertices = new ArrayList() ;
 	else
@@ -125,7 +129,7 @@ class GeneralizedVertexList implements GeneralizedStripFlags {
 	    else
 		hasColor3 = true ;
     }
-    
+
     /**
      * A class with fields corresponding to all the data that can be bundled
      * with the vertices of generalized strips.
@@ -136,11 +140,11 @@ class GeneralizedVertexList implements GeneralizedStripFlags {
 	Color3f color3 ;
 	Color4f color4 ;
 	Vector3f normal ;
-	    
+
 	Vertex(Point3f p, Vector3f n, Color4f c, int flag) {
 	    this.flag = flag ;
 	    coord = new Point3f(p) ;
-		
+
 	    if (hasNormals)
 		normal = new Vector3f(n) ;
 
@@ -158,7 +162,7 @@ class GeneralizedVertexList implements GeneralizedStripFlags {
     void addVertex(Point3f pos, Vector3f norm, Color4f color, int flag) {
 	vertices.add(new Vertex(pos, norm, color, flag)) ;
     }
-				
+
     /**
      * Return the number of vertices in this list.
      */
@@ -225,7 +229,7 @@ class GeneralizedVertexList implements GeneralizedStripFlags {
 		    c3f[i] = v.color3 ;
 		}
 		ga.setColors(0, c3f) ;
-	    
+
 	    } else if (hasColor4) {
 		Color4f c4f[] = new Color4f[indices.count] ;
 		for (int i = 0 ; i < indices.count ; i++) {

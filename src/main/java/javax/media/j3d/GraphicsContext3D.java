@@ -26,12 +26,13 @@
 
 package javax.media.j3d;
 
-import java.awt.Point;
-import java.awt.image.BufferedImage;
-import javax.vecmath.*;
-import java.util.Vector;
-import java.util.Enumeration;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.util.Enumeration;
+import java.util.Vector;
+
+import javax.vecmath.Color3f;
+import javax.vecmath.Vector3d;
 
 /**
  * A GraphicsContext3D object is used for immediate mode rendering into
@@ -197,7 +198,7 @@ public class GraphicsContext3D extends Object   {
     boolean lightsChanged = false;
 
     // A boolean that indicates the sounds have changed
-    // XXXX: the soundsChanged flag are set like lights methods set 
+    // XXXX: the soundsChanged flag are set like lights methods set
     //       lightsChanged? but where is this supposed to be check???
     //       lightsChanged tested in 'draw'; but Sound are not processed
     //       in draw.
@@ -214,15 +215,15 @@ public class GraphicsContext3D extends Object   {
     int stereoMode = STEREO_BOTH;
 
     // Read Buffer for reading raster of color image
-    byte[] byteBuffer = new byte[1];      
+    byte[] byteBuffer = new byte[1];
 
     // Read Buffer for reading floating depth image
-    float[] floatBuffer = new float[1];      
+    float[] floatBuffer = new float[1];
 
     // Read Buffer for reading integer depth image
     int[] intBuffer = new int[1];
 
-    /** 
+    /**
      * The cached ColoringAttributes color value.  It is
      * 1.0, 1.0, 1.0 if there is no ColoringAttributes.
      */
@@ -238,18 +239,18 @@ public class GraphicsContext3D extends Object   {
     float dGreen = 1.0f;
     float dBlue = 1.0f;
 
-    /** 
+    /**
      * The cached TransparencyAttributes transparency value.  It is
      * 0.0 if there is no TransparencyAttributes.
      */
     float alpha = 0.0f;
 
-    /** 
+    /**
      * The cached visible flag for geometry.
      */
     boolean visible = true;
 
-    /** 
+    /**
      * Cached values for polygonMode, line antialiasing, and point antialiasing
      */
     int polygonMode = PolygonAttributes.POLYGON_FILL;
@@ -258,7 +259,7 @@ public class GraphicsContext3D extends Object   {
 
 
     /**
-    /** 
+    /**
      * A boolean indicating whether or not lighting should be on.
      */
     boolean enableLighting = false;
@@ -347,11 +348,11 @@ public class GraphicsContext3D extends Object   {
     /**
      * Sets the current Appearance object to the specified
      * Appearance component object.
-     * The graphics context stores a reference to the specified 
-     * Appearance object. This means that the application may modify 
-     * individual appearance attributes by using the appropriate 
+     * The graphics context stores a reference to the specified
+     * Appearance object. This means that the application may modify
+     * individual appearance attributes by using the appropriate
      * methods on the Appearance object.
-     * If the Appearance object is null, default values will be used 
+     * If the Appearance object is null, default values will be used
      * for all appearance attributes - it is as if an
      * Appearance node were created using the default constructor.
      *
@@ -362,7 +363,7 @@ public class GraphicsContext3D extends Object   {
      * an off-screen buffer.
      */
     public void setAppearance(Appearance appearance) {
-        
+
         if(appearance == null) {
             if(defaultAppearance == null) {
                 defaultAppearance = new Appearance();
@@ -405,13 +406,13 @@ public class GraphicsContext3D extends Object   {
                                 }
                             }
                         }
-                    }        
-                }           
+                    }
+                }
             }
         }
 
         uAppearance = appearance;
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
 	    (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -423,11 +424,11 @@ public class GraphicsContext3D extends Object   {
             sendRenderMessage(true, GraphicsContext3D.SET_APPEARANCE, appearance, null);
         }
     }
-    
+
     void doSetAppearance(Appearance appearance) {
         // Appearance can't be null. See setAppearance().
         assert(appearance != null);
-        
+
         NodeComponentRetained nc;
         nc = ((AppearanceRetained)appearance.retained).material;
         if (nc != null) {
@@ -439,8 +440,8 @@ public class GraphicsContext3D extends Object   {
         } else {
             enableLighting = false;
         }
-        
-        if(appearance instanceof ShaderAppearance){ 
+
+        if(appearance instanceof ShaderAppearance){
             // Handle ShaderProgramRetained.
             ShaderProgramRetained spR = ((ShaderAppearanceRetained)appearance.retained).shaderProgram;
             if(spR != null) {
@@ -456,7 +457,7 @@ public class GraphicsContext3D extends Object   {
             }
 
             //Handle ShaderAttributeSetRetained.
-            ShaderAttributeSetRetained sasR = 
+            ShaderAttributeSetRetained sasR =
                         ((ShaderAppearanceRetained)appearance.retained).shaderAttributeSet;
             if(sasR != null) {
                 sasR.setInImmCtx(true);
@@ -470,33 +471,33 @@ public class GraphicsContext3D extends Object   {
                 }
             }
         }
-        
+
         if (((AppearanceRetained)appearance.retained).texUnitState != null) {
             TextureUnitStateRetained[] texUnitState =
                     ((AppearanceRetained)appearance.retained).texUnitState;
-            
+
             for (int i = 0 ; i < texUnitState.length; i++) {
                 if (texUnitState[i] != null) {
                     texUnitState[i].setInImmCtx(true);
                 }
             }
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).texture;
         if (nc != null) {
             nc.setInImmCtx(true);
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).texCoordGeneration;
         if (nc != null) {
             nc.setInImmCtx(true);
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).textureAttributes;
         if (nc != null) {
             nc.setInImmCtx(true);
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).coloringAttributes;
         if (nc != null) {
             nc.setInImmCtx(true);
@@ -508,7 +509,7 @@ public class GraphicsContext3D extends Object   {
             green = 1.0f;
             blue = 1.0f;
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).transparencyAttributes;
         if (nc != null) {
             nc.setInImmCtx(true);
@@ -516,14 +517,14 @@ public class GraphicsContext3D extends Object   {
         } else {
             alpha = 1.0f;
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).renderingAttributes;
         if (nc != null) {
             nc.setInImmCtx(true);
             visible = ((RenderingAttributesRetained)nc).visible;
         } else
             visible = true;
-        
+
         nc = ((AppearanceRetained)appearance.retained).polygonAttributes;
         if (nc != null) {
             nc.setInImmCtx(true);
@@ -531,16 +532,16 @@ public class GraphicsContext3D extends Object   {
         } else {
             polygonMode = PolygonAttributes.POLYGON_FILL;
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).lineAttributes;
         if (nc != null) {
             nc.setInImmCtx(true);
             lineAA = ((LineAttributesRetained)nc).lineAntialiasing;
-            
+
         } else {
             lineAA = false;
         }
-        
+
         nc = ((AppearanceRetained)appearance.retained).pointAttributes;
         if (nc != null) {
             if (nc.source.isLive())
@@ -549,7 +550,7 @@ public class GraphicsContext3D extends Object   {
         } else {
             pointAA = false;
         }
-        
+
         // Reset the inImmCtx flag of this.appearance.
         if (this.appearance != null) {
             AppearanceRetained app = (AppearanceRetained)this.appearance.retained;
@@ -557,7 +558,7 @@ public class GraphicsContext3D extends Object   {
             if (app.material != null) {
                 app.material.setInImmCtx(false);
             }
-            
+
             if(app instanceof ShaderAppearanceRetained){
                 // Handle ShaderProgramRetained.
                 ShaderProgramRetained spR = ((ShaderAppearanceRetained)app).shaderProgram;
@@ -572,7 +573,7 @@ public class GraphicsContext3D extends Object   {
                         }
                     }
                 }
-                
+
                 //Handle ShaderAttributeSetRetained.
                 ShaderAttributeSetRetained sasR = ((ShaderAppearanceRetained)app).shaderAttributeSet;
                 if(sasR != null) {
@@ -587,7 +588,7 @@ public class GraphicsContext3D extends Object   {
                     }
                 }
             }
-            
+
             if (app.texUnitState != null) {
                 for (int i = 0; i < app.texUnitState.length; i++) {
                     if (app.texUnitState[0] != null)
@@ -622,8 +623,8 @@ public class GraphicsContext3D extends Object   {
                 app.pointAttributes.setInImmCtx(false);
             }
         }
-        
-        ((AppearanceRetained)appearance.retained).setInImmCtx(true);   
+
+        ((AppearanceRetained)appearance.retained).setInImmCtx(true);
         this.appearance = appearance;
     }
 
@@ -638,16 +639,16 @@ public class GraphicsContext3D extends Object   {
     /**
      * Sets the current Background to the specified Background
      * leaf node object.
-     * The graphics context stores a reference to the specified 
-     * Background node. This means that the application may modify 
-     * the background color or image by using the appropriate 
-     * methods on the Background node. The Background node must 
-     * not be part of a live scene graph, nor may it subsequently 
-     * be made part of a live scene graph-an IllegalSharingException 
-     * is thrown in such cases. If the Background object is null, 
+     * The graphics context stores a reference to the specified
+     * Background node. This means that the application may modify
+     * the background color or image by using the appropriate
+     * methods on the Background node. The Background node must
+     * not be part of a live scene graph, nor may it subsequently
+     * be made part of a live scene graph-an IllegalSharingException
+     * is thrown in such cases. If the Background object is null,
      * the default background color of black (0,0,0) is used to clear
-     * the canvas prior to rendering a new frame. The Background 
-     * node's application region is ignored for immediate-mode 
+     * the canvas prior to rendering a new frame. The Background
+     * node's application region is ignored for immediate-mode
      * rendering.
      *
      * @param background the new Background object
@@ -660,7 +661,7 @@ public class GraphicsContext3D extends Object   {
      * an off-screen buffer.
      */
     public void setBackground(Background background) {
-        
+
         if (background.isLive()) {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D11"));
         }
@@ -676,9 +677,9 @@ public class GraphicsContext3D extends Object   {
         if (((BackgroundRetained)background.retained).geometryBranch != null) {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D22"));
         }
-        
+
         uBackground = background;
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
 	    (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -692,7 +693,7 @@ public class GraphicsContext3D extends Object   {
     }
 
     void doSetBackground(Background background) {
-	BackgroundRetained bg; 
+	BackgroundRetained bg;
 
 	if (this.background != null) {
 	    bg = (BackgroundRetained)this.background.retained;
@@ -715,14 +716,14 @@ public class GraphicsContext3D extends Object   {
     /**
      * Sets the current Fog to the specified Fog
      * leaf node object.
-     * The graphics context stores a reference to the specified 
-     * Fog node. This means that the application may modify the 
-     * fog attributes using the appropriate methods on the Fog 
-     * node object. The Fog node must not be part of a live 
+     * The graphics context stores a reference to the specified
+     * Fog node. This means that the application may modify the
+     * fog attributes using the appropriate methods on the Fog
+     * node object. The Fog node must not be part of a live
      * scene graph, nor may it subsequently be made part of a
-     * live scene graph-an IllegalSharingException is thrown in 
-     * such cases. If the Fog object is null, fog is disabled. 
-     * Both the region of influence and the hierarchical scope 
+     * live scene graph-an IllegalSharingException is thrown in
+     * such cases. If the Fog object is null, fog is disabled.
+     * Both the region of influence and the hierarchical scope
      * of the Fog node are ignored for immediate-mode rendering.
      * @param fog the new Fog object
      * @exception IllegalSharingException if the Fog node
@@ -733,7 +734,7 @@ public class GraphicsContext3D extends Object   {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D12"));
         }
         uFog = fog;
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -793,17 +794,17 @@ public class GraphicsContext3D extends Object   {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D25"));
         }
         uModelClip = modelClip;
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
             doSetModelClip(modelClip);
         } else if (Thread.currentThread() ==
                         canvas3d.view.universe.behaviorScheduler) {
-            sendRenderMessage(false, GraphicsContext3D.SET_MODELCLIP, 
+            sendRenderMessage(false, GraphicsContext3D.SET_MODELCLIP,
 					modelClip, null);
         } else {
-            sendRenderMessage(true, GraphicsContext3D.SET_MODELCLIP, 
+            sendRenderMessage(true, GraphicsContext3D.SET_MODELCLIP,
 					modelClip, null);
         }
     }
@@ -822,7 +823,7 @@ public class GraphicsContext3D extends Object   {
 
 	    // save the current model Transform
 	    modelClipTransform.set(compTransform);
-	} 
+	}
     }
 
     /**
@@ -838,14 +839,14 @@ public class GraphicsContext3D extends Object   {
 
     /**
      * Replaces the specified light with the light provided.
-     * The graphics context stores a reference to each light 
-     * object in the list of lights. This means that the 
+     * The graphics context stores a reference to each light
+     * object in the list of lights. This means that the
      * application may modify the light attributes for
-     * any of the lights using the appropriate methods on that 
-     * Light node object. None of the Light nodes in the list 
-     * of lights may be part of a live scene graph, nor may 
+     * any of the lights using the appropriate methods on that
+     * Light node object. None of the Light nodes in the list
+     * of lights may be part of a live scene graph, nor may
      * they subsequently be made part of a live scene graph -
-     * an IllegalSharingException is thrown in such cases. 
+     * an IllegalSharingException is thrown in such cases.
      * @param light the new light
      * @param index which light to replace
      * @exception IllegalSharingException if the Light node
@@ -860,14 +861,14 @@ public class GraphicsContext3D extends Object   {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D14"));
         }
         uLights.setElementAt(light, index);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
             doSetLight(light, index);
         } else if (Thread.currentThread() ==
                         canvas3d.view.universe.behaviorScheduler) {
-            sendRenderMessage(false, GraphicsContext3D.SET_LIGHT, light, 
+            sendRenderMessage(false, GraphicsContext3D.SET_LIGHT, light,
 			new Integer(index));
         } else {
             sendRenderMessage(true, GraphicsContext3D.SET_LIGHT, light,
@@ -899,12 +900,12 @@ public class GraphicsContext3D extends Object   {
     public void insertLight(Light light, int index) {
         if (light == null) {
            throw new NullPointerException(J3dI18N.getString("GraphicsContext3D13"));
-        }       
+        }
         if (light.isLive()) {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D14"));
         }
         uLights.insertElementAt(light, index);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -932,7 +933,7 @@ public class GraphicsContext3D extends Object   {
      */
     public void removeLight(int index) {
         uLights.removeElementAt(index);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -967,16 +968,16 @@ public class GraphicsContext3D extends Object   {
     /**
      * Retrieves the enumeration object of all the lights.
      * @return the enumeration object of all the lights
-     */  
+     */
     public Enumeration getAllLights() {
         return uLights.elements();
-    }  
- 
+    }
+
     /**
      * Appends the specified light to this graphics context's list of lights.
-     * Adding a null Light object to the list will result 
-     * in a NullPointerException. Both the region of influence 
-     * and the hierarchical scope of all lights in the list 
+     * Adding a null Light object to the list will result
+     * in a NullPointerException. Both the region of influence
+     * and the hierarchical scope of all lights in the list
      * are ignored for immediate-mode rendering.
      * @param light the light to add
      * @exception IllegalSharingException if the Light node
@@ -987,12 +988,12 @@ public class GraphicsContext3D extends Object   {
         if (light == null) {
            throw new NullPointerException(J3dI18N.getString("GraphicsContext3D13"));
         }
- 
+
         if (light.isLive()) {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D14"));
         }
         uLights.addElement(light);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1028,7 +1029,7 @@ public class GraphicsContext3D extends Object   {
 	}
 	if (normalTransform == null) {
 	    normalTransform = new Transform3D();
-	} 
+	}
 
 	if (normalTransformNeedToUpdate) {
 	    normalTransform.invert(compTransform);
@@ -1075,7 +1076,7 @@ public class GraphicsContext3D extends Object   {
     /**
      * Sets the HiRes coordinate of this context to the location
      * specified by the parameters provided.
-     * The parameters x, y, and z are arrays of eight 32-bit 
+     * The parameters x, y, and z are arrays of eight 32-bit
      * integers that specify the high-resolution coordinates point.
      * @param x an eight element array specifying the x position
      * @param y an eight element array specifying the y position
@@ -1086,7 +1087,7 @@ public class GraphicsContext3D extends Object   {
 	HiResCoord hiRes = new HiResCoord(x, y, z);
 	setHiRes(hiRes);
     }
-   
+
     /**
      * Sets the HiRes coordinate of this context
      * to the location specified by the HiRes argument.
@@ -1094,7 +1095,7 @@ public class GraphicsContext3D extends Object   {
      */
     public void setHiRes(HiResCoord hiRes) {
         uHiRes.setHiResCoord(hiRes);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1124,14 +1125,14 @@ public class GraphicsContext3D extends Object   {
     /**
      * Sets the current model transform to a copy of the specified
      * transform.
-     * A BadTransformException is thrown if an attempt is made 
+     * A BadTransformException is thrown if an attempt is made
      * to specify an illegal Transform3D.
      * @param t the new model transform
      * @exception BadTransformException if the transform is not affine.
      */
     public void setModelTransform(Transform3D t) {
-	
-        if ((canvas3d.view == null) || 
+
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1142,10 +1143,10 @@ public class GraphicsContext3D extends Object   {
 	    //Transform3D uModelTransform = t;
 	    if (Thread.currentThread() ==
 		canvas3d.view.universe.behaviorScheduler) {
-		sendRenderMessage(false, GraphicsContext3D.SET_MODEL_TRANSFORM, 
+		sendRenderMessage(false, GraphicsContext3D.SET_MODEL_TRANSFORM,
 				  uModelTransform, null);
 	    } else {
-		sendRenderMessage(true, GraphicsContext3D.SET_MODEL_TRANSFORM, 
+		sendRenderMessage(true, GraphicsContext3D.SET_MODEL_TRANSFORM,
 				  uModelTransform, null);
 	    }
 	}
@@ -1166,8 +1167,8 @@ public class GraphicsContext3D extends Object   {
      * @exception BadTransformException if the transform is not affine.
      */
     public void multiplyModelTransform(Transform3D t) {
-        if ((canvas3d.view == null) || 
-	    (canvas3d.view.universe == null) || 
+        if ((canvas3d.view == null) ||
+	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
             doMultiplyModelTransform(t);
@@ -1182,13 +1183,13 @@ public class GraphicsContext3D extends Object   {
 	    }
 	}
     }
-    
+
     void doMultiplyModelTransform(Transform3D t) {
 	this.modelTransform.mul(t);
 	computeCompositeTransform();
 	normalTransformNeedToUpdate = true;
     }
-  
+
     /**
      * Retrieves the current model transform.
      * @param t the model transform that will receive the current
@@ -1200,10 +1201,10 @@ public class GraphicsContext3D extends Object   {
 
     /**
      * Replaces the specified sound with the sound provided.
-     * The graphics context stores a reference to each sound 
-     * object in the list of sounds. This means that the 
+     * The graphics context stores a reference to each sound
+     * object in the list of sounds. This means that the
      * application may modify the sound attributes for
-     * any of the sounds by using the appropriate methods on 
+     * any of the sounds by using the appropriate methods on
      * that Sound node object.
      * @param sound the new sound
      * @param index which sound to replace
@@ -1219,7 +1220,7 @@ public class GraphicsContext3D extends Object   {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D23"));
         }
         uSounds.setElementAt(sound, index);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1252,9 +1253,9 @@ public class GraphicsContext3D extends Object   {
     /**
      * Inserts the specified sound at the specified index location.
      * Inserting a sound to the list of sounds implicitly starts the
-     * sound playing. Once a sound is finished playing, it can be 
-     * restarted by setting the sound's enable flag to true. 
-     * The scheduling region of all sounds in the list is ignored 
+     * sound playing. Once a sound is finished playing, it can be
+     * restarted by setting the sound's enable flag to true.
+     * The scheduling region of all sounds in the list is ignored
      * for immediate-mode rendering.
      * @param sound the new sound
      * @param index at which location to insert
@@ -1263,14 +1264,14 @@ public class GraphicsContext3D extends Object   {
      * @exception NullPointerException if the Sound object is null.
      */
     public void insertSound(Sound sound, int index) {
-        if (sound == null) { 
-           throw new NullPointerException(J3dI18N.getString("GraphicsContext3D17"));         } 
- 
-        if (sound.isLive()) { 
+        if (sound == null) {
+           throw new NullPointerException(J3dI18N.getString("GraphicsContext3D17"));         }
+
+        if (sound.isLive()) {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D23"));
         }
         uSounds.insertElementAt(sound, index);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1298,17 +1299,17 @@ public class GraphicsContext3D extends Object   {
      */
     public void removeSound(int index) {
         uSounds.removeElementAt(index);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
             doRemoveSound(index);
         } else if (Thread.currentThread() ==
                         canvas3d.view.universe.behaviorScheduler) {
-            sendRenderMessage(false, GraphicsContext3D.REMOVE_SOUND, 
+            sendRenderMessage(false, GraphicsContext3D.REMOVE_SOUND,
 				new Integer(index), null);
         } else {
-            sendRenderMessage(true, GraphicsContext3D.REMOVE_SOUND, 
+            sendRenderMessage(true, GraphicsContext3D.REMOVE_SOUND,
 				new Integer(index), null);
         }
     }
@@ -1336,17 +1337,17 @@ public class GraphicsContext3D extends Object   {
     /**
      * Retrieves the enumeration object of all the sounds.
      * @return the enumeration object of all the sounds
-     */  
+     */
     public Enumeration getAllSounds() {
         return uSounds.elements();
-    }   
+    }
 
     /**
      * Appends the specified sound to this graphics context's list of sounds.
      * Adding a sound to the list of sounds implicitly starts the
-     * sound playing. Once a sound is finished playing, it can be 
-     * restarted by setting the sound's enable flag to true. 
-     * The scheduling region of all sounds in the list is ignored 
+     * sound playing. Once a sound is finished playing, it can be
+     * restarted by setting the sound's enable flag to true.
+     * The scheduling region of all sounds in the list is ignored
      * for immediate-mode rendering.
      * @param sound the sound to add
      * @exception IllegalSharingException if the Sound node
@@ -1354,15 +1355,15 @@ public class GraphicsContext3D extends Object   {
      * @exception NullPointerException if the Sound object is null.
      */
     public void addSound(Sound sound) {
-        if (sound == null) { 
-           throw new NullPointerException(J3dI18N.getString("GraphicsContext3D17"));         } 
- 
+        if (sound == null) {
+           throw new NullPointerException(J3dI18N.getString("GraphicsContext3D17"));         }
+
         if (sound.isLive()) {
            throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D23"));
- 
+
         }
         uSounds.addElement(sound);
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1390,7 +1391,7 @@ public class GraphicsContext3D extends Object   {
     public int numSounds() {
 	return uSounds.size();
     }
- 
+
     SoundScheduler getSoundScheduler() {
         if (canvas3d != null && canvas3d.view != null)
             return canvas3d.view.soundScheduler;  // could be null as well
@@ -1432,7 +1433,7 @@ public class GraphicsContext3D extends Object   {
 
     /**
      * Retrieves the sound playing flag.
-     * @param index which sound 
+     * @param index which sound
      * @return flag denoting if sound is currently playing
      */
     public boolean isSoundPlaying(int index) {
@@ -1445,15 +1446,15 @@ public class GraphicsContext3D extends Object   {
     /**
      * Sets the current AuralAttributes object to the specified
      * AuralAttributes component object.
-     * This means that the application may modify individual 
-     * audio attributes by using the appropriate methods in 
+     * This means that the application may modify individual
+     * audio attributes by using the appropriate methods in
      * the Aural-Attributes object.
      * @param attributes the new AuralAttributes object
      */
     public void setAuralAttributes(AuralAttributes attributes) {
         uAuralAttributes = attributes;
 
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1497,7 +1498,7 @@ public class GraphicsContext3D extends Object   {
      */
     public void setBufferOverride(boolean bufferOverride) {
         uBufferOverride = bufferOverride;
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1511,7 +1512,7 @@ public class GraphicsContext3D extends Object   {
 			new Boolean(bufferOverride), null);
         }
     }
- 
+
     void doSetBufferOverride(boolean bufferOverride) {
 	if (bufferOverride != this.bufferOverride) {
 	    this.bufferOverride = bufferOverride;
@@ -1549,7 +1550,7 @@ public class GraphicsContext3D extends Object   {
      */
     public void setFrontBufferRendering(boolean frontBufferRendering) {
         uFrontBufferRendering = frontBufferRendering;
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1616,7 +1617,7 @@ public class GraphicsContext3D extends Object   {
      */
     public void setStereoMode(int stereoMode) {
         uStereoMode = stereoMode;
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -1674,19 +1675,19 @@ public class GraphicsContext3D extends Object   {
     }
 
     void doClear() {
-        
+
         if (!canvas3d.firstPaintCalled)
             return;
-        
+
         RenderBin rb = canvas3d.view.renderBin;
         BackgroundRetained back = null;
-        
-        
+
+
         if (this.background != null)
             back = (BackgroundRetained)this.background.retained;
         else
             back = this.black;
-        
+
         // XXXX: This should ideally be done by the renderer (or by the
         // canvas itself) when the canvas is first added to a view.
         /*
@@ -1697,10 +1698,10 @@ public class GraphicsContext3D extends Object   {
         // If we are in pure immediate mode, update the view cache
         if (!canvas3d.isRunning)
             updateViewCache(rb);
-        
+
         // We need to catch NullPointerException when the dsi
         // gets yanked from us during a remove.
-        
+
         try {
             // Issue 78 - need to get the drawingSurface info every
             // frame; this is necessary since the HDC (window ID)
@@ -1709,7 +1710,7 @@ public class GraphicsContext3D extends Object   {
             if (!canvas3d.offScreen) {
                 canvas3d.drawingSurfaceObject.getDrawingSurfaceObjectInfo();
             }
-            
+
             if (canvas3d.drawingSurfaceObject.renderLock()) {
                 // XXXX : Fix texture
                 /*
@@ -1727,7 +1728,7 @@ public class GraphicsContext3D extends Object   {
                     }
                 }
                  */
-                
+
                 if (canvas3d.ctx == null) {
                     synchronized (VirtualUniverse.mc.contextCreationLock) {
                         canvas3d.ctx = canvas3d.createNewContext(null, false);
@@ -1735,28 +1736,28 @@ public class GraphicsContext3D extends Object   {
                             canvas3d.drawingSurfaceObject.unLock();
                             return;
                         }
-                        
+
                         canvas3d.ctxTimeStamp =
                                 VirtualUniverse.mc.getContextTimeStamp();
                         canvas3d.screen.renderer.listOfCtxs.add(canvas3d.ctx);
                         canvas3d.screen.renderer.listOfCanvases.add(canvas3d);
-                        
+
                         canvas3d.beginScene();
-                        
+
                         if (canvas3d.graphics2D != null) {
                             canvas3d.graphics2D.init();
                         }
-                        
+
                         // enable separate specular color
                         canvas3d.enableSeparateSpecularColor();
                     }
-                    
+
                     // create the cache texture state in canvas
                     // for state download checking purpose
                     if (canvas3d.texUnitState == null) {
                         canvas3d.createTexUnitState();
                     }
-                                        
+
                     canvas3d.drawingSurfaceObject.contextValidated();
                     canvas3d.screen.renderer.currentCtx = canvas3d.ctx;
                     canvas3d.screen.renderer.currentDrawable = canvas3d.drawable;
@@ -1765,18 +1766,18 @@ public class GraphicsContext3D extends Object   {
                     canvas3d.canvasDirty = 0xffff;
                     // Update Appearance
                     updateState(rb, RenderMolecule.SURFACE);
-                    
+
                     canvas3d.currentLights = new
                             LightRetained[canvas3d.getNumCtxLights(canvas3d.ctx)];
-                    
+
                     for (int j=0; j<canvas3d.currentLights.length; j++) {
                         canvas3d.currentLights[j] = null;
                     }
                 }
-                
-                
+
+
                 canvas3d.makeCtxCurrent();
-                
+
                 if ((dirtyMask & BUFFER_MODE) != 0) {
                     if (bufferOverride) {
                         canvas3d.setRenderMode(canvas3d.ctx, stereoMode,
@@ -1790,27 +1791,27 @@ public class GraphicsContext3D extends Object   {
                     }
                     dirtyMask &= ~BUFFER_MODE;
                 }
-                
+
                 Dimension size = canvas3d.getSize();
                 int winWidth  = size.width;
                 int winHeight = size.height;
                 boolean isByRefBackgroundImage = false;
-                if (back.image != null) {                    
+                if (back.image != null) {
                     if (back.image.isByReference()) {
                         back.image.geomLock.getLock();
                         isByRefBackgroundImage = true;
                     }
-                
+
                     back.image.evaluateExtensions(canvas3d);
                 }
-                
+
                 canvas3d.clear(back, winWidth, winHeight);
 
                 if (isByRefBackgroundImage) {
                     back.image.geomLock.unLock();
                 }
-                
-                
+
+
                 // Set the viewport and view matrices
                 if (!canvas3d.isRunning) {
                     CanvasViewCache cvCache = canvas3d.canvasViewCache;
@@ -1832,7 +1833,7 @@ public class GraphicsContext3D extends Object   {
                                 rb.vworldToVpc);
                     }
                 }
-                
+
                 canvas3d.drawingSurfaceObject.unLock();
             }
         } catch (NullPointerException ne) {
@@ -1840,11 +1841,11 @@ public class GraphicsContext3D extends Object   {
             throw ne;
         }
     }
-    
+
     // Method to update compTransform.
     private void computeCompositeTransform() {
         ViewPlatform vp;
-        
+
         if ((canvas3d == null) ||
                 (canvas3d.view == null) ||
                 (((vp = canvas3d.view.getViewPlatform()) == null)) ||
@@ -1852,15 +1853,15 @@ public class GraphicsContext3D extends Object   {
             compTransform.set(modelTransform);
             return;
         }
-        
+
         ViewPlatformRetained vpR = (ViewPlatformRetained)vp.retained;
         if ((vpR == null) || (vpR.locale == null)) {
             compTransform.set(modelTransform);
             return;
         }
-        
+
         HiResCoord localeHiRes = vpR.locale.hiRes;
-        
+
         if (localeHiRes.equals(hiRes)) {
             compTransform.set(modelTransform);
         } else {
@@ -1871,7 +1872,7 @@ public class GraphicsContext3D extends Object   {
             compTransform.mul(trans, modelTransform);
         }
     }
-  
+
     // Method to update the view cache in pure immediate mode
     private void updateViewCache(RenderBin rb) {
 
@@ -1924,13 +1925,13 @@ public class GraphicsContext3D extends Object   {
             J3dDebug.doAssert(canvas3d.ctx != null, "canvas3d.ctx != null");
         }
 
-        // We need to catch NullPointerException when the dsi 
+        // We need to catch NullPointerException when the dsi
         // gets yanked from us during a remove.
-        try { 
+        try {
 	  if (canvas3d.drawingSurfaceObject.renderLock()) {
 
 	    // Make the context current
-	    canvas3d.makeCtxCurrent(); 
+	    canvas3d.makeCtxCurrent();
 
 	    if ((dirtyMask & BUFFER_MODE) != 0) {
 		if (bufferOverride) {
@@ -1942,16 +1943,16 @@ public class GraphicsContext3D extends Object   {
 		}
 		dirtyMask &= ~BUFFER_MODE;
 	    }
-		
-	    CanvasViewCache cvCache = canvas3d.canvasViewCache; 
+
+	    CanvasViewCache cvCache = canvas3d.canvasViewCache;
 	    Transform3D proj;
 
-//  	    vpcToEc = cvCache.getLeftVpcToEc(); 
+//  	    vpcToEc = cvCache.getLeftVpcToEc();
 	    if (bufferOverride) {
 		switch(stereoMode) {
 		case STEREO_RIGHT:
 		    vpcToEc = cvCache.getRightVpcToEc();
-		    // XXXX: move this under check for 
+		    // XXXX: move this under check for
 		    // (dirtyMask & BUFFER_MODE) above after testing
 		    // PureImmediate mode
 		    canvas3d.setProjectionMatrix(canvas3d.ctx,
@@ -1961,19 +1962,19 @@ public class GraphicsContext3D extends Object   {
 		case STEREO_BOTH:
 		default:
 		    vpcToEc = cvCache.getLeftVpcToEc();
-		    // XXXX: move this under check for 
+		    // XXXX: move this under check for
 		    // (dirtyMask & BUFFER_MODE) above after testing
 		    // PureImmediate mode
 		    canvas3d.setProjectionMatrix(canvas3d.ctx,
 						 cvCache.getLeftProjection());
 		}
 	    }
-	    else if (!canvas3d.isRunning || 
+	    else if (!canvas3d.isRunning ||
 		     // vpcToEc is not set in the first frame
 		     // of preRender() callback
 		     (canvas3d.vpcToEc == null)) {
 		    vpcToEc = cvCache.getLeftVpcToEc();
-	    } 
+	    }
 	    else {
 		vpcToEc = canvas3d.vpcToEc;
 	    }
@@ -1984,9 +1985,9 @@ public class GraphicsContext3D extends Object   {
 
 
 	    //	    this.drawTransform.mul(rb.vworldToVpc,
-	    //	    this.compTransform); 
+	    //	    this.compTransform);
 
-	    boolean isNonUniformScale = !drawTransform.isCongruent(); 
+	    boolean isNonUniformScale = !drawTransform.isCongruent();
 
 	    int geometryType = 0;
 	    switch (((GeometryRetained)geometry.retained).geoType) {
@@ -2005,7 +2006,7 @@ public class GraphicsContext3D extends Object   {
                 break;
             case GeometryRetained.GEO_TYPE_COMPRESSED:
                 geometryType = RenderMolecule.COMPRESSED;
-    
+
                 switch (((CompressedGeometryRetained)geometry.retained).getBufferType()) {
                 case CompressedGeometryHeader.POINT_BUFFER:
                     geometryType |= RenderMolecule.POINT ;
@@ -2023,7 +2024,7 @@ public class GraphicsContext3D extends Object   {
                 geometryType = RenderMolecule.SURFACE;
                 break;
             }
-	    
+
 	    useAlpha = updateState(rb, geometryType);
 
 	    canvas3d.setModelViewMatrix(canvas3d.ctx,
@@ -2033,7 +2034,7 @@ public class GraphicsContext3D extends Object   {
 
 	    updateModelClip(rb.vworldToVpc);
 
-	    this.drawTransform.mul(rb.vworldToVpc, this.compTransform); 
+	    this.drawTransform.mul(rb.vworldToVpc, this.compTransform);
 	    canvas3d.setModelViewMatrix(canvas3d.ctx,
 					vpcToEc.mat, this.drawTransform);
 
@@ -2055,7 +2056,7 @@ public class GraphicsContext3D extends Object   {
 		        geoRetained.setupMirrorColorPointer((geoRetained.vertexType & GeometryArrayRetained.COLOR_DEFINED),true);
 		    }
 	        }
-		
+
 	        if ((geometry.retained instanceof IndexedGeometryArrayRetained) &&
 		    ((((GeometryArrayRetained)geometry.retained).vertexFormat & GeometryArray.USE_COORD_INDEX_ONLY) == 0)) {
 		    if (geoRetained.dirtyFlag != 0) {
@@ -2073,7 +2074,7 @@ public class GraphicsContext3D extends Object   {
 
 	        geoRetained.setVertexFormat(false, ignoreVertexColors, canvas3d.ctx );
 
-	    } else if (geometry.retained instanceof Text3DRetained) { 
+	    } else if (geometry.retained instanceof Text3DRetained) {
 	        ((Text3DRetained)geometry.retained).setModelViewMatrix(
 			vpcToEc, this.drawTransform);
 		drawGeo = (GeometryRetained)geometry.retained;
@@ -2094,7 +2095,7 @@ public class GraphicsContext3D extends Object   {
 	    }
 
 		drawGeo.execute(canvas3d, null, isNonUniformScale,
-				false, alpha, 
+				false, alpha,
 				canvas3d.screen.screen,
 				ignoreVertexColors);
 
@@ -2110,18 +2111,18 @@ public class GraphicsContext3D extends Object   {
 
                 canvas3d.drawingSurfaceObject.unLock();
 	  }
-	} catch (NullPointerException ne) { 
+	} catch (NullPointerException ne) {
 	    canvas3d.drawingSurfaceObject.unLock();
 	    throw ne;
-	} 
+	}
     }
 
     /**
      * Draw the specified Geometry component object.
      * @param geometry the Geometry object to draw.
      *
-     * @exception IllegalSharingException if the specified geometry is a 
-     * Raster that refers to an ImageComponent2D that is being used by a 
+     * @exception IllegalSharingException if the specified geometry is a
+     * Raster that refers to an ImageComponent2D that is being used by a
      * Canvas3D as an off-screen buffer.
      */
     public void draw(Geometry geometry) {
@@ -2137,7 +2138,7 @@ public class GraphicsContext3D extends Object   {
                 }
             }
         }
-        
+
         if ((canvas3d.view == null) || (canvas3d.view.universe == null) ||
 		(!canvas3d.view.active)) {
 	    return;
@@ -2146,10 +2147,10 @@ public class GraphicsContext3D extends Object   {
         } else {
 	    if (Thread.currentThread() ==
                         canvas3d.view.universe.behaviorScheduler) {
-                sendRenderMessage(false, GraphicsContext3D.DRAW, 
+                sendRenderMessage(false, GraphicsContext3D.DRAW,
 						geometry, null);
             } else {
-                sendRenderMessage(true, GraphicsContext3D.DRAW, geometry, 
+                sendRenderMessage(true, GraphicsContext3D.DRAW, geometry,
 			null);
             }
 	}
@@ -2176,7 +2177,7 @@ public class GraphicsContext3D extends Object   {
 	if (shape.isLive()) {
 	    throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D26"));
 	}
-        ((Shape3DRetained)shape.retained).setInImmCtx(true); 
+        ((Shape3DRetained)shape.retained).setInImmCtx(true);
 	setAppearance(shape.getAppearance());
 	draw(shape.getGeometry());
     }
@@ -2231,15 +2232,15 @@ public class GraphicsContext3D extends Object   {
                     throw new IllegalArgumentException(J3dI18N.getString("GraphicsContext3D34"));
                 }
                 if (imageRetained.getNumberOfComponents() < 3) {
-                    throw new IllegalArgumentException(J3dI18N.getString("GraphicsContext3D35"));                  
+                    throw new IllegalArgumentException(J3dI18N.getString("GraphicsContext3D35"));
                 }
                 if (image.isLive()) {
                     throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D36"));
                 }
                 if (imageRetained.getInImmCtx() || imageRetained.getUsedByOffScreen()) {
                     throw new IllegalSharingException(J3dI18N.getString("GraphicsContext3D37"));
-                }         
-            }        
+                }
+            }
         }
         if ((canvas3d.view == null) || (canvas3d.view.universe == null) ||
 		(!canvas3d.view.active)) {
@@ -2248,18 +2249,18 @@ public class GraphicsContext3D extends Object   {
             doReadRaster(raster);
         } else if (Thread.currentThread() ==
                         canvas3d.view.universe.behaviorScheduler) {
-	    readRasterReady = false;	    
+	    readRasterReady = false;
             sendRenderMessage(false, GraphicsContext3D.READ_RASTER, raster, null);
 	    while (!readRasterReady) {
 		MasterControl.threadYield();
-	    } 
+	    }
         } else {
 	    // call from user thread
 	    readRasterReady = false;
             sendRenderMessage(true, GraphicsContext3D.READ_RASTER, raster, null);
 	    while (!readRasterReady) {
 		MasterControl.threadYield();
-	    } 
+	    }
         }
     }
 
@@ -2388,7 +2389,7 @@ public class GraphicsContext3D extends Object   {
      * @since Java 3D 1.2
      */
     public void flush(boolean wait) {
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ||
 	    (!canvas3d.view.active) ||
             (Thread.currentThread() == canvas3d.screen.renderer)) {
@@ -2398,10 +2399,10 @@ public class GraphicsContext3D extends Object   {
 
 	    if (Thread.currentThread() ==
                         canvas3d.view.universe.behaviorScheduler) {
-                sendRenderMessage(false, GraphicsContext3D.FLUSH, waitArg, 
+                sendRenderMessage(false, GraphicsContext3D.FLUSH, waitArg,
 					null);
 	    } else {
-                sendRenderMessage(true, GraphicsContext3D.FLUSH, waitArg, 
+                sendRenderMessage(true, GraphicsContext3D.FLUSH, waitArg,
 					null);
 	    }
             // Issue 131: AutomaticOffscreen canvases must be treated as onscreen ones.
@@ -2409,13 +2410,13 @@ public class GraphicsContext3D extends Object   {
 		!canvas3d.manualRendering ) {
 		// No need to wait if renderer thread is not schedule
 		runMonitor(J3dThread.WAIT);
-	    } 
+	    }
         }
     }
 
     void doFlush(boolean wait) {
 	try {
-	  if (canvas3d.drawingSurfaceObject.renderLock()) {	
+	  if (canvas3d.drawingSurfaceObject.renderLock()) {
 	      canvas3d.syncRender(canvas3d.ctx, wait);
 	      canvas3d.drawingSurfaceObject.unLock();
 	      if (wait) {
@@ -2440,13 +2441,13 @@ public class GraphicsContext3D extends Object   {
 	for (i = 0; i < nLight;i++) {
 	    LightRetained lt = (LightRetained)((Light)lights.get(i)).retained;
 	    if (lt instanceof AmbientLightRetained) {
-		sceneAmbient.x += lt.color.x; 
-		sceneAmbient.y += lt.color.y; 
+		sceneAmbient.x += lt.color.x;
+		sceneAmbient.y += lt.color.y;
 		sceneAmbient.z += lt.color.z;
 		continue;
 	    }
-	    
-	    lt.update(canvas3d.ctx, n, 
+
+	    lt.update(canvas3d.ctx, n,
 		      canvas3d.canvasViewCache.getVworldToCoexistenceScale());
 	    if (lt.lightOn)
 		enableMask |= (1 << n);
@@ -2461,12 +2462,12 @@ public class GraphicsContext3D extends Object   {
 	if (sceneAmbient.z > 1.0f) {
 	    sceneAmbient.z = 1.0f;
 	}
-	
+
 	canvas3d.setSceneAmbient(canvas3d.ctx, sceneAmbient.x,
 				 sceneAmbient.y, sceneAmbient.z);
 
 	canvas3d.canvasDirty |= Canvas3D.AMBIENTLIGHT_DIRTY;
-	canvas3d.sceneAmbient.set(sceneAmbient);  
+	canvas3d.sceneAmbient.set(sceneAmbient);
 
 	if (canvas3d.enableMask != enableMask) {
 	    canvas3d.canvasDirty |= Canvas3D.LIGHTENABLES_DIRTY;
@@ -2475,7 +2476,7 @@ public class GraphicsContext3D extends Object   {
 	    canvas3d.enableMask = enableMask;
 	}
 
-	// Force LightBin.updateAttributes and EnvironmentSet.updateAttributes 
+	// Force LightBin.updateAttributes and EnvironmentSet.updateAttributes
 	// to use the within frame case.
 	canvas3d.lightBin = null;
 	canvas3d.environmentSet = null;
@@ -2511,7 +2512,7 @@ public class GraphicsContext3D extends Object   {
 						this.drawTransform);
 	    }
 	    ((ModelClipRetained)modelClip.retained).update(
-			canvas3d.ctx, enableMask, 
+			canvas3d.ctx, enableMask,
 			this.drawTransform);
 	    canvas3d.canvasDirty |= Canvas3D.MODELCLIP_DIRTY;
 	    canvas3d.modelClip = (ModelClipRetained) modelClip.retained;
@@ -2528,7 +2529,7 @@ public class GraphicsContext3D extends Object   {
 
     }
 
-    
+
 
     boolean updateState(RenderBin rb, int geometryType) {
 
@@ -2552,13 +2553,13 @@ public class GraphicsContext3D extends Object   {
 	    if (app.material != null) {
 		app.material.updateNative(canvas3d.ctx,
 					      red,green,blue,
-					      alpha,enableLighting);	    
+					      alpha,enableLighting);
 		canvas3d.material = app.material;
 		canvas3d.canvasDirty |= Canvas3D.MATERIAL_DIRTY;
 	    } else {
 		if (canvas3d.material != null) {
-		    canvas3d.updateMaterial(canvas3d.ctx, 
-					    red, green, blue, alpha);		    
+		    canvas3d.updateMaterial(canvas3d.ctx,
+					    red, green, blue, alpha);
 		    canvas3d.material = null;
 		    canvas3d.canvasDirty |= Canvas3D.MATERIAL_DIRTY;
 		}
@@ -2570,24 +2571,24 @@ public class GraphicsContext3D extends Object   {
                 ShaderProgramRetained spR = ((ShaderAppearanceRetained)app).shaderProgram;
                 if ( spR != null) {
                     spR.updateNative(canvas3d, true);
-                    
+
                     ShaderAttributeSetRetained sasR =
                             ((ShaderAppearanceRetained)app).shaderAttributeSet;
-                    
+
                     if (sasR != null) {
                         sasR.updateNative(canvas3d, spR);
                     }
-                    
+
                     canvas3d.shaderProgram = spR;
                     useShaders = true;
                 }
             }
-            else if (canvas3d.shaderProgram != null) {                
+            else if (canvas3d.shaderProgram != null) {
                 canvas3d.shaderProgram.updateNative(canvas3d, false);
                 canvas3d.shaderProgram = null;
                 useShaders = false;
             }
-            
+
             // Set the number of available texture units; this depends on
             // whether or not shaders are being used.
             int availableTextureUnits =
@@ -2626,7 +2627,7 @@ public class GraphicsContext3D extends Object   {
 
                         if ((app.texUnitState[i] != null) &&
 				    app.texUnitState[i].isTextureEnabled()) {
-			    app.texUnitState[i].updateNative(i, canvas3d, 
+			    app.texUnitState[i].updateNative(i, canvas3d,
 								false, false);
 			} else {
                             canvas3d.resetTexture(canvas3d.ctx, i);
@@ -2648,7 +2649,7 @@ public class GraphicsContext3D extends Object   {
                     }
                     canvas3d.setNumActiveTexUnit(0);
                 }
- 
+
                 // set the active texture unit back to 0
                 canvas3d.activeTextureUnit(canvas3d.ctx, 0);
 	    } else {
@@ -2662,7 +2663,7 @@ public class GraphicsContext3D extends Object   {
 				canvas3d.resetTexture(canvas3d.ctx, i);
 				canvas3d.texUnitState[i].texture = null;
 			    }
-			}	    
+			}
 		    }
 
                     // set the active texture unit back to 0
@@ -2696,7 +2697,7 @@ public class GraphicsContext3D extends Object   {
 	        if (app.texCoordGeneration != null) {
 		    app.texCoordGeneration.updateNative(canvas3d);
 		    canvas3d.canvasDirty |= Canvas3D.TEXTUREBIN_DIRTY|Canvas3D.TEXTUREATTRIBUTES_DIRTY;
-		    if ((canvas3d.texUnitState != null) && 
+		    if ((canvas3d.texUnitState != null) &&
 			(canvas3d.texUnitState[0] != null)) {
 			canvas3d.texUnitState[0].texGen = app.texCoordGeneration;
 		    }
@@ -2704,20 +2705,20 @@ public class GraphicsContext3D extends Object   {
 	        else {
 		    // If the canvas does not alreadt have a null texCoordGeneration
 		    // load the default
-		    if ((canvas3d.texUnitState != null) && 
+		    if ((canvas3d.texUnitState != null) &&
 			(canvas3d.texUnitState[0] != null) &&
 			(canvas3d.texUnitState[0].texGen != null)) {
 		        canvas3d.resetTexCoordGeneration(canvas3d.ctx);
-		        canvas3d.canvasDirty |= Canvas3D.TEXTUREBIN_DIRTY|Canvas3D.TEXTUREATTRIBUTES_DIRTY;		    
+		        canvas3d.canvasDirty |= Canvas3D.TEXTUREBIN_DIRTY|Canvas3D.TEXTUREATTRIBUTES_DIRTY;
 		        canvas3d.texUnitState[0].texGen = app.texCoordGeneration;
 		    }
 	        }
-    
-    
+
+
 	        if (app.textureAttributes != null) {
-		    if ((canvas3d.texUnitState != null) && 
+		    if ((canvas3d.texUnitState != null) &&
 			(canvas3d.texUnitState[0] != null)) {
-			
+
 			if (canvas3d.texUnitState[0].texture != null) {
 			    app.textureAttributes.updateNative(canvas3d, false,
 				       canvas3d.texUnitState[0].texture.format);
@@ -2733,11 +2734,11 @@ public class GraphicsContext3D extends Object   {
 	        else {
 		    // If the canvas does not already have a null texAttribute
 		    // load the default if necessary
-		    if ((canvas3d.texUnitState != null) && 
-			(canvas3d.texUnitState[0] != null) && 
+		    if ((canvas3d.texUnitState != null) &&
+			(canvas3d.texUnitState[0] != null) &&
 			(canvas3d.texUnitState[0].texAttrs != null)) {
 		        canvas3d.resetTextureAttributes(canvas3d.ctx);
-		        canvas3d.canvasDirty |= Canvas3D.TEXTUREBIN_DIRTY|Canvas3D.TEXTUREATTRIBUTES_DIRTY;		    
+		        canvas3d.canvasDirty |= Canvas3D.TEXTUREBIN_DIRTY|Canvas3D.TEXTUREATTRIBUTES_DIRTY;
 		        canvas3d.texUnitState[0].texAttrs = null;
 		    }
 	        }
@@ -2764,8 +2765,8 @@ public class GraphicsContext3D extends Object   {
 
 	    if (app.transparencyAttributes != null) {
 		app.transparencyAttributes.updateNative(canvas3d.ctx,
-							alpha, geometryType, 
-							polygonMode, 
+							alpha, geometryType,
+							polygonMode,
 							lineAA, pointAA);
 		canvas3d.canvasDirty |= Canvas3D.TRANSPARENCYATTRS_DIRTY;
 		canvas3d.transparency = app.transparencyAttributes;
@@ -2794,21 +2795,21 @@ public class GraphicsContext3D extends Object   {
 		canvas3d.canvasDirty |= Canvas3D.ATTRIBUTEBIN_DIRTY|Canvas3D.TEXTUREATTRIBUTES_DIRTY;
 		canvas3d.renderingAttrs = app.renderingAttributes;
 
-		useAlpha = useAlpha || 
-				(app.renderingAttributes.alphaTestFunction 
+		useAlpha = useAlpha ||
+				(app.renderingAttributes.alphaTestFunction
 					!= RenderingAttributes.ALWAYS);
 	    } else {
 		// If the canvas does not alreadt have a null renderingAttrs
 		// load the default
 		ignoreVertexColors = false;
 		if (canvas3d.renderingAttrs != null) {
-		    canvas3d.resetRenderingAttributes(canvas3d.ctx, 
-				canvas3d.depthBufferWriteEnableOverride, 
+		    canvas3d.resetRenderingAttributes(canvas3d.ctx,
+				canvas3d.depthBufferWriteEnableOverride,
 				canvas3d.depthBufferEnableOverride);
 		    canvas3d.canvasDirty |= Canvas3D.ATTRIBUTEBIN_DIRTY|Canvas3D.TEXTUREATTRIBUTES_DIRTY;
 		    canvas3d.renderingAttrs = null;
 		}
-	    }	    	    
+	    }
 
 
 	    if (app.polygonAttributes != null) {
@@ -2856,7 +2857,7 @@ public class GraphicsContext3D extends Object   {
 		    canvas3d.pointAttributes = null;
 		}
 	    }
-	    
+
 	    canvas3d.appearance = app;
 
 	} else {
@@ -2866,21 +2867,21 @@ public class GraphicsContext3D extends Object   {
 	    }
 	}
 
-	
+
 	return (useAlpha );
     }
 
     void initializeState() {
-       
+
 	canvas3d.setSceneAmbient(canvas3d.ctx, 0.0f, 0.0f, 0.0f);
 	canvas3d.disableFog(canvas3d.ctx);
 	canvas3d.resetRenderingAttributes(canvas3d.ctx,false, false);
-        
+
         if(canvas3d.shaderProgram != null) {
             canvas3d.shaderProgram.updateNative(canvas3d, false);
             canvas3d.shaderProgram = null;
         }
-        
+
         // reset the previously enabled texture units
 
         int prevNumActiveTexUnit = canvas3d.getNumActiveTexUnit();
@@ -2919,7 +2920,7 @@ public class GraphicsContext3D extends Object   {
         //System.err.println("GC3D.resetAppearance ....");
 
 	if (canvas3d.material != null) {
-	    canvas3d.updateMaterial(canvas3d.ctx, 
+	    canvas3d.updateMaterial(canvas3d.ctx,
 					red, green, blue, alpha);
 	    canvas3d.material = null;
 	    canvas3d.canvasDirty |= Canvas3D.MATERIAL_DIRTY;
@@ -2996,7 +2997,7 @@ public class GraphicsContext3D extends Object   {
 	}
     }
 
-    void sendRenderMessage(boolean renderRun, int command, 
+    void sendRenderMessage(boolean renderRun, int command,
 				Object arg1, Object arg2) {
 
         // send a message to the request renderer
@@ -3018,7 +3019,7 @@ public class GraphicsContext3D extends Object   {
 	}
 
         canvas3d.screen.renderer.rendererStructure.addMessage(renderMessage);
-	
+
         if (renderRun) {
             // notify mc that there is work to do
             VirtualUniverse.mc.sendRunMessage(canvas3d.view, J3dThread.RENDER_THREAD);
@@ -3029,7 +3030,7 @@ public class GraphicsContext3D extends Object   {
     }
 
     void sendSoundMessage(int command, Object arg1, Object arg2) {
-        if ((canvas3d.view == null) || 
+        if ((canvas3d.view == null) ||
 	    (canvas3d.view.universe == null) ) {
             return;
         }

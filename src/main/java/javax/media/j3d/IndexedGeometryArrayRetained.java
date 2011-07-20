@@ -26,8 +26,11 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
 import java.util.ArrayList;
+
+import javax.vecmath.TexCoord2f;
+import javax.vecmath.TexCoord3f;
+
 import com.sun.j3d.internal.FloatBufferWrapper;
 
 /**
@@ -130,7 +133,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
         obj.cloneSourceArray = this;
         obj.unIndexify(this);
         obj.source=source;
-        
+
         return obj;
     }
 
@@ -201,18 +204,18 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray23"));
 			}
 			break;
-		    case PD: 
+		    case PD:
 			if (doubleRefCoords != null && (3 * newMax >= doubleRefCoords.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray23"));
 			}
 
 			break;
-		    case P3F: 
+		    case P3F:
 			if (p3fRefCoords != null && (newMax >= p3fRefCoords.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray23"));
 			}
 			break;
-		    case P3D: 
+		    case P3D:
 			if (p3dRefCoords != null && (newMax >= p3dRefCoords.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray23"));
 			}
@@ -229,7 +232,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    }
 	}
 
-    }	
+    }
 
     void doColorCheck(int newMax) {
 	// If the new Value is greater than the old value, make sure there is array length
@@ -237,14 +240,14 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	// Check to make sure that the array length defined by the user is ateast maxCoordIndex long
 	if ((vertexFormat & GeometryArray.COLOR) == 0)
 	    return;
-	
+
 	if ((vertexFormat & GeometryArray.BY_REFERENCE) == 0) {
 	    if (newMax >= vertexCount) {
 		throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
 	    }
 	}
 	else {
-	    int multiplier = getColorStride(); 
+	    int multiplier = getColorStride();
 
 	    if(( vertexFormat & GeometryArray.USE_NIO_BUFFER) != 0) {
 		if ((vertexFormat & GeometryArray.INTERLEAVED) == 0) {
@@ -252,12 +255,12 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		    case CF:
 			if (floatBufferRefColors != null && multiplier * newMax >= floatBufferRefColors.limit()) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
-			} 
+			}
 			break;
-		    case CUB: 
+		    case CUB:
 			if (byteBufferRefColors != null && multiplier * newMax >= byteBufferRefColors.limit()) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
-			} 
+			}
 			break;
 		    }
 		}
@@ -275,28 +278,28 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
 			}
 			break;
-		    case CUB: 
+		    case CUB:
 			if (byteRefColors != null && (multiplier * newMax >= byteRefColors.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
 			}
 
 			break;
-		    case C3F: 
+		    case C3F:
 			if (c3fRefColors != null && (newMax >= c3fRefColors.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
 			}
 			break;
-		    case C4F: 
+		    case C4F:
 			if (c4fRefColors != null && (newMax >= c4fRefColors.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
 			}
 			break;
-		    case C3UB: 
+		    case C3UB:
 			if (c3bRefColors != null && (newMax >= c3bRefColors.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
 			}
 			break;
-		    case C4UB: 
+		    case C4UB:
 			if (c4bRefColors != null && (newMax >= c4bRefColors.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray24"));
 			}
@@ -341,7 +344,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray26"));
 		    }
 		}
-	    } else {    
+	    } else {
 		if ((vertexFormat & GeometryArray.INTERLEAVED) == 0) {
 		    switch ((vertexType & NORMAL_DEFINED)) {
 		    case NF:
@@ -349,7 +352,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray26"));
 			}
 			break;
-		    case N3F: 
+		    case N3F:
 			if (v3fRefNormals != null && (newMax >= v3fRefNormals.length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray26"));
 			}
@@ -411,13 +414,13 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray25"));
 			}
 			break;
-		    case T2F: 
+		    case T2F:
 			if (refTexCoords[texCoordSet] != null && (newMax >= ((TexCoord2f[])refTexCoords[texCoordSet]).length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray25"));
 			}
 
 			break;
-		    case T3F: 
+		    case T3F:
 			if (refTexCoords[texCoordSet] != null && (newMax >= ((TexCoord3f[])refTexCoords[texCoordSet]).length)) {
 			    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray25"));
 			}
@@ -502,9 +505,9 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    }
 	    if ((vertexFormat & GeometryArray.NORMALS) != 0) {
 		maxNormalIndex = newMax;
-	    }	    
+	    }
 	}
-	
+
 	boolean isLive = source!=null && source.isLive();
         if(isLive){
             geomLock.getLock();
@@ -531,9 +534,9 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	if (dataValue < 0) {
 	    // Throw an exception, since index is negative
 	    throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray27"));
-	    
+
 	}
-	
+
 	if (newMax == indices[index]) {
 	    if (dataValue >= newMax) {
 		newMax = dataValue;
@@ -567,7 +570,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    if (newIndices[j] < 0) {
 		// Throw an exception, since index is negative
 		throw new ArrayIndexOutOfBoundsException(J3dI18N.getString("IndexedGeometryArray27"));
-	    
+
 	    }
 	    if (indices[index+j] == maxIndex) {
 		if (newIndices[j] >= newMax) {
@@ -628,9 +631,9 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    }
 	    if ((vertexFormat & GeometryArray.NORMALS) != 0) {
 		maxNormalIndex = newMax;
-	    }	    
+	    }
 	}
-	
+
 	boolean isLive = source!=null && source.isLive();
         if(isLive){
             geomLock.getLock();
@@ -721,8 +724,8 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
     final void doPostUpdaterUpdate() {
         // user may have called setCoordIndicesRef and/or
         // changed contents of indexCoord array. Thus, need to
-        // recompute maxCoordIndex unconditionally (and redundantly 
-        // if user had only invoked setCoordIndicesRef but not also 
+        // recompute maxCoordIndex unconditionally (and redundantly
+        // if user had only invoked setCoordIndicesRef but not also
         // changed contents). geomLock is currently locked.
 
         // Option 1:
@@ -731,7 +734,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
         // out too many sendDataChangedMessage(true) - occurs if updateData
         // method is called rapidly.
         // setCoordIndicesRef(indexCoord);
-  
+
     // Option 2:
     // use only necessary code from setCoordIndicesRef
     // System.err.println("IndexedGeometryArrayretained#doUpdaterUpdate");
@@ -739,7 +742,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 
         if (indexCoord != null) {
             newMax = computeMaxIndexWithCheck(initialIndexIndex, validIndexCount, indexCoord);
-            if (newMax > maxCoordIndex) { 
+            if (newMax > maxCoordIndex) {
                 doErrorCheck(newMax);
             }
         }
@@ -760,9 +763,9 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    }
 	    if ((vertexFormat & GeometryArray.NORMALS) != 0) {
 		maxNormalIndex = newMax;
-	    }	    
+	    }
 	}
-	
+
 	dirtyFlag |= INDEX_CHANGED;
 	maxCoordIndex = newMax;
     }
@@ -786,7 +789,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
         }
         // No need to set INDEX_CHANGED since IndexBuffer
         // is used only when USE_COORD_INDEX_ONLY specified.
-        // In this case only coordinate index array is 
+        // In this case only coordinate index array is
         // considered.
         this.indexColor[index] = colorIndex;
         maxColorIndex = newMax;
@@ -985,7 +988,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
     void setVertexAttrIndices(int vertexAttrNum,
                               int index,
                               int[] vertexAttrIndices) {
-  
+
         int i, j, num = vertexAttrIndices.length;
         int [] indices = this.indexVertexAttr[vertexAttrNum];
 
@@ -1037,7 +1040,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 
     //NVaidya
     /**
-     * Returns a reference to the coordinate indices associated 
+     * Returns a reference to the coordinate indices associated
      * with the vertices
      */
     final int[] getCoordIndicesRef() {
@@ -1152,7 +1155,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
     }
 
 
-    void execute(Canvas3D cv, RenderAtom ra, boolean isNonUniformScale, 
+    void execute(Canvas3D cv, RenderAtom ra, boolean isNonUniformScale,
 		 boolean updateAlpha, float alpha,
 		 int screen, boolean ignoreVertexColors) {
 
@@ -1235,7 +1238,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			retVal = updateAlphaInInterLeavedData(cv, screen, alpha);
 			useAlpha = (retVal[0] == Boolean.TRUE);
 			cdata = (float[])retVal[1];
-			if (alpha != lastScreenAlpha) { 
+			if (alpha != lastScreenAlpha) {
 			    lastScreenAlpha = alpha;
 			    cdirty |= COLOR_CHANGED;
 			}
@@ -1278,11 +1281,11 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		     (vertexType & VATTR_DEFINED) == 0) ||
 		    (((vertexFormat& GeometryArray.TEXTURE_COORDINATE) != 0) &&
 		     (vertexType & TEXCOORD_DEFINED) == 0)) {
-		    return;  
+		    return;
 		} else {
 		    byte[] cbdata = null;
 		    float[] cfdata = null;
-		    
+
 		    if ((vertexType & (CF | C3F | C4F )) != 0) {
 			synchronized (this) {
 			    cdirty = dirtyFlag;
@@ -1300,7 +1303,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 				    lastScreenAlpha = -1;
 				    cdirty |= COLOR_CHANGED;
 				}
-			    
+
 			    }
 			    dirtyFlag = 0;
 			}
@@ -1327,7 +1330,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		    } else {
 			cdirty = dirtyFlag;
 		    }
-		    
+
 		    int vdefined = 0;
 		    if((vertexType & (PF | P3F)) != 0)
 			vdefined |= COORD_FLOAT;
@@ -1370,7 +1373,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    if ((vertexFormat & GeometryArray.INTERLEAVED) != 0) {
 		if( interleavedFloatBufferImpl == null)
 		    return;
-		
+
 		float[] cdata = null;
 
 		synchronized (this) {
@@ -1380,7 +1383,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			retVal = updateAlphaInInterLeavedData(cv, screen, alpha);
 			useAlpha = (retVal[0] == Boolean.TRUE);
 			cdata = (float[])retVal[1];
-			if (alpha != lastScreenAlpha) { 
+			if (alpha != lastScreenAlpha) {
 			    lastScreenAlpha = alpha;
 			    cdirty |= COLOR_CHANGED;
 			}
@@ -1393,7 +1396,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		    }
 		    dirtyFlag = 0;
 		}
-		
+
                 Pipeline.getPipeline().executeIndexedGeometryBuffer(cv.ctx,
                         this, geoType, isNonUniformScale,
                         useAlpha,
@@ -1422,11 +1425,11 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		     (vertexType & VATTR_DEFINED) == 0) ||
 		    (((vertexFormat& GeometryArray.TEXTURE_COORDINATE) != 0) &&
 		     (vertexType & TEXCOORD_DEFINED) == 0)) {
-		    return;  
+		    return;
 		} else {
 		    byte[] cbdata = null;
 		    float[] cfdata = null;
-		    
+
 		    if ((vertexType & CF ) != 0) {
 			synchronized (this) {
 			    cdirty = dirtyFlag;
@@ -1446,7 +1449,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 				    lastScreenAlpha = -1;
 				    cdirty |= COLOR_CHANGED;
 				}
-			    
+
 			    }
 			    dirtyFlag = 0;
 			}
@@ -1477,7 +1480,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		    }
 
 		    Object vcoord = null, cdataBuffer=null, normal=null;
-		    
+
 		    int vdefined = 0;
 		    if((vertexType & PF)  != 0) {
 			vdefined |= COORD_FLOAT;
@@ -1493,7 +1496,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 			vdefined |= COLOR_BYTE;
 			cdataBuffer = byteBufferRefColors.getBufferAsObject();
 		    }
-		    
+
 		    if((vertexType & NORMAL_DEFINED) != 0) {
 			vdefined |= NORMAL_FLOAT;
 			normal = floatBufferRefNormals.getBufferAsObject();
@@ -1532,7 +1535,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	} // end of nio buffer
     }
 
-    void buildGA(Canvas3D cv, RenderAtom ra, boolean isNonUniformScale, 
+    void buildGA(Canvas3D cv, RenderAtom ra, boolean isNonUniformScale,
 		 boolean updateAlpha, float alpha, boolean ignoreVertexColors,
 		 Transform3D xform, Transform3D nxform) {
 	int cdirty;
@@ -1543,7 +1546,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		    ignoreVertexColors, xform, nxform);
 	}
 	else {
-	    
+
 	    if ((vertexFormat & GeometryArray.BY_REFERENCE) == 0) {
                 float[] vdata;
 		//	    System.err.println("by-copy");
@@ -1598,7 +1601,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
             // go into a display list.
 	}
     }
-    
+
     void mergeGeometryArrays(ArrayList list) {
 	int numMerge = list.size();
 	int[] texCoord = null;
@@ -1636,11 +1639,11 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    for (int j = 0; j < curIndexCount; j++) {
 		indexCoord[j+curIndexOffset] = geo.indexCoord[j+geo.initialIndexIndex]+curDataOffset;
                 if (notUCIO) {
-	            if ((vertexFormat  & GeometryArray.COLOR) != 0) 
+	            if ((vertexFormat  & GeometryArray.COLOR) != 0)
 	                indexColor[j+curIndexOffset] = geo.indexColor[j+geo.initialIndexIndex]+curDataOffset;
-	            if ((vertexFormat  &  GeometryArray.NORMALS) != 0) 
+	            if ((vertexFormat  &  GeometryArray.NORMALS) != 0)
 	                indexNormal[j+curIndexOffset] = geo.indexNormal[j+geo.initialIndexIndex]+curDataOffset;
-	            if ((vertexFormat  &  GeometryArray.TEXTURE_COORDINATE) != 0) 
+	            if ((vertexFormat  &  GeometryArray.TEXTURE_COORDINATE) != 0)
 	                texCoord[j+curIndexOffset] = geo.indexTexCoord[0][j+geo.initialIndexIndex]+curDataOffset;
                 }
 	    }
@@ -1652,7 +1655,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	// reset the max Values
 
 	// call the super to merge the vertex data
-	super.mergeGeometryArrays(list);	
+	super.mergeGeometryArrays(list);
     }
 
 
@@ -1669,7 +1672,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 
 	return true;
     }
-    
+
     /**
      * Gets current number of indices
      * @return indexCount
@@ -1688,7 +1691,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
             }
         }
 	return maxIndex;
-	
+
     }
 
     //NVaidya
@@ -1704,7 +1707,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	    }
 	}
 	return maxIndex;
-	
+
     }
 
     void setValidIndexCount(int validIndexCount) {
@@ -1797,7 +1800,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	if (!inUpdater && isLive) {
 	    sendDataChangedMessage(true);
 	}
-    
+
     }
 
     void setInitialIndexIndex(int initialIndexIndex) {
@@ -1815,7 +1818,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 	int newNormalIndex=0;
 	int[] newTexCoordIndex = null;
         int[] newVertexAttrIndex = null;
-        
+
 	newCoordMax = computeMaxIndex(initialIndexIndex, validIndexCount, indexCoord);
 	doErrorCheck(newCoordMax);
 	if ((vertexFormat & GeometryArray.USE_COORD_INDEX_ONLY) == 0) {
@@ -1845,7 +1848,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
 		doNormalCheck(newNormalIndex);
 	    }
 	}
-	    
+
 	boolean isLive = source!=null && source.isLive();
         if(isLive){
             geomLock.getLock();
@@ -1894,7 +1897,7 @@ abstract class IndexedGeometryArrayRetained extends GeometryArrayRetained {
     int getInitialIndexIndex() {
 	return initialIndexIndex;
     }
-    
+
     int getValidIndexCount() {
 	return validIndexCount;
     }

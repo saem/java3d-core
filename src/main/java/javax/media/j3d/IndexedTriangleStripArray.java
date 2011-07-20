@@ -78,8 +78,8 @@ public class IndexedTriangleStripArray extends IndexedGeometryStripArray {
 
 	super(vertexCount, vertexFormat, indexCount, stripIndexCounts);
 
-        if (vertexCount < 1) 
-	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray0")); 
+        if (vertexCount < 1)
+	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray0"));
 
         if (indexCount < 3 )
 	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray1"));
@@ -133,8 +133,8 @@ public class IndexedTriangleStripArray extends IndexedGeometryStripArray {
 	      texCoordSetCount, texCoordSetMap,
 	      indexCount, stripIndexCounts);
 
-        if (vertexCount < 1) 
-	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray0")); 
+        if (vertexCount < 1)
+	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray0"));
 
         if (indexCount < 3 )
 	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray1"));
@@ -195,8 +195,8 @@ public class IndexedTriangleStripArray extends IndexedGeometryStripArray {
 	      vertexAttrCount, vertexAttrSizes,
 	      indexCount, stripIndexCounts);
 
-        if (vertexCount < 1) 
-	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray0")); 
+        if (vertexCount < 1)
+	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray0"));
 
         if (indexCount < 3 )
 	    throw new IllegalArgumentException(J3dI18N.getString("IndexedTriangleStripArray1"));
@@ -211,7 +211,7 @@ public class IndexedTriangleStripArray extends IndexedGeometryStripArray {
 	this.retained.setSource(this);
     }
 
-  
+
     /**
      * @deprecated replaced with cloneNodeComponent(boolean forceDuplicate)
      */

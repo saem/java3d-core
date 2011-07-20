@@ -77,8 +77,8 @@ public class IndexedLineStripArray extends IndexedGeometryStripArray {
 
 	super(vertexCount, vertexFormat, indexCount, stripIndexCounts);
 
-        if (vertexCount < 1) 
-	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray0")); 
+        if (vertexCount < 1)
+	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray0"));
 
         if (indexCount < 2 )
 	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray1"));
@@ -132,8 +132,8 @@ public class IndexedLineStripArray extends IndexedGeometryStripArray {
 	      texCoordSetCount, texCoordSetMap,
 	      indexCount, stripIndexCounts);
 
-        if (vertexCount < 1) 
-	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray0")); 
+        if (vertexCount < 1)
+	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray0"));
 
         if (indexCount < 2 )
 	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray1"));
@@ -194,8 +194,8 @@ public class IndexedLineStripArray extends IndexedGeometryStripArray {
 	      vertexAttrCount, vertexAttrSizes,
 	      indexCount, stripIndexCounts);
 
-        if (vertexCount < 1) 
-	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray0")); 
+        if (vertexCount < 1)
+	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray0"));
 
         if (indexCount < 2 )
 	    throw new IllegalArgumentException(J3dI18N.getString("IndexedLineStripArray1"));

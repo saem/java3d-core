@@ -32,7 +32,7 @@ import java.util.Enumeration;
  * An abstract class specifying a single wakeup Condition. This class
  * is extended by the WakeupCriterion, WakeupOr, WakeupAnd,
  * WakeupOrOfAnds, and WakeupAndOfOr classes. A Behavior node hands a
- * WakeupCondition object to the behavior scheduler and the behavior 
+ * WakeupCondition object to the behavior scheduler and the behavior
  * scheduler hands back an enumeration of that WakeupCondition.
  */
 
@@ -45,12 +45,12 @@ public abstract class WakeupCondition extends Object {
      * This boolean indicates whether this condition has been fully met.
      */
     boolean conditionMet = false;
-    
+
     /**
      * This points to the parent of this criterion in the AndOr tree
      */
     WakeupCondition parent = null;
-    
+
     /**
      * The location of this criterion in the parents array.
      */
@@ -60,7 +60,7 @@ public abstract class WakeupCondition extends Object {
      * The BehaviorRetained node that is using this condition
      */
     BehaviorRetained behav = null;
-    
+
     /**
      * This is the allElements enumerator
      */
@@ -85,7 +85,7 @@ public abstract class WakeupCondition extends Object {
 	}
 	return allEnum;
     }
-    
+
     /**
      * Returns an enumeration of all triggered WakeupCriterias in this Condition.
      */
@@ -98,7 +98,7 @@ public abstract class WakeupCondition extends Object {
 	return trigEnum;
     }
 
-    /** 
+    /**
      * this sets the conditionMet flag.
      */
     void setConditionMet(int id, Boolean checkSchedulingRegion) {
@@ -115,7 +115,7 @@ public abstract class WakeupCondition extends Object {
 	    VirtualUniverse.mc.processMessage(message);
 	}
     }
-    
+
     /**
      * Initialize And/Or tree and add criterion to the BehaviourStructure
      */
@@ -127,7 +127,7 @@ public abstract class WakeupCondition extends Object {
     }
 
     /**
-     * This goes through the AndOr tree to remove the various criterion from the 
+     * This goes through the AndOr tree to remove the various criterion from the
      * BehaviorStructure.
      * We can't use  behav.universe.behaviorStructure since behav
      * may reassign to another universe at this time.

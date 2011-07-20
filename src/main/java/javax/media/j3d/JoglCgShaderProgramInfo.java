@@ -26,7 +26,7 @@
 
 package javax.media.j3d;
 
-import com.sun.opengl.cg.*;
+import com.sun.opengl.cg.CGparameter;
 
 class JoglCgShaderProgramInfo extends JoglShaderObject {
   private JoglCgShaderInfo vShader;  // vertex shader

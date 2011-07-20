@@ -26,8 +26,8 @@
 
 package javax.media.j3d;
 
-import java.net.URL; 
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * The MediaContainerRetained object defines all rendering state that can
@@ -38,7 +38,7 @@ class MediaContainerRetained extends NodeComponentRetained {
       *  Gain Scale Factor applied to source with this attribute
       */
      boolean    cached = true;
- 
+
      /**
       *  URL string that references the sound data
       */
@@ -84,13 +84,13 @@ class MediaContainerRetained extends NodeComponentRetained {
             if (urlString != null || inputStream != null)
                 throw new IllegalArgumentException(J3dI18N.getString("MediaContainer5"));
             // Test if url object is valid by openning it
-            try  {   
-                InputStream stream; 
-                stream = url.openStream(); 
-                stream.close(); 
+            try  {
+                InputStream stream;
+                stream = url.openStream();
+                stream.close();
             }
-            catch (Exception e) { 
-                throw new SoundException(javax.media.j3d.J3dI18N.getString("MediaContainer0"));                          
+            catch (Exception e) {
+                throw new SoundException(javax.media.j3d.J3dI18N.getString("MediaContainer0"));
             }
         }
         this.url = url;
@@ -127,7 +127,7 @@ class MediaContainerRetained extends NodeComponentRetained {
                stream.close();
             }
             catch (Exception e) {
-                throw new SoundException(javax.media.j3d.J3dI18N.getString("MediaContainer0"));                  
+                throw new SoundException(javax.media.j3d.J3dI18N.getString("MediaContainer0"));
             }
         }
         this.urlString = path;
@@ -188,9 +188,9 @@ class MediaContainerRetained extends NodeComponentRetained {
         return this.inputStream;
     }
 
-    /**  
+    /**
      * Dispatch a message about a media container change
-     */  
+     */
     void dispatchMessage() {
         // Send message including a integer argumentD
         J3dMessage createMessage = new J3dMessage();

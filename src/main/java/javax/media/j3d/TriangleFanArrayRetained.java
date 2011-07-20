@@ -26,8 +26,8 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.lang.Math;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 /**
  * The TriangleFanArray object draws an array of vertices as a set of
@@ -62,8 +62,8 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	switch (pickShape.getPickType()) {
 	case PickShape.PICKRAY:
 	    PickRay pickRay= (PickRay) pickShape;
-	
-	    while (i < stripVertexCounts.length) {  
+
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 for(int k=0; k<2; k++) {
@@ -100,7 +100,7 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	case PickShape.PICKSEGMENT:
 	    PickSegment pickSegment = (PickSegment) pickShape;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 for(int k=0; k<2; k++) {
@@ -110,7 +110,7 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 		while (j < end) {
                     vtxIndexArr[2] = j;
 		    getVertexData(j++, pnts[2]);
-                    if (intersectSegment(pnts, pickSegment.start, 
+                    if (intersectSegment(pnts, pickSegment.start,
 					 pickSegment.end, sdist, iPnt)) {
 			if (flags == 0) {
 			    return true;
@@ -136,10 +136,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGBOX:
-	    BoundingBox bbox = (BoundingBox) 
+	    BoundingBox bbox = (BoundingBox)
 		((PickBounds) pickShape).bounds;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 for(int k=0; k<2; k++) {
@@ -174,10 +174,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGSPHERE:
-	    BoundingSphere bsphere = (BoundingSphere) 
+	    BoundingSphere bsphere = (BoundingSphere)
 		                     ((PickBounds) pickShape).bounds;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 for(int k=0; k<2; k++) {
@@ -188,7 +188,7 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
                     vtxIndexArr[2] = j;
 		    getVertexData(j++, pnts[2]);
                     if (intersectBoundingSphere(pnts, bsphere, sdist,
-						iPnt)) { 
+						iPnt)) {
 			if (flags == 0) {
 			    return true;
 			}
@@ -213,10 +213,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    }
 	    break;
 	case PickShape.PICKBOUNDINGPOLYTOPE:
-	    BoundingPolytope bpolytope = (BoundingPolytope) 
+	    BoundingPolytope bpolytope = (BoundingPolytope)
 		((PickBounds) pickShape).bounds;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 for(int k=0; k<2; k++) {
@@ -254,7 +254,7 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	case PickShape.PICKCYLINDER:
 	    PickCylinder pickCylinder= (PickCylinder) pickShape;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 for(int k=0; k<2; k++) {
@@ -291,7 +291,7 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	case PickShape.PICKCONE:
 	    PickCone pickCone= (PickCone) pickShape;
 
-	    while (i < stripVertexCounts.length) {  
+	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
                 for(int k=0; k<2; k++) {
@@ -329,8 +329,8 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    // Should not happen since API already check for this
 	    throw new IllegalArgumentException(J3dI18N.getString("TriangleFanArrayRetained0"));
 	default:
-	    throw new RuntimeException ("PickShape not supported for intersection"); 
-	} 
+	    throw new RuntimeException ("PickShape not supported for intersection");
+	}
 
 	if (minDist < Double.MAX_VALUE) {
 	    iPnt.x = x;
@@ -339,8 +339,8 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
             return true;
 	}
 	return false;
-    }    
- 
+    }
+
     // intersect pnts[] with every triangle in this object
     boolean intersect(Point3d[] pnts) {
 	int j, end;
@@ -359,10 +359,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, points[0]);		
-		getVertexData(j++, points[1]);		
+		getVertexData(j++, points[0]);
+		getVertexData(j++, points[1]);
 		while (j < end) {
-		    getVertexData(j++, points[2]);		
+		    getVertexData(j++, points[2]);
 		    if (intersectTriTri(points[0], points[1], points[2],
 					pnts[0], pnts[1], pnts[2])) {
 			return true;
@@ -375,10 +375,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, points[0]);		
-		getVertexData(j++, points[1]);		
+		getVertexData(j++, points[0]);
+		getVertexData(j++, points[1]);
 		while (j < end) {
-		    getVertexData(j++, points[2]);		
+		    getVertexData(j++, points[2]);
 		    if (intersectTriTri(points[0], points[1], points[2],
 					pnts[0], pnts[1], pnts[2]) ||
 			intersectTriTri(points[0], points[1], points[2],
@@ -393,10 +393,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, points[0]);		
-		getVertexData(j++, points[1]);		
+		getVertexData(j++, points[0]);
+		getVertexData(j++, points[1]);
 		while (j < end) {
-		    getVertexData(j++, points[2]);		
+		    getVertexData(j++, points[2]);
 		    if (intersectSegment(points, pnts[0], pnts[1],
 					 dist, null)) {
 			return true;
@@ -409,10 +409,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, points[0]);		
-		getVertexData(j++, points[1]);		
+		getVertexData(j++, points[0]);
+		getVertexData(j++, points[1]);
 		while (j < end) {
-		    getVertexData(j++, points[2]);		
+		    getVertexData(j++, points[2]);
 		    if (intersectTriPnt(points[0], points[1], points[2],
 					pnts[0])) {
 			return true;
@@ -424,7 +424,7 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	}
 	return false;
     }
-    
+
     boolean intersect(Transform3D thisToOtherVworld, GeometryRetained geom) {
 	int i = 0, j, end;
 	Point3d[] pnts = new Point3d[3];
@@ -435,12 +435,12 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	while (i < stripVertexCounts.length) {
 	    j = stripStartVertexIndices[i];
 	    end = j + stripVertexCounts[i++];
-	    getVertexData(j++, pnts[0]);		
-	    getVertexData(j++, pnts[1]);	
+	    getVertexData(j++, pnts[0]);
+	    getVertexData(j++, pnts[1]);
 	    thisToOtherVworld.transform(pnts[0]);
 	    thisToOtherVworld.transform(pnts[1]);
 	    while (j < end) {
-		getVertexData(j++, pnts[2]);		
+		getVertexData(j++, pnts[2]);
 		thisToOtherVworld.transform(pnts[2]);
 		if (geom.intersect(pnts)) {
 		    return true;
@@ -468,11 +468,11 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
-		getVertexData(j++, pnts[0]);		
-		getVertexData(j++, pnts[1]);		
+		getVertexData(j++, pnts[0]);
+		getVertexData(j++, pnts[1]);
 		end = j + stripVertexCounts[i++];
 		while ( j < end) {
-		    getVertexData(j++, pnts[2]);		
+		    getVertexData(j++, pnts[2]);
 		    if (intersectBoundingBox(pnts, box, null, null)) {
 			return true;
 		    }
@@ -486,10 +486,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, pnts[0]);		
-		getVertexData(j++, pnts[1]);		
+		getVertexData(j++, pnts[0]);
+		getVertexData(j++, pnts[1]);
 		while ( j < end) {
-		    getVertexData(j++, pnts[2]);		
+		    getVertexData(j++, pnts[2]);
 		    if (intersectBoundingSphere(pnts, bsphere, null, null)) {
 			return true;
 		    }
@@ -503,10 +503,10 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    while (i < stripVertexCounts.length) {
 		j = stripStartVertexIndices[i];
 		end = j + stripVertexCounts[i++];
-		getVertexData(j++, pnts[0]);		
-		getVertexData(j++, pnts[1]);		
+		getVertexData(j++, pnts[0]);
+		getVertexData(j++, pnts[1]);
 		while ( j < end) {
-		    getVertexData(j++, pnts[2]);		
+		    getVertexData(j++, pnts[2]);
 		    if (intersectBoundingPolytope(pnts, bpolytope, null, null)) {
 			return true;
 		    }
@@ -516,7 +516,7 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	    break;
 	default:
 	    throw new RuntimeException("Bounds not supported for intersection "
-				       + targetBound); 
+				       + targetBound);
 	}
 	return false;
     }
@@ -526,9 +526,9 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	Vector3d vec = new Vector3d();
 	Vector3d normal = new Vector3d();
 	Vector3d tmpvec = new Vector3d();
-	Point3d pnt0 = new Point3d();	
-	Point3d pnt1 = new Point3d();	
-	Point3d pnt2 = new Point3d();	
+	Point3d pnt0 = new Point3d();
+	Point3d pnt1 = new Point3d();
+	Point3d pnt2 = new Point3d();
 	double area, totalarea = 0;
 	int end, replaceIndex, j, i = 0;
 	centroid.x = 0;
@@ -538,11 +538,11 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 	while( i < stripVertexCounts.length) {
 	    j = stripStartVertexIndices[i];
 	    end = j + stripVertexCounts[i++];
-	    getVertexData(j++, pnt0); 
+	    getVertexData(j++, pnt0);
 	    getVertexData(j++, pnt1);
 	    replaceIndex = 2;
 	    while (j < end) {
-		area = 0; 
+		area = 0;
 		if (replaceIndex == 2) {
 		    getVertexData(j++, pnt2);
 		    replaceIndex = 1;
@@ -551,20 +551,20 @@ class TriangleFanArrayRetained extends GeometryStripArrayRetained {
 		    replaceIndex = 2;
 		}
 
-		// Determine the normal 
-		vec.sub(pnt0, pnt1); 
-		tmpvec.sub(pnt1, pnt2); 
+		// Determine the normal
+		vec.sub(pnt0, pnt1);
+		tmpvec.sub(pnt1, pnt2);
 
 		// Do the cross product
-		normal.cross(vec, tmpvec); 
+		normal.cross(vec, tmpvec);
 		normal.normalize();
 		// If a degenerate triangle, don't include
 		if (Double.isNaN(normal.x + normal.y + normal.z))
 		    continue;
 
 		tmpvec.set(0,0,0);
-		
-		// compute the area 
+
+		// compute the area
 		getCrossValue(pnt0, pnt1, tmpvec);
 		getCrossValue(pnt1, pnt2, tmpvec);
 		getCrossValue(pnt2, pnt0, tmpvec);

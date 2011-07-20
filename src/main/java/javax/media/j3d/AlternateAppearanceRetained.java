@@ -27,10 +27,9 @@
 package javax.media.j3d;
 
 
-import javax.vecmath.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
-import java.util.ArrayList;
 
 
 class AlternateAppearanceRetained extends LeafRetained {
@@ -47,10 +46,10 @@ class AlternateAppearanceRetained extends LeafRetained {
 
     /**
      * The Boundary object defining the lights's region of influence.
-     */  
+     */
     Bounds regionOfInfluence = null;
 
-    /** 
+    /**
      * The bounding leaf reference
      */
     BoundingLeafRetained boundingLeaf = null;
@@ -71,9 +70,9 @@ class AlternateAppearanceRetained extends LeafRetained {
     boolean isScoped = false;
 
     // The object that contains the dynamic HashKey - a string type object
-    // Used in scoping 
+    // Used in scoping
     HashKey tempKey = new HashKey(250);
-    
+
     /**
      * The transformed value of the applicationRegion.
      */
@@ -116,7 +115,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	    appearance = null;
     }
 
-    
+
     /**
      * sets the appearance and send a message
      */
@@ -132,12 +131,12 @@ class AlternateAppearanceRetained extends LeafRetained {
 	    }
 	}
 	// There is no need to clone the appearance's mirror
-	sendMessage(APPEARANCE_CHANGED, 
-		    (appearance != null ? appearance.mirror: null));  
+	sendMessage(APPEARANCE_CHANGED,
+		    (appearance != null ? appearance.mirror: null));
     }
 
 
-   
+
     Appearance getAppearance() {
         return (appearance == null ? null: (Appearance) appearance.source);
     }
@@ -145,7 +144,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 
     /**
      * Set the alternate's region of influence.
-     */  
+     */
     void initInfluencingBounds(Bounds region) {
 	if (region != null) {
             this.regionOfInfluence = (Bounds) region.clone();
@@ -156,16 +155,16 @@ class AlternateAppearanceRetained extends LeafRetained {
 
     /**
      * Set the alternate's region of influence and send message
-     */  
+     */
     void setInfluencingBounds(Bounds region) {
 	initInfluencingBounds(region);
-	sendMessage(BOUNDS_CHANGED, 
+	sendMessage(BOUNDS_CHANGED,
 		    (region != null ? region.clone() : null));
     }
 
-    /**  
+    /**
      * Get the alternate's region of Influence.
-     */  
+     */
     Bounds getInfluencingBounds() {
 	return (regionOfInfluence != null ?
 		(Bounds) regionOfInfluence.clone() : null);
@@ -173,7 +172,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 
     /**
      * Set the alternate's region of influence to the specified Leaf node.
-     */  
+     */
     void initInfluencingBoundingLeaf(BoundingLeaf region) {
 	if (region != null) {
 	    boundingLeaf = (BoundingLeafRetained)region.retained;
@@ -184,7 +183,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 
     /**
      * Set the alternate's region of influence to the specified Leaf node.
-     */  
+     */
     void setInfluencingBoundingLeaf(BoundingLeaf region) {
 	if (boundingLeaf != null)
 	    boundingLeaf.mirrorBoundingLeaf.removeUser(mirrorAltApp);
@@ -194,21 +193,21 @@ class AlternateAppearanceRetained extends LeafRetained {
 	} else {
 	    boundingLeaf = null;
 	}
-	sendMessage(BOUNDINGLEAF_CHANGED, 
-		    (boundingLeaf != null ? 
+	sendMessage(BOUNDINGLEAF_CHANGED,
+		    (boundingLeaf != null ?
 		     boundingLeaf.mirrorBoundingLeaf : null));
     }
 
-    /**  
+    /**
      * Get the alternate's region of influence.
-     */  
+     */
     BoundingLeaf getInfluencingBoundingLeaf() {
-	return (boundingLeaf != null ? 
+	return (boundingLeaf != null ?
 		(BoundingLeaf)boundingLeaf.source : null);
     }
 
 
-    
+
     /**
      * Replaces the specified scope with the scope provided.
      * @param scope the new scope
@@ -287,7 +286,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	scopeInfo[2] = (scopes.size() > 0 ? Boolean.TRUE: Boolean.FALSE);
 	sendMessage(SCOPE_CHANGED, scopeInfo);
     }
-    
+
 
 
     void initRemoveScope(int index) {
@@ -313,11 +312,11 @@ class AlternateAppearanceRetained extends LeafRetained {
 	sendMessage(SCOPE_CHANGED, scopeInfo);
     }
 
-  /** 
+  /**
    * Removes the specified Group node from this node's list of scopes.
-   * Method is a no-op if the 
+   * Method is a no-op if the
    * specified node is not found
-   * @param The Group node to be removed 
+   * @param The Group node to be removed
    */
     void removeScope(Group scope) {
       int ind = indexOfScope(scope);
@@ -350,14 +349,14 @@ class AlternateAppearanceRetained extends LeafRetained {
 
     void initRemoveAllScopes() {
       int n = scopes.size();
-      for(int i = n-1; i >= 0; i--) 
+      for(int i = n-1; i >= 0; i--)
 	initRemoveScope(i);
     }
-    
+
     /**
      * Returns an enumeration object of the scoperen.
      * @return an enumeration object of the scoperen
-     */  
+     */
     Enumeration getAllScopes() {
 	Enumeration elm = scopes.elements();
 	Vector v = new Vector(scopes.size());
@@ -367,7 +366,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	return v.elements();
     }
 
-  /** 
+  /**
    * Returns the index of the specified Group node in this node's list of scopes.
    * @param scope the Group node whose index is needed
    */
@@ -407,7 +406,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	scopeInfo[2] = (scopes.size() > 0 ? Boolean.TRUE: Boolean.FALSE);
 	sendMessage(SCOPE_CHANGED, scopeInfo);
     }
-   
+
 
 
     /**
@@ -417,7 +416,7 @@ class AlternateAppearanceRetained extends LeafRetained {
     int numScopes() {
 	return scopes.size();
     }
-  
+
 
     /**
      * This sets the immedate mode context flag
@@ -425,7 +424,7 @@ class AlternateAppearanceRetained extends LeafRetained {
     void setInImmCtx(boolean inCtx) {
         inImmCtx = inCtx;
     }
- 
+
     /**
      * This gets the immedate mode context flag
      */
@@ -467,7 +466,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	    if (objs[2] != null) {
 		mirrorAltApp.region = (Bounds)mirrorAltApp.boundingLeaf.transformedRegion;
 	    }
-	    else { 
+	    else {
 		if (mirrorAltApp.regionOfInfluence != null) {
 		    mirrorAltApp.region = mirrorAltApp.regionOfInfluence.copy(mirrorAltApp.region);
 		    mirrorAltApp.region.transform(
@@ -477,7 +476,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 		else {
 		    mirrorAltApp.region = null;
 		}
-		
+
 	    }
 	}
 	else if ((component & SCOPE_CHANGED) != 0) {
@@ -485,7 +484,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	    ArrayList addList = (ArrayList)scopeList[0];
 	    ArrayList removeList = (ArrayList)scopeList[1];
 	    boolean isScoped = ((Boolean)scopeList[2]).booleanValue();
-	    
+
 	    if (addList != null) {
 		mirrorAltApp.isScoped = isScoped;
 		for (i = 0; i < addList.size(); i++) {
@@ -493,7 +492,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 		    obj.addAltApp(mirrorAltApp);
 		}
 	    }
-	    
+
 	    if (removeList != null) {
 		mirrorAltApp.isScoped = isScoped;
 		for (i = 0; i < removeList.size(); i++) {
@@ -509,7 +508,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 
     /** Note: This routine will only be called on
      * the mirror object - will update the object's
-     * cached region and transformed region 
+     * cached region and transformed region
      */
 
     void updateBoundingLeaf() {
@@ -579,13 +578,13 @@ class AlternateAppearanceRetained extends LeafRetained {
 	} else {
 	    s.nodeList.add(mirrorAltApp);
 	}
-	
+
         if (s.transformTargets != null && s.transformTargets[0] != null) {
             s.transformTargets[0].addNode(mirrorAltApp,
                                                 Targets.ENV_TARGETS);
 	    s.notifyThreads |= J3dThread.UPDATE_TRANSFORM;
 	}
-	
+
         // process switch leaf
         if (s.switchTargets != null &&
                         s.switchTargets[0] != null) {
@@ -630,11 +629,11 @@ class AlternateAppearanceRetained extends LeafRetained {
 	obj[1] = (regionOfInfluence != null?regionOfInfluence.clone():null);
 	createMessage.args[4] = obj;
 	VirtualUniverse.mc.processMessage(createMessage);
-	
-	
-	
 
-	
+
+
+
+
     }
 
     /**
@@ -648,7 +647,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	AppearanceRetained app = (AppearanceRetained)args[3];
 	BoundingLeafRetained bl=(BoundingLeafRetained)((Object[])args[4])[0];
 	Bounds bnds = (Bounds)((Object[])args[4])[1];
-	
+
 	for (int i = 0; i < shapeList.size(); i++) {
 	    shape = ((GeometryAtom)shapeList.get(i)).source;
 	    shape.addAltApp(mirrorAltApp);
@@ -665,7 +664,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	    mirrorAltApp.boundingLeaf = null;
 	    mirrorAltApp.region = null;
 	}
-	
+
 	if (bnds != null) {
 	    mirrorAltApp.regionOfInfluence = bnds;
 	    if (mirrorAltApp.region == null) {
@@ -683,17 +682,17 @@ class AlternateAppearanceRetained extends LeafRetained {
 	Shape3DRetained shape;
 	ArrayList shapeList = (ArrayList)args[2];
 	ArrayList removeScopeList = new ArrayList();
-	
+
 	for (int i = 0; i < shapeList.size(); i++) {
 	    shape = ((GeometryAtom)shapeList.get(i)).source;
 	    shape.removeAltApp(mirrorAltApp);
-	}		
-	mirrorAltApp.isScoped = false;	
+	}
+	mirrorAltApp.isScoped = false;
 
 
 
     }
-    
+
 
     /**
      * This clearLive routine first calls the superclass's method, then
@@ -713,10 +712,10 @@ class AlternateAppearanceRetained extends LeafRetained {
 	s.notifyThreads |= J3dThread.UPDATE_RENDERING_ENVIRONMENT|
 	    J3dThread.UPDATE_RENDER;
 
-	// Remove this mirror light as users of the bounding leaf 
+	// Remove this mirror light as users of the bounding leaf
 	if (mirrorAltApp.boundingLeaf != null)
 	    mirrorAltApp.boundingLeaf.removeUser(mirrorAltApp);
-	
+
 	if ((s.viewScopedNodeList != null) && (s.viewLists != null)) {
 	    s.viewScopedNodeList.add(mirrorAltApp);
 	    s.scopedNodesViewList.add(s.viewLists.get(0));
@@ -726,14 +725,14 @@ class AlternateAppearanceRetained extends LeafRetained {
         if (s.transformTargets != null && s.transformTargets[0] != null) {
             s.transformTargets[0].addNode(mirrorAltApp,
                                                 Targets.ENV_TARGETS);
-	    s.notifyThreads |= J3dThread.UPDATE_TRANSFORM;   
+	    s.notifyThreads |= J3dThread.UPDATE_TRANSFORM;
 	}
         if (s.switchTargets != null &&
                         s.switchTargets[0] != null) {
             s.switchTargets[0].addNode(mirrorAltApp, Targets.ENV_TARGETS);
         }
 
-	
+
 	if (scopes.size() > 0) {
 	    J3dMessage createMessage = new J3dMessage();
 	    createMessage.threads = J3dThread.UPDATE_RENDERING_ENVIRONMENT;
@@ -768,10 +767,10 @@ class AlternateAppearanceRetained extends LeafRetained {
 		region.transform(regionOfInfluence,
 				 sgAltApp.getCurrentLocalToVworld());
 	    }
-	    
+
 	}
     }
-    
+
     final void sendMessage(int attrMask, Object attr) {
 	J3dMessage createMessage = new J3dMessage();
 	createMessage.threads = targetThreads;
@@ -781,7 +780,7 @@ class AlternateAppearanceRetained extends LeafRetained {
 	createMessage.args[1]= new Integer(attrMask);
 	createMessage.args[2] = attr;
 	VirtualUniverse.mc.processMessage(createMessage);
-    }    
+    }
 
 
     void getMirrorObjects(ArrayList leafList, HashKey key) {

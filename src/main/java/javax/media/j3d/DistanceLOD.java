@@ -26,8 +26,9 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.Point3f;
 import java.util.Enumeration;
+
+import javax.vecmath.Point3f;
 
 /**
  * This class defines a distance-based LOD behavior node that operates on
@@ -65,7 +66,7 @@ public class DistanceLOD extends LOD {
 
     /**
      * Constructs and initializes a DistanceLOD node with default values.
-     * Note that the default constructor creates a DistanceLOD object with 
+     * Note that the default constructor creates a DistanceLOD object with
      * a single distance value set to 0.0 and is, therefore, not useful.
      */
     public DistanceLOD() {
@@ -164,7 +165,7 @@ public class DistanceLOD extends LOD {
      */
     public void initialize() {
 	// Insert wakeup condition into queue
-	wakeupOn(wakeupFrame);  
+	wakeupOn(wakeupFrame);
     }
 
     /**
@@ -178,7 +179,7 @@ public class DistanceLOD extends LOD {
 	// compute distance in virtual world
 	View v = this.getView();
 	if( v == null ) {
-	    wakeupOn(wakeupFrame);  
+	    wakeupOn(wakeupFrame);
 	    return;
 	}
 
@@ -190,41 +191,41 @@ public class DistanceLOD extends LOD {
 	// Handle stimulus
 	double viewDistance = 0.0;
 	int nSwitches,i,index=0;
-	
-	Transform3D localToWorldTrans = new Transform3D();	
-	
+
+	Transform3D localToWorldTrans = new Transform3D();
+
         localToWorldTrans.set(((NodeRetained)this.retained).getCurrentLocalToVworld());
-	
-	
-	//  DistanceLOD's location in virutal world 
-	localToWorldTrans.transform( position, center); 
-	
-	
+
+
+	//  DistanceLOD's location in virutal world
+	localToWorldTrans.transform( position, center);
+
+
 	viewPosition.x = (float)((ViewPlatformRetained)vp.retained).schedSphere.center.x;
 	viewPosition.y = (float)((ViewPlatformRetained)vp.retained).schedSphere.center.y;
 	viewPosition.z = (float)((ViewPlatformRetained)vp.retained).schedSphere.center.z;
 	viewDistance = center.distance( viewPosition);
-	
+
 
 	// convert distance into local coordinates
 	viewDistance = viewDistance/localToWorldTrans.getDistanceScale();
-	
+
 	nSwitches = numSwitches();
-	
+
 	index = distances.length; // viewDistance > distances[n-1]
-	
+
 	if( viewDistance <= distances[0] ) {
 	    index = 0;
 	} else {
 	    for (i=1; i < distances.length; i++) {
-		if ((viewDistance > distances[i-1]) && 
+		if ((viewDistance > distances[i-1]) &&
 		    (viewDistance <= distances[i])) {
 		    index = i;
 		    break;
 		}
 	    }
 	}
-	
+
 	for(i=nSwitches-1; i>=0; i--) {
 	    Switch sw = getSwitch(i);
 	    // Optimize, this behavior is passive
@@ -235,8 +236,8 @@ public class DistanceLOD extends LOD {
 	    }
 	}
 	// Insert wakeup condition into queue
-	wakeupOn(wakeupFrame);  
-   
+	wakeupOn(wakeupFrame);
+
     }
 
     /**
@@ -265,7 +266,7 @@ public class DistanceLOD extends LOD {
      * <code>originalNode</code> into
      * the current node.  This method is called from the
      * <code>cloneNode</code> method which is, in turn, called by the
-     * <code>cloneTree</code> method.<P> 
+     * <code>cloneTree</code> method.<P>
      *
      * @param originalNode the original node to duplicate.
      * @param forceDuplicate when set to <code>true</code>, causes the

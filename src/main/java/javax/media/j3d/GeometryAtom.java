@@ -26,29 +26,28 @@
 
 package javax.media.j3d;
 
-import java.util.ArrayList;
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
 
 /**
  * A GeometryAtom is the smallest object representing Geometry.
  */
 
 class GeometryAtom extends Object implements BHLeafInterface, NnuId {
-    
+
     /**
      * Array of geometry components of this geometry atom
      */
     // The first index of geometryArr should always be 0, unless geometryArr contains
     // multiple Text3Ds.
     GeometryRetained[] geometryArray = null;
-    
+
     /**
      * Array of transforms used only for Text3d.
      */
     Transform3D[] lastLocalTransformArray = null;
 
 
-    /** 
+    /**
      * The locale that this geometry atom is attatched to.  This is only non-null
      * if this instance is directly linked into a locale.
      */
@@ -58,18 +57,18 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
      * The mirror Shape3DRetained for this GeometryAtom.
      */
     Shape3DRetained source = null;
-  
+
     /**
      * The BHLeafNode for this GeometryAtom.
      */
-    BHLeafNode bhLeafNode = null;  
-  
+    BHLeafNode bhLeafNode = null;
+
     // true if alpha channel is editable
     boolean alphaEditable;
-    
+
     // true if this ga is visible. Default is true.
     boolean visible = true;
-    
+
     /**
      * This is the original geometry type from which this atom came
      */
@@ -109,22 +108,22 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
 	    return 0;
 	}
     }
-    
+
     public BoundingBox computeBoundingHull() {
 	/*
-	  System.err.println("Bounds is " + source.vwcBounds); 
+	  System.err.println("Bounds is " + source.vwcBounds);
 	  for(int i=0; i<geometryArray.length; i++) {
 	  System.err.println( i + " geoBounds " +
 	  geometryArray[i].geoBounds);
 	  }
 	  */
-	
+
 	return source.vwcBounds;
     }
 
     // This method is use by picking and collision queries.
     public boolean isEnable() {
-	return ((source.vwcBounds != null) && 
+	return ((source.vwcBounds != null) &&
 		(source.vwcBounds.isEmpty() == false) &&
 		(source.switchState.currentSwitchOn));
     }
@@ -149,7 +148,7 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
 	return locale;
     }
 
-    
+
     /**
      * Gets a RenderAtom for the given viewIndex.
      * If it doesn't exist, it creates one.
@@ -160,7 +159,7 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
 	// If renderAtom is not scoped to this view, don't even
 	// bother creating the renderAtom
 
-	synchronized (renderAtoms) {
+	synchronized (lockObj) {
 	    index = view.viewIndex;
 	    if (index >= renderAtoms.length) {
 
@@ -176,7 +175,7 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
 		ra = new RenderAtom();
 		newList[index] = ra;
 		newList[index].geometryAtom = this;
-		
+
 		// Allocate space based on number of geometry in the list
 		ra.rListInfo = new RenderAtomListInfo[geometryArray.length];
 		if (geoType != GeometryRetained.GEO_TYPE_TEXT3D) {
@@ -233,7 +232,7 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
 		}
 	    }
 	}
-	    
+
 	return (renderAtoms[index]);
     }
     // If the renderAtom is transparent, then make sure that the
@@ -268,7 +267,7 @@ class GeometryAtom extends Object implements BHLeafInterface, NnuId {
 	    return;
 	}
 	// End of new for 1.3.2
-	
+
 	synchronized(lockObj) {
 	    for (int j = 0; j < geometryArray.length; j++) {
 		if (geometryArray[j] == null)

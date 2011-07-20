@@ -25,7 +25,6 @@
  */
 
 package javax.media.j3d;
-import java.util.ArrayList;
 
 /**
  * Class specifying a wakeup when the transform within a specified
@@ -53,7 +52,7 @@ public final class WakeupOnTransformChange extends WakeupCriterion {
 	    if (transform.transformChange == null) {
 		transform.transformChange = new WakeupIndexedList(1,
 					  WakeupOnTransformChange.class,
-					  WakeupOnTransformChange.COND_IN_BS_LIST, 
+					  WakeupOnTransformChange.COND_IN_BS_LIST,
 								  transform.universe);
 	    }
 	}
@@ -69,7 +68,7 @@ public final class WakeupOnTransformChange extends WakeupCriterion {
     }
 
     /**
-     * This is a callback from BehaviorStructure. It is 
+     * This is a callback from BehaviorStructure. It is
      * used to add wakeupCondition to behavior structure.
      */
     void addBehaviorCondition(BehaviorStructure bs) {
@@ -78,7 +77,7 @@ public final class WakeupOnTransformChange extends WakeupCriterion {
 
 
     /**
-     * This is a callback from BehaviorStructure. It is 
+     * This is a callback from BehaviorStructure. It is
      * used to remove wakeupCondition from behavior structure.
      */
     void removeBehaviorCondition(BehaviorStructure bs) {

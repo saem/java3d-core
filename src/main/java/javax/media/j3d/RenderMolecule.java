@@ -26,8 +26,7 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.util.*;
+import javax.vecmath.Vector3d;
 
 /**
  * The RenderMolecule manages a collection of RenderAtoms.
@@ -50,7 +49,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     static final int LINE       = 0x02;
     static final int SURFACE    = 0x04;
     static final int RASTER     = 0x08;
-    static final int COMPRESSED = 0x10; 
+    static final int COMPRESSED = 0x10;
 
     static int RM_COMPONENTS = (AppearanceRetained.POLYGON |
 				AppearanceRetained.LINE |
@@ -68,11 +67,11 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     ColoringAttributesRetained coloringAttributes = null;
     TransparencyAttributesRetained transparency = null;
 
-    // Use Object instead of AppearanceRetained class for 
+    // Use Object instead of AppearanceRetained class for
     // state caching optimation memory performance
 
     boolean normalPresent = true;
-    
+
 
     // Equivalent bits
     static final int POINTATTRS_DIRTY        = AppearanceRetained.POINT;
@@ -84,8 +83,8 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 
     static final int ALL_DIRTY_BITS    = POINTATTRS_DIRTY | LINEATTRS_DIRTY | POLYGONATTRS_DIRTY | MATERIAL_DIRTY | TRANSPARENCY_DIRTY | COLORINGATTRS_DIRTY;
 
-    /** 
-     * bit mask of all attr fields that are equivalent across 
+    /**
+     * bit mask of all attr fields that are equivalent across
      * renderMolecules
      */
     int dirtyAttrsAcrossRms = ALL_DIRTY_BITS;
@@ -142,12 +141,12 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
      */
     Transform3D[] trans = null;
 
-    
+
     /**
      * specify whether scale is nonuniform
      */
     boolean isNonUniformScale = false;
-     
+
     /**
      * number of renderAtoms to be rendered in this RenderMolecule
      */
@@ -161,7 +160,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     RenderAtom addRAs = null;
     RenderAtom removeRAs = null;
 
-    /** 
+    /**
      * The cached ColoringAttributes color value.  It is
      * 1.0, 1.0, 1.0 if there is no ColoringAttributes.
      */
@@ -177,9 +176,9 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     float dGreen = 1.0f;
     float dBlue = 1.0f;
 
-     
 
-    /** 
+
+    /**
      * The cached TransparencyAttributes transparency value.  It is
      * 0.0 if there is no TransparencyAttributes.
      */
@@ -190,12 +189,12 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
      */
     int geometryType = -1;
 
-    /** 
+    /**
      * A boolean indicating whether or not lighting should be on.
      */
     boolean enableLighting = false;
 
-    /** 
+    /**
      * A boolean indicating whether or not this molecule rendered Text3D
      */
 
@@ -208,7 +207,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     static int SEPARATE_DLIST_PER_RINFO_MOLECULE = 0x20;
 
 
-    /** 
+    /**
      * Cached values for polygonMode, line antialiasing, and point antialiasing
      */
     int polygonMode = PolygonAttributes.POLYGON_FILL;
@@ -227,7 +226,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     int texCoordSetMapLen = 0;
 
     /**
-     * The primary renderMethod object for this RenderMolecule 
+     * The primary renderMethod object for this RenderMolecule
      * this is either a Text3D, display list, or compressed geometry renderer.
      */
     RenderMethod primaryRenderMethod = null;
@@ -264,7 +263,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
      */
     RenderAtomListInfo separateDlistRenderAtomList = null;
 
-    
+
     /**
      * The list of RenderAtoms in this RenderMolecule that are using vertex
      * arrays.
@@ -292,8 +291,8 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     boolean soleUser = false;
     Object appHandle = null;
 
-    
-    VertexArrayRenderMethod cachedVertexArrayRenderMethod =    
+
+    VertexArrayRenderMethod cachedVertexArrayRenderMethod =
 	(VertexArrayRenderMethod)
 	VirtualUniverse.mc.getVertexArrayRenderMethod();
 
@@ -329,7 +328,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 
     // Transform when locale is different from the view's locale
     Transform3D[] localeLocalToVworld = null;
-    
+
     // Vector used for locale translation
     Vector3d localeTranslation = null;
 
@@ -350,27 +349,27 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		   PolygonAttributesRetained polygonAttributes,
 		   LineAttributesRetained lineAttributes,
 		   PointAttributesRetained pointAttributes,
-		   MaterialRetained material, 
+		   MaterialRetained material,
 		   ColoringAttributesRetained coloringAttributes,
 		   TransparencyAttributesRetained transparency,
 		   RenderingAttributesRetained renderAttrs,
 		   TextureUnitStateRetained[] texUnits,
 		   Transform3D[] transform, int[] transformIndex,
-		   RenderBin rb) { 
+		   RenderBin rb) {
 	renderBin = rb;
 	IndexedUnorderSet.init(this, TOTAL_INDEXED_UNORDER_SET_TYPES);
 
-	reset(ga, polygonAttributes, lineAttributes, pointAttributes, 
+	reset(ga, polygonAttributes, lineAttributes, pointAttributes,
 	      material, coloringAttributes, transparency, renderAttrs,
 	      texUnits, transform,
 	      transformIndex);
     }
 
-    void reset(GeometryAtom ga, 
+    void reset(GeometryAtom ga,
 	       PolygonAttributesRetained polygonAttributes,
 	       LineAttributesRetained lineAttributes,
 	       PointAttributesRetained pointAttributes,
-	       MaterialRetained material, 
+	       MaterialRetained material,
 	       ColoringAttributesRetained coloringAttributes,
 	       TransparencyAttributesRetained transparency,
 	       RenderingAttributesRetained renderAttrs,
@@ -393,7 +392,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 
         closestSwitchParent = ga.source.closestSwitchParent;
         closestSwitchIndex = ga.source.closestSwitchIndex;
-	
+
 	int i1;
 	// Find the first non-null geometey
 	GeometryRetained geo = null;
@@ -418,8 +417,8 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    appHandle = ga.source.appearance;
 	else
 	    appHandle = (Object)this;
-	    
-	// If its of type GeometryArrayRetained 
+
+	// If its of type GeometryArrayRetained
 	if (ga.geoType <= GeometryRetained.GEO_TYPE_GEOMETRYARRAY ||
 	    ga.geoType == GeometryRetained.GEO_TYPE_TEXT3D) {
 
@@ -475,7 +474,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    break;
 	case GeometryRetained.GEO_TYPE_COMPRESSED:
 	    this.geometryType = COMPRESSED;
-		
+
 	    switch (((CompressedGeometryRetained)geo).getBufferType()) {
 	    case CompressedGeometryHeader.POINT_BUFFER:
 		this.geometryType |= POINT ;
@@ -487,10 +486,10 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    case CompressedGeometryHeader.TRIANGLE_BUFFER:
 		this.geometryType |= SURFACE ;
 		if (polygonAttributes != null) {
-		    if (polygonAttributes.polygonMode == 
+		    if (polygonAttributes.polygonMode ==
 			PolygonAttributes.POLYGON_POINT) {
 			this.geometryType |= POINT;
-		    } else if (polygonAttributes.polygonMode == 
+		    } else if (polygonAttributes.polygonMode ==
 			       PolygonAttributes.POLYGON_LINE) {
 			this.geometryType |= LINE;
 		    }
@@ -501,10 +500,10 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	default:
 	    this.geometryType = SURFACE;
 	    if (polygonAttributes != null) {
-		if (polygonAttributes.polygonMode == 
+		if (polygonAttributes.polygonMode ==
 		    PolygonAttributes.POLYGON_POINT) {
 		    this.geometryType |= POINT;
-		} else if (polygonAttributes.polygonMode == 
+		} else if (polygonAttributes.polygonMode ==
 			   PolygonAttributes.POLYGON_LINE) {
 		    this.geometryType |= LINE;
 		}
@@ -512,11 +511,11 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    break;
 	}
 
-	isQuadGeometryArray = (geo.getClassType() == 
+	isQuadGeometryArray = (geo.getClassType() ==
 			       GeometryRetained.QUAD_TYPE);
-	isTriGeometryArray = (geo.getClassType() == 
+	isTriGeometryArray = (geo.getClassType() ==
 			      GeometryRetained.TRIANGLE_TYPE);
-			      
+
 	this.localToVworld = transform;
 	this.localToVworldIndex = transformIndex;
         doInfinite = ga.source.inBackgroundGroup;
@@ -531,7 +530,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	if (polygonAttributes != null) {
 	    if (polygonAttributes.changedFrequent != 0) {
 		definingPolygonAttributes = polygonAttributes;
-		    
+
 		mask |= POLYGONATTRS_DIRTY;
 	    }
 	    else {
@@ -673,7 +672,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    definingTransparency.set(transparency);
 		}
 		else {
-		    definingTransparency = 
+		    definingTransparency =
 			(TransparencyAttributesRetained)transparency.clone();
 		}
 	    }
@@ -727,7 +726,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		   PolygonAttributesRetained polygonAttributes,
 		   LineAttributesRetained lineAttributes,
 		   PointAttributesRetained pointAttributes,
-		   MaterialRetained material, 
+		   MaterialRetained material,
 		   ColoringAttributesRetained coloringAttributes,
 		   TransparencyAttributesRetained transparency,
 		   Transform3D[] transform) {
@@ -789,10 +788,10 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	default:
 	    geoType = SURFACE;
 	    if (polygonAttributes != null) {
-		if (polygonAttributes.polygonMode == 
+		if (polygonAttributes.polygonMode ==
 		    PolygonAttributes.POLYGON_POINT) {
 		    geoType |= POINT;
-		} else if (polygonAttributes.polygonMode == 
+		} else if (polygonAttributes.polygonMode ==
 			   PolygonAttributes.POLYGON_LINE) {
 		    geoType |= LINE;
 		}
@@ -804,17 +803,17 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    return (false);
 	}
 	/*
-	// XXXX : Check this 
+	// XXXX : Check this
 	if (useDisplayList &&
 	    (ga.geometry.isEditable ||
 	     ga.geometry.refCount > 1 ||
 	     ((GroupRetained)ga.source.parent).switchLevel >= 0 ||
-	     ga.alphaEditable)) { 
+	     ga.alphaEditable)) {
 	    return (false);
 	}
 	*/
 	if (ga.geoType == GeometryRetained.GEO_TYPE_TEXT3D &&
-	    primaryMoleculeType != 0 && 
+	    primaryMoleculeType != 0 &&
 	    ((primaryMoleculeType & TEXT3D_MOLECULE) == 0)) {
 	    return (false);
 	}
@@ -841,7 +840,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    // or punt all to vertex array. And we don't need to worry
 	    // about some of the ga can be in display list for this canvas,
 	    // and some other can be in display list for the other canvas.
-	    if (((gr.texCoordSetMap != null) && 
+	    if (((gr.texCoordSetMap != null) &&
 		 (this.texCoordSetMapLen != gr.texCoordSetMap.length)) ||
 		((gr.texCoordSetMap == null) && (this.texCoordSetMapLen != 0))) {
 		return (false);
@@ -850,7 +849,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    if (VirtualUniverse.mc.isD3D() &&
 		(((geo.getClassType() == GeometryRetained.QUAD_TYPE)
 		  && !isQuadGeometryArray) ||
-		 ((geo.getClassType() == GeometryRetained.TRIANGLE_TYPE)  
+		 ((geo.getClassType() == GeometryRetained.TRIANGLE_TYPE)
 		  && !isTriGeometryArray))) {
 		return false;
 	    }
@@ -879,7 +878,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
                 // state could have been changed. Example,
                 // application could have detached an appearance,
                 // made changes to the appearance state, and then
-                // reattached the appearance. In this case, the 
+                // reattached the appearance. In this case, the
                 // changes would not have reflected to the RenderMolecule
 
                 if (numEditingRenderAtoms == 0) {
@@ -894,13 +893,13 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    else {
 		return false;
 	    }
-	    
+
 	}
 	// Assign the cloned value as the original value
 
 	// Either a changedFrequent or a null case
 	// and the incoming one is not equal or null
-	// then return;	
+	// then return;
 	// This check also handles null == null case
 	if (definingPolygonAttributes != null) {
 	    if ((this.definingPolygonAttributes.changedFrequent != 0) ||
@@ -945,7 +944,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	else if (lineAttributes != null) {
 	    return false;
 	}
-	
+
 
 	if (definingPointAttributes != null) {
 	    if ((this.definingPointAttributes.changedFrequent != 0) ||
@@ -969,7 +968,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    return false;
 	}
 
-	
+
 
 
 	if (definingMaterial != null) {
@@ -1061,7 +1060,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    textureBin.removeRenderMolecule(this);
 	    return;
 	}
-	
+
 	while (removeRAs != null) {
 	    r = (RenderAtom)removeRAs;
 	    r.removed = null;
@@ -1074,7 +1073,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		// Don't remove  null geo
 		if (rinfo.geometry() == null)
 		    continue;
-		
+
 		if ((rinfo.groupType & RenderAtom.PRIMARY) != 0) {
 		    primaryChanged = true;
 		    if (rinfo.prev == null) { // At the head of the list
@@ -1093,7 +1092,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    if (primaryMoleculeType == RASTER) {
 			RasterRetained geo = (RasterRetained)rinfo.geometry();
 			renderBin.removeGeometryFromLockList(geo);
-			if (geo.image != null) 
+			if (geo.image != null)
 				renderBin.removeNodeComponent(geo.image);
 
 		    }
@@ -1102,7 +1101,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			    renderBin.removeDlistPerRinfo.add(rinfo);
 			}
 		    }
-		} 
+		}
 		else if ((rinfo.groupType & RenderAtom.SEPARATE_DLIST_PER_GEO) != 0) {
 		    if (rinfo.prev == null) { // At the head of the list
 			separateDlistRenderAtomList = rinfo.next;
@@ -1116,7 +1115,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			}
 		    }
 		    renderBin.removeGeometryDlist(rinfo);
-		    
+
 		}
 		else {
 		    if (rinfo.prev == null) { // At the head of the list
@@ -1169,7 +1168,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    vwcBounds.set(null);
 		    displayListId = 0;
 		    displayListIdObj = null;
-		}	    
+		}
 		if (locale != renderBin.locale) {
 		    localeLocalToVworld = null;
 		}
@@ -1180,7 +1179,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    // If a renderAtom is added to the display list
 		    // structure then add this to the dirty list of rm
 		    // for which the display list needs to be recreated
-		    renderBin.addDirtyRenderMolecule(this); 
+		    renderBin.addDirtyRenderMolecule(this);
 		    vwcBounds.set(null);
 		    rinfo = primaryRenderAtomList;
 		    while (rinfo != null) {
@@ -1188,7 +1187,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			rinfo = rinfo.next;
 		    }
 		    primaryChanged = false;
-		}	    
+		}
 	    }
 	}
 	numEditingRenderAtoms = numRenderAtoms;
@@ -1219,10 +1218,10 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			if ((r.groupType & RenderAtom.DLIST) != 0 && primaryRenderMethod == null) {
 			    primaryMoleculeType = DLIST_MOLECULE;
 			    renderBin.renderMoleculeList.add(this);
-			    
+
 			    if (vwcBounds == null)
 				vwcBounds = new BoundingBox((BoundingBox)null);
-			    primaryRenderMethod = 
+			    primaryRenderMethod =
 				VirtualUniverse.mc.getDisplayListRenderMethod();
 			    // Assign a displayListId for this renderMolecule
 			    if (displayListId == 0) {
@@ -1234,7 +1233,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 				 primaryRenderMethod == null) {
 			    primaryMoleculeType = SEPARATE_DLIST_PER_RINFO_MOLECULE;
 			    renderBin.renderMoleculeList.add(this);
-			    primaryRenderMethod = 
+			    primaryRenderMethod =
 				VirtualUniverse.mc.getDisplayListRenderMethod();
 
 			}
@@ -1276,13 +1275,13 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			else {
 			    r.next = separateDlistRenderAtomList;
 			    separateDlistRenderAtomList.prev = r;
-			    separateDlistRenderAtomList = r;			
+			    separateDlistRenderAtomList = r;
 			}
 			((GeometryArrayRetained)r.geometry()).assignDlistId();
 			renderBin.addGeometryDlist(r);
 		    }
 		    else {
-			if (secondaryRenderMethod == null) 
+			if (secondaryRenderMethod == null)
 			    secondaryRenderMethod = cachedVertexArrayRenderMethod;
 			if (vertexArrayRenderAtomList == null) {
 			    vertexArrayRenderAtomList = r;
@@ -1290,7 +1289,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			else {
 			    r.next = vertexArrayRenderAtomList;
 			    vertexArrayRenderAtomList.prev = r;
-			    vertexArrayRenderAtomList = r;			
+			    vertexArrayRenderAtomList = r;
 			}
 			// For indexed geometry there is no need to lock since
 			// the mirror is changed only when the renderer is not
@@ -1306,7 +1305,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			    // refernce and there is color and we need to use alpha
                             // Issue 113 - ignore multiScreen
 			    if ((( geo.vertexFormat & GeometryArray.BY_REFERENCE)!=0) &&
-				(geo.c4fAllocated == 0) && 
+				(geo.c4fAllocated == 0) &&
 				((geo.vertexFormat & GeometryArray.COLOR) != 0) &&
 				useAlpha) {
 				renderBin.addDirtyReferenceGeometry(geo);
@@ -1385,8 +1384,8 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
                 i = localToVworldIndex[NodeRetained.LAST_LOCAL_TO_VWORLD];
                 localeLocalToVworld[i].getRotation(infLocalToVworld[i]);
             }
-	    
-	    // No new renderAtoms were added, but need to	
+
+	    // No new renderAtoms were added, but need to
 	    // recompute vwcBounds in response to xform change
 	    if ((onUpdateList & BOUNDS_RECOMPUTE_UPDATE) != 0) {
 		vwcBounds.set(null);
@@ -1395,7 +1394,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    vwcBounds.combine(r.renderAtom.localeVwcBounds);
 		    r = r.next;
 		}
-	    }	    
+	    }
 	}
 
 	// Clear all bits except the IN_DIRTY_LIST
@@ -1415,10 +1414,10 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     // If dlist will be altered due to alpha or ignoreVertexColors, then don't
     // put in a separate dlist that can be shared ...
     final boolean geoNotAltered(GeometryArrayRetained geo) {
-	return !(((geo.vertexFormat & GeometryArray.COLOR) != 0) && 
+	return !(((geo.vertexFormat & GeometryArray.COLOR) != 0) &&
 		 (textureBin.attributeBin.ignoreVertexColors || useAlpha));
     }
-    
+
     int evalRinfoGroupType(RenderAtomListInfo r) {
 	int groupType = 0;
 
@@ -1428,7 +1427,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 
 	if ((primaryMoleculeType & (COMPRESSED_MOLECULE |
 				    RASTER_MOLECULE     |
-				    TEXT3D_MOLECULE	|	
+				    TEXT3D_MOLECULE	|
 				    ORIENTEDSHAPE3D_MOLECULE)) != 0) {
 	    groupType = RenderAtom.OTHER;
 	}
@@ -1486,51 +1485,51 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	MaterialRetained mat = (raApp == null)? null : raApp.material;
         if (!soleUser && material != mat) {
 	    // no longer sole user
-            material = definingMaterial;        
+            material = definingMaterial;
         }
 
         if ((geometryType & SURFACE) != 0) {
-	    PolygonAttributesRetained pgAttrs = 
+	    PolygonAttributesRetained pgAttrs =
 		(raApp == null)? null : raApp.polygonAttributes;
             if (!soleUser && polygonAttributes != pgAttrs) {
-	        // no longer sole user 
-                polygonAttributes = definingPolygonAttributes; 
+	        // no longer sole user
+                polygonAttributes = definingPolygonAttributes;
             }
 
-        } 
+        }
 	if ((geometryType & LINE) != 0) {
-	    LineAttributesRetained lnAttrs = 
+	    LineAttributesRetained lnAttrs =
 		(raApp == null)? null : raApp.lineAttributes;
             if (!soleUser && lineAttributes != lnAttrs) {
-	        // no longer sole user 
-                lineAttributes = definingLineAttributes;	
+	        // no longer sole user
+                lineAttributes = definingLineAttributes;
             }
 
-        }  
+        }
 	if ((geometryType & POINT) != 0) {
-	    PointAttributesRetained pnAttrs = 
+	    PointAttributesRetained pnAttrs =
 		(raApp == null)? null : raApp.pointAttributes;
 	    if (!soleUser && pointAttributes != pnAttrs) {
-	        // no longer sole user 
-                pointAttributes = definingPointAttributes; 	
+	        // no longer sole user
+                pointAttributes = definingPointAttributes;
             }
         }
 
-	ColoringAttributesRetained coAttrs = 
+	ColoringAttributesRetained coAttrs =
 	    (raApp == null)? null : raApp.coloringAttributes;
         if (!soleUser && coloringAttributes != coAttrs) {
-	    // no longer sole user 
-            coloringAttributes = definingColoringAttributes; 
+	    // no longer sole user
+            coloringAttributes = definingColoringAttributes;
         }
 
-	TransparencyAttributesRetained trAttrs = 
+	TransparencyAttributesRetained trAttrs =
 	    (raApp == null)? null : raApp.transparencyAttributes;
         if (!soleUser && transparency != trAttrs) {
-	    // no longer sole user 
-            transparency = definingTransparency;    	
+	    // no longer sole user
+            transparency = definingTransparency;
         }
 
-	
+
 
 	// If the renderAtom is being inserted first time, then evaluate
 	// the groupType to determine if need separate localeVwcBounds
@@ -1577,7 +1576,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    renderBin.addGeometryDlist(renderAtom.rListInfo[i]);
 
 	    }
-	    if (removeRAs == null) 
+	    if (removeRAs == null)
 		rb.removeRenderAtomInRMList.remove(this);
 	}
 	else {
@@ -1620,7 +1619,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     void removeRenderAtom(RenderAtom r) {
 	int index;
 
-	r.renderMolecule = null; 
+	r.renderMolecule = null;
 	if (r.added == this) {
 	    //Remove this renderAtom from the addRAs list
 
@@ -1640,7 +1639,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		r.nextAdd = null;
 		r.prevAdd = null;
 	    }
-		
+
 	    r.added = null;
 	    r.envSet = null;
 	    // If the number of renderAtoms is zero, and it is on the
@@ -1650,14 +1649,14 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    // Might be expensive to remove this entry from the renderBin
 	    // objUpdateList, just let it call the renderMolecule
 	    /*
-	      if (addRAs == null) { 
+	      if (addRAs == null) {
 	      if (onUpdateList == NEW_RENDERATOMS_UPDATE){
 	      renderBin.objUpdateList.remove(renderBin.objUpdateList.indexOf(this));
 	      }
 	      onUpdateList &= ~NEW_RENDERATOMS_UPDATE;
 	      }
 	    */
-	    
+
 	}
 	else {
 	    // Add this renderAtom to the remove list
@@ -1722,14 +1721,14 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	     definingTransparency.transparencyMode !=
 	     TransparencyAttributes.SCREEN_DOOR);
 
-	
+
 	if (texUnits != null) {
-	    for (int i = 0; 
+	    for (int i = 0;
 		 textureBlend == false && i < texUnits.length;
 		 i++) {
 		if (texUnits[i] != null &&
 		    texUnits[i].texAttrs != null) {
-		    textureBlend = textureBlend || 
+		    textureBlend = textureBlend ||
             		(texUnits[i].texAttrs.textureMode ==
 			 TextureAttributes.BLEND);
 		}
@@ -1738,8 +1737,8 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 
         alphaTest =
             renderAttrs != null && renderAttrs.alphaTestFunction != RenderingAttributes.ALWAYS;
-	
-	boolean oldUseAlpha = useAlpha; 
+
+	boolean oldUseAlpha = useAlpha;
         useAlpha = alphaBlend || alphaTest || textureBlend;
 
 	if( !oldUseAlpha && useAlpha) {
@@ -1756,7 +1755,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    // reference and there is color and we need to use alpha
 		    // Issue 113 - ignore multiScreen
 		    if ((( geo.vertexFormat & GeometryArray.BY_REFERENCE)!=0) &&
-			(geo.c4fAllocated == 0) && 
+			(geo.c4fAllocated == 0) &&
 			((geo.vertexFormat & GeometryArray.COLOR) != 0) &&
 			useAlpha) {
 			renderBin.addDirtyReferenceGeometry(geo);
@@ -1775,13 +1774,13 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    return primaryRenderAtomList.renderAtom.geometryAtom.
 		source.switchState.lastSwitchOn;
 
-	} 
-	
+	}
+
 	if (vertexArrayRenderAtomList != null) {
 	    return vertexArrayRenderAtomList.renderAtom.geometryAtom.
 		source.switchState.lastSwitchOn;
-	    
-	} 
+
+	}
 
 	if (separateDlistRenderAtomList != null) {
 	    return separateDlistRenderAtomList.renderAtom.geometryAtom.
@@ -1795,10 +1794,10 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
      */
     boolean render(Canvas3D cv, int pass, int dirtyBits) {
         assert pass < 0;
-	
+
 	boolean isVisible = isSwitchOn();
-	
-	if (!isVisible) {	
+
+	if (!isVisible) {
 	    return false;
 	}
 
@@ -1808,9 +1807,9 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
         cv.setStateToUpdate(Canvas3D.RENDERMOLECULE_BIT, this);
 
 	boolean modeSupportDL = true;
-	isNonUniformScale = !trans[localToVworldIndex[NodeRetained.LAST_LOCAL_TO_VWORLD]].isCongruent();	    
+	isNonUniformScale = !trans[localToVworldIndex[NodeRetained.LAST_LOCAL_TO_VWORLD]].isCongruent();
 	// We have to dynamically switch between using displaymode
-	// mode or not instead of decide in canBeInDisplayList(), 
+	// mode or not instead of decide in canBeInDisplayList(),
 	// since polygonAttribute can be change by editable Appearance
 	// or editable polygonAttribute which mode we can't take
 	// advantage of display list mode in many cases just because
@@ -1823,7 +1822,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	// the number of texture units supported by the Canvas, then
 	// we'll have to punt to vertex array as well.
 
-	if ((pass != TextureBin.USE_DISPLAYLIST) ||	
+	if ((pass != TextureBin.USE_DISPLAYLIST) ||
 	    (texCoordSetMapLen > cv.maxTexCoordSets) ||
 	    (VirtualUniverse.mc.isD3D() &&
 	      (((definingPolygonAttributes != null) &&
@@ -1832,7 +1831,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		   PolygonAttributes.POLYGON_LINE))||
 		 (isTriGeometryArray &&
 		  (definingPolygonAttributes.polygonMode ==
-		   PolygonAttributes.POLYGON_POINT)))) || 
+		   PolygonAttributes.POLYGON_POINT)))) ||
 	       cv.texLinearMode))) {
 	    modeSupportDL = false;
 	}
@@ -1857,18 +1856,18 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    else {
 			if (renderBin.dlistRenderMethod.renderSeparateDlistPerRinfo(this, cv, primaryRenderAtomList,dirtyBits))
 			    isVisible = true;
-			
+
 		    }
-		} else { 
+		} else {
 		    if(cachedVertexArrayRenderMethod.render(this, cv,
-							    primaryRenderAtomList, 
+							    primaryRenderAtomList,
 							    dirtyBits)) {
 			isVisible = true;
 		    }
 		}
 	    }
 	}
-	else {	// TEXT3D or ORIENTEDSHAPE3D    
+	else {	// TEXT3D or ORIENTEDSHAPE3D
 
 	    if (primaryRenderAtomList != null) {
 		if(primaryRenderMethod.render(this, cv, primaryRenderAtomList,
@@ -1877,7 +1876,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		}
 	    }
 	}
-	
+
 	if (separateDlistRenderAtomList != null) {
             if (modeSupportDL) {
                 if(renderBin.dlistRenderMethod.renderSeparateDlists(this, cv,
@@ -1885,21 +1884,21 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
                         dirtyBits)) {
                     isVisible = true;
                 }
-		
+
 	    } else {
-		if(cachedVertexArrayRenderMethod.render(this, cv, 
+		if(cachedVertexArrayRenderMethod.render(this, cv,
 							separateDlistRenderAtomList,
 							dirtyBits)) {
 		    isVisible = true;
 		}
 	    }
-	    
+
 	}
-	
+
 	// XXXX: In the case of independent primitives such as quads,
 	// it would still be better to call multi draw arrays
 	if (vertexArrayRenderAtomList != null) {
-	    if(cachedVertexArrayRenderMethod.render(this, cv, 
+	    if(cachedVertexArrayRenderMethod.render(this, cv,
 						    vertexArrayRenderAtomList,
 						    dirtyBits)) {
 		isVisible = true;
@@ -1907,19 +1906,19 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	}
 	return isVisible;
     }
-    
+
     void updateAttributes(Canvas3D cv, int dirtyBits) {
 
 
-	boolean setTransparency = false; 
+	boolean setTransparency = false;
 
-	// If this is a beginning of a frame OR diff. geometryType 
+	// If this is a beginning of a frame OR diff. geometryType
 	// then reload everything for the first rendermolecule
 	//	System.err.println("updateAttributes");
 	int bitMask = geometryType | Canvas3D.MATERIAL_DIRTY|
 	    Canvas3D.COLORINGATTRS_DIRTY|
 	    Canvas3D.TRANSPARENCYATTRS_DIRTY;
-	
+
 	// If beginning of a frame then reload all the attributes
 	if ((cv.canvasDirty & bitMask) != 0) {
 	    if ((geometryType & SURFACE) != 0) {
@@ -1927,9 +1926,9 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    cv.resetPolygonAttributes(cv.ctx);
 		} else {
 		    definingPolygonAttributes.updateNative(cv.ctx);
-		}	    
+		}
 		cv.polygonAttributes = polygonAttributes;
-	    } 
+	    }
 	    if ((geometryType & LINE) != 0) {
 		if (definingLineAttributes == null) {
 		    cv.resetLineAttributes(cv.ctx);
@@ -1937,7 +1936,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    definingLineAttributes.updateNative(cv.ctx);
 		}
 		cv.lineAttributes = lineAttributes;
-	    } 
+	    }
 	    if ((geometryType & POINT) != 0) {
 		if (definingPointAttributes == null) {
 		    cv.resetPointAttributes(cv.ctx);
@@ -1953,29 +1952,29 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    } else {
 		definingTransparency.updateNative(cv.ctx,
 						  alpha, geometryType,
-						  polygonMode, lineAA, 
+						  polygonMode, lineAA,
 						  pointAA);
 	    }
 	    cv.transparency = transparency;
-	    
+
 	    if (definingMaterial == null) {
 		cv.updateMaterial(cv.ctx, red, green, blue, alpha);
 	    } else {
 		definingMaterial.updateNative(cv.ctx,
-					      red, green, blue, alpha, 
+					      red, green, blue, alpha,
 					      enableLighting);
 	    }
 	    cv.material = material;
 	    cv.enableLighting = enableLighting;
 
 	    if (definingColoringAttributes == null) {
-		cv.resetColoringAttributes(cv.ctx, red, green, blue, 
+		cv.resetColoringAttributes(cv.ctx, red, green, blue,
 					   alpha, enableLighting);
 	    } else {
 		definingColoringAttributes.updateNative(cv.ctx,
 							dRed,
 							dBlue,
-							dGreen,alpha, 
+							dGreen,alpha,
 							enableLighting);
 	    }
 	    cv.coloringAttributes = coloringAttributes;
@@ -1991,46 +1990,46 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
         // whenever encounter a non-visible rm
 
 	else if (cv.renderMolecule != this && (dirtyBits != 0)) {
-	    
+
 	    // no need to download states if appHandle is the same
 	    if (cv.appHandle != appHandle) {
-		
+
 		// Check if the attribute bundle in the canvas is the same
 		// as the attribute bundle in this renderMolecule
-		
-		if (cv.transparency != transparency && 
+
+		if (cv.transparency != transparency &&
 		    (dirtyBits & TRANSPARENCY_DIRTY) != 0) {
 		    setTransparency = true;
 		    if (definingTransparency == null) {
-			
+
 			cv.resetTransparency(cv.ctx, geometryType,
 					     polygonMode, lineAA, pointAA);
-		    } else {		      
-			definingTransparency.updateNative(cv.ctx, alpha, 
-							  geometryType, polygonMode, 
+		    } else {
+			definingTransparency.updateNative(cv.ctx, alpha,
+							  geometryType, polygonMode,
 							  lineAA, pointAA);
 		    }
 		    cv.transparency = transparency;
-		}	    
-		
-		if (setTransparency || ((cv.enableLighting != enableLighting) || 
-					(cv.material != material) && 
-					(dirtyBits & MATERIAL_DIRTY) != 0)){ 
-		    if (definingMaterial == null) {			
+		}
+
+		if (setTransparency || ((cv.enableLighting != enableLighting) ||
+					(cv.material != material) &&
+					(dirtyBits & MATERIAL_DIRTY) != 0)){
+		    if (definingMaterial == null) {
 			cv.updateMaterial(cv.ctx, red, green, blue, alpha);
-		    } else {			
-			definingMaterial.updateNative(cv.ctx, red, green, 
-						      blue, alpha, 
+		    } else {
+			definingMaterial.updateNative(cv.ctx, red, green,
+						      blue, alpha,
 						      enableLighting);
 		    }
 		    cv.material = material;
 		    cv.enableLighting = enableLighting;
-		}				 
-		
+		}
+
 		if (((geometryType & SURFACE) != 0) &&
 		    cv.polygonAttributes != polygonAttributes &&
 		    (dirtyBits & POLYGONATTRS_DIRTY) != 0) {
-		    
+
 		    if (definingPolygonAttributes == null) {
 			cv.resetPolygonAttributes(cv.ctx);
 		    } else {
@@ -2038,11 +2037,11 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    }
 		    cv.polygonAttributes = polygonAttributes;
 		}
-		
+
 		if (((geometryType & LINE) != 0) &&
 		    cv.lineAttributes != lineAttributes &&
 		    (dirtyBits & LINEATTRS_DIRTY) != 0) {
-		    
+
 		    if (definingLineAttributes == null) {
 			cv.resetLineAttributes(cv.ctx);
 		    } else {
@@ -2050,11 +2049,11 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    }
 		    cv.lineAttributes = lineAttributes;
 		}
-		
+
 		if (((geometryType & POINT) != 0) &&
 		    cv.pointAttributes != pointAttributes &&
 		    (dirtyBits & POINTATTRS_DIRTY) != 0) {
-		    
+
 		    if (definingPointAttributes == null) {
 			cv.resetPointAttributes(cv.ctx);
 		    } else {
@@ -2062,15 +2061,15 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    }
 		    cv.pointAttributes = pointAttributes;
 		}
-		
+
 		// Use Object instead of AppearanceRetained class for
 		// state caching optimation for memory performance
 		cv.appHandle = appHandle;
 	    }
-	    // no state caching for color attrs, which can also be 
+	    // no state caching for color attrs, which can also be
 	    // changed by primitive with colors
 	    if(setTransparency || ((dirtyBits & COLORINGATTRS_DIRTY) != 0)) {
-		
+
 		if (definingColoringAttributes == null) {
 		    cv.resetColoringAttributes(cv.ctx,
 					       red, green, blue, alpha,
@@ -2078,34 +2077,34 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		} else {
 		    definingColoringAttributes.updateNative(cv.ctx,
 							    dRed,
-							    dBlue, 
-							    dGreen,alpha, 
+							    dBlue,
+							    dGreen,alpha,
 							    enableLighting);
-		    
+
 		}
                 cv.coloringAttributes = coloringAttributes;
-	    }	    
-	    
+	    }
+
 	}
-	
+
 	if ((primaryMoleculeType & (TEXT3D_MOLECULE| ORIENTEDSHAPE3D_MOLECULE)) == 0) {
 	    /* System.err.println("updateAttributes  setModelViewMatrix (1)"); */
 
 	    Transform3D modelMatrix =
 	        trans[localToVworldIndex[NodeRetained.LAST_LOCAL_TO_VWORLD]];
-	    
+
 	    if (cv.modelMatrix != modelMatrix) {
 		/* System.err.println("updateAttributes  setModelViewMatrix (2)"); */
 
-		cv.setModelViewMatrix(cv.ctx, cv.vworldToEc.mat, 
+		cv.setModelViewMatrix(cv.ctx, cv.vworldToEc.mat,
 				      modelMatrix);
 	    }
 	}
-	
+
 	cv.canvasDirty &= ~bitMask;
 	cv.renderMolecule = this;
     }
-	
+
     void transparentSortRender(Canvas3D cv, int pass, TransparentRenderingInfo tinfo) {
         assert pass < 0;
 
@@ -2114,12 +2113,12 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 
         // include this LightBin to the to-be-updated list in Canvas
         cv.setStateToUpdate(Canvas3D.RENDERMOLECULE_BIT, this);
-	
-	
+
+
 	boolean modeSupportDL = true;
-	    
+
 	// We have to dynamically switch between using displaymode
-	// mode or not instead of decide in canBeInDisplayList(), 
+	// mode or not instead of decide in canBeInDisplayList(),
 	// since polygonAttribute can be change by editable Appearance
 	// or editable polygonAttribute which mode we can't take
 	// advantage of display list mode in many cases just because
@@ -2140,7 +2139,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 				(isTriGeometryArray &&
 				 (definingPolygonAttributes.polygonMode ==
 				  PolygonAttributes.POLYGON_POINT))))
-			      || 
+			      ||
 			      cv.texLinearMode))) {
 	    modeSupportDL = false;
 	}
@@ -2197,7 +2196,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 				       ALL_DIRTY_BITS);
 	    tinfo.rInfo.next = save;
 	}
-	
+
     }
 
 
@@ -2208,7 +2207,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
      */
     void updateTransparencyAttributes(Canvas3D cv) {
 	if (definingTransparency == null) {
-	    cv.resetTransparency(cv.ctx, geometryType, polygonMode, 
+	    cv.resetTransparency(cv.ctx, geometryType, polygonMode,
 				 lineAA, pointAA);
 	} else {
 	    definingTransparency.updateNative(cv.ctx, alpha, geometryType,
@@ -2220,7 +2219,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	// This function only gets called when primaryRenderAtomsList are
 	if (primaryRenderAtomList != null) {
 	    ((DisplayListRenderMethod)primaryRenderMethod).buildDisplayList(this, cv);
-	} 
+	}
     }
 
     void releaseAllPrimaryDisplayListID() {
@@ -2247,7 +2246,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    displayListId = -1;
 		}
 	    }
-	} 
+	}
 
     }
 
@@ -2269,7 +2268,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    cv.freeDisplayList(ctx, displayListId);
 		}
 	    }
-	} 
+	}
     }
 
     void updateAllPrimaryDisplayLists(Canvas3D cv) {
@@ -2285,9 +2284,9 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    else if(primaryMoleculeType == DLIST_MOLECULE) {
 		((DisplayListRenderMethod)primaryRenderMethod).buildDisplayList(this, cv);
 	    }
-	} 
+	}
     }
-    
+
     void checkEquivalenceWithBothNeighbors(int dirtyBits) {
 	RenderMolecule leftRm = prev;
 	RenderMolecule rightRm = next;
@@ -2301,7 +2300,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    next.checkEquivalenceWithLeftNeighbor(this, dirtyBits);
 	}
     }
-	    
+
     boolean reloadColor(RenderMolecule rm) {
 	if (((rm.vertexFormat & GeometryArray.COLOR) == 0) ||
 	    (((rm.vertexFormat & GeometryArray.COLOR) != 0) &&
@@ -2315,8 +2314,8 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	boolean reload_color = reloadColor(rm);
 	// XXXX : For now ignore the dirtyBits being sent in
 	dirtyAttrsAcrossRms = ALL_DIRTY_BITS ;
-	
-	
+
+
 
 	// There is some interdepenency between the different components
 	// in the way it is sent down to the native code
@@ -2326,12 +2325,12 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	int materialColoringDirty = (MATERIAL_DIRTY |
 				     TRANSPARENCY_DIRTY |
 				     COLORINGATTRS_DIRTY);
-	
+
 	int transparencyDirty = (TRANSPARENCY_DIRTY|
 				 POLYGONATTRS_DIRTY |
 				 LINEATTRS_DIRTY |
 				 POINTATTRS_DIRTY);
-				 
+
 	if ((dirtyAttrsAcrossRms & POLYGONATTRS_DIRTY) != 0) {
 	    if (rm.geometryType == geometryType &&
 		(rm.polygonAttributes == polygonAttributes ||
@@ -2351,7 +2350,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	}
 
 	if ((dirtyAttrsAcrossRms & LINEATTRS_DIRTY) != 0) {
-	    if (rm.geometryType == geometryType && 
+	    if (rm.geometryType == geometryType &&
 		((rm.lineAttributes == lineAttributes) ||
 		 ((rm.definingLineAttributes != null) &&
 		  (rm.definingLineAttributes.equivalent(definingLineAttributes)))))
@@ -2391,7 +2390,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
     void translate() {
 	//	System.err.println("onUpdateList = "+onUpdateList+" renderBin.localeChanged = "+renderBin.localeChanged+" rm = "+this);
 	int i = localToVworldIndex[NodeRetained.LAST_LOCAL_TO_VWORLD];
-	
+
 	localeLocalToVworld[i].mat[0] = localToVworld[i].mat[0];
 	localeLocalToVworld[i].mat[1] = localToVworld[i].mat[1];
 	localeLocalToVworld[i].mat[2] = localToVworld[i].mat[2];
@@ -2417,12 +2416,12 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    // D3D doesn't support line/point antialiasing
 	    if ((geometryType & SURFACE) != 0) {
 		if (definingPolygonAttributes != null) {
-		    if ((definingPolygonAttributes.polygonMode == 
+		    if ((definingPolygonAttributes.polygonMode ==
 			 PolygonAttributes.POLYGON_POINT) &&
 			(definingPointAttributes != null) &&
 			definingPointAttributes.pointAntialiasing) {
 			return false;
-		    } else if ((definingPolygonAttributes.polygonMode == 
+		    } else if ((definingPolygonAttributes.polygonMode ==
 				PolygonAttributes.POLYGON_LINE) &&
 			       (definingLineAttributes != null) &&
 			       definingLineAttributes.lineAntialiasing) {
@@ -2469,7 +2468,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 
 		//		System.err.println("===> updating node component, cloned = "+cloned+" material.changedFrequent = "+material.changedFrequent);
 		//		System.err.println("===> definingMaterial ="+definingMaterial+" material = "+material);
-		
+
 		material = ((AppearanceRetained)appHandle).material;
 		if (material == null)
 		    definingMaterial = null;
@@ -2532,7 +2531,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    if (pointAttributes.changedFrequent != 0) {
 			definingPointAttributes = pointAttributes;
 		    }
-		    else { 
+		    else {
 			// If the one replaced is a cloned copy, then ..
 			if (cloned) {
 			    definingPointAttributes.set(pointAttributes);
@@ -2547,7 +2546,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    else {
 		pointAA = definingPointAttributes.pointAntialiasing;
 	    }
-	    
+
 	}
 	if ((soleUserCompDirty & POLYGONATTRS_DIRTY) != 0) {
 	    if (soleUser) {
@@ -2573,7 +2572,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 			    definingPolygonAttributes = (PolygonAttributesRetained)polygonAttributes.clone();
 			}
 		    }
-		
+
 		    polygonMode = definingPolygonAttributes.polygonMode;
 		}
 	    }
@@ -2584,7 +2583,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	    if (polygonMode == PolygonAttributes.POLYGON_LINE) {
 		geometryType |= LINE;
             } else if (polygonMode == PolygonAttributes.POLYGON_POINT) {
-		geometryType |= POINT;		    
+		geometryType |= POINT;
 	    }
 	}
 
@@ -2618,7 +2617,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		alpha = 1.0f - definingTransparency.transparency;
 	    }
 	}
-	
+
 	if ((soleUserCompDirty & COLORINGATTRS_DIRTY) != 0) {
 	    if (soleUser) {
 		// Evaluate before replacing the old Value
@@ -2660,7 +2659,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	//	System.err.println("rm = "+this+"red = "+red+" green = "+green+" blue = "+blue);
 	boolean newVal = isOpaque() || inOrderedGroup;
 	return (isOpaqueOrInOG != newVal);
-	
+
     }
 
     // Issue 129: method to add or remove all rendering atoms in this
@@ -2672,7 +2671,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	addRemoveTransparentObject(renderBin, add, separateDlistRenderAtomList);
 	addRemoveTransparentObject(renderBin, add, vertexArrayRenderAtomList);
     }
-    
+
     private void addRemoveTransparentObject(RenderBin renderBin,
 					    boolean add,
 					    RenderAtomListInfo rinfo) {
@@ -2702,7 +2701,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		dGreen = 1.0f;
 		dBlue = 1.0f;
 	    } else {
-		if (normalPresent) 
+		if (normalPresent)
 		    enableLighting = definingMaterial.lightingEnable;
 		else
 		    enableLighting = false;
@@ -2739,7 +2738,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	}
 
     }
-	
+
     void handleMaterialEquivalence() {
 	// Check if it has equivalent material to any of the "non-dirty"
 	// renderMolecules before this one
@@ -2767,7 +2766,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		    bits = prev.soleUserCompDirty;
 		else if (prevMap != null)
 		    bits = prevMap.soleUserCompDirty;
-		
+
 		leftBits = ((soleUserCompDirty |bits) &ALL_DIRTY_BITS);
 		rightBits = ((soleUserCompDirty & ALL_DIRTY_BITS)  & ~MATERIAL_DIRTY);
 		markBitsAsDirty(leftBits, rightBits);
@@ -2915,7 +2914,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 	if (!reloadColor) {
 	    if (((this.material == rm.material) ||
 		 ((rm.definingMaterial != null) &&
-		  (rm.definingMaterial.equivalent(definingMaterial)))) && 
+		  (rm.definingMaterial.equivalent(definingMaterial)))) &&
 		rm.alpha == alpha &&
 		enableLighting == rm.enableLighting &&
 		(enableLighting ||
@@ -2987,7 +2986,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		locale.hiRes.difference(renderBin.locale.hiRes, localeTranslation);
 		translate();
 		int i = localToVworldIndex[NodeRetained.CURRENT_LOCAL_TO_VWORLD];
-	
+
 		localeLocalToVworld[i].mat[0] = localToVworld[i].mat[0];
 		localeLocalToVworld[i].mat[1] = localToVworld[i].mat[1];
 		localeLocalToVworld[i].mat[2] = localToVworld[i].mat[2];
@@ -3006,13 +3005,13 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		localeLocalToVworld[i].mat[15] = localToVworld[i].mat[15];
 	    }
 	}
-	
+
 	trans = localeLocalToVworld;
     }
 
 
     /**
-     * updateNodeComponentCheck is called for each soleUser RenderMolecule 
+     * updateNodeComponentCheck is called for each soleUser RenderMolecule
      * into which new renderAtom has been added. This method is called before
      * updateNodeComponent() to allow RenderMolecule to catch any node
      * component changes that have been missed because the changes
@@ -3078,7 +3077,7 @@ class RenderMolecule extends IndexedObject implements ObjectUpdate, NodeComponen
 		soleUserCompDirty |= COLORINGATTRS_DIRTY;
 	    }
 	}
-	
+
 	if (definingTransparency != null &&
 	    definingTransparency == transparency) {
 	    if (definingTransparency.compChanged != 0) {

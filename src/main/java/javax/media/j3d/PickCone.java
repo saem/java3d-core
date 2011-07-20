@@ -26,7 +26,9 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point4d;
+import javax.vecmath.Vector3d;
 
 /**
  * PickCone is the abstract base class of all cone pick shapes.
@@ -58,7 +60,7 @@ public abstract class PickCone extends PickShape {
     public void getOrigin(Point3d origin) {
 	origin.set(this.origin);
     }
-    
+
     /**
      * Gets the direction of this PickCone.
      * @param direction the Vector3d object into which the direction
@@ -79,7 +81,7 @@ public abstract class PickCone extends PickShape {
 
     /**
      * Gets the radius of this PickCone at the specified distance.
-     * @param distance the distance from the origin at which we want 
+     * @param distance the distance from the origin at which we want
      * the radius of the cone
      * @return the radius at the specified distance
      */

@@ -47,7 +47,7 @@ class MRSWLock {
 	writeRequested = 0;
 	lockRequested = 0;
     }
-    
+
     synchronized final void readLock() {
 	lockRequested++;
 	while((write == true) || (writeRequested > 0)) {
@@ -56,17 +56,17 @@ class MRSWLock {
 	lockRequested--;
 	readCount++;
     }
-    
+
     synchronized final void readUnlock() {
 	if(readCount>0)
 	    readCount--;
 	else
 	    if(debug) System.err.println("ReadWriteLock.java : Problem! readCount is >= 0.");
-	
+
 	if(lockRequested>0)
 	    notifyAll();
     }
-    
+
     synchronized final void writeLock() {
 	lockRequested++;
 	writeRequested++;
@@ -84,5 +84,5 @@ class MRSWLock {
 	if(lockRequested>0)
 	    notifyAll();
     }
-    
+
 }

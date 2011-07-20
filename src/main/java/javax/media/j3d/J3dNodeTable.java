@@ -26,11 +26,7 @@
 
 package javax.media.j3d;
 
-import java.io.DataOutputStream;
-import java.io.OutputStream;
 import java.util.Hashtable;
-import javax.vecmath.Color3f;
-import javax.vecmath.Tuple3f;
 
 /**
  * The J3dNodeTable object provides utilities for the save/load
@@ -70,7 +66,7 @@ class J3dNodeTable {
     static final int ORDERED_GROUP = 4;
     static final int BRANCH_GROUP = 5;
     static final int ENDGROUP = 9;		// denotes done with group
-	
+
     // 10 - 19: Shape3D (in a class by itself)
     static final int SHAPE3D = 10;
 
@@ -92,7 +88,7 @@ class J3dNodeTable {
     static final int IMAGE_COMPONENT_2D = 34;
     static final int IMAGE_COMPONENT_3D = 35;
     static final int ENDAPPEARANCE = 49;
-    
+
     // 100 - 149: All Geometry types
     static final int GEOMETRY = 100;
     static final int COMPRESSED_GEOMETRY = 101;
@@ -140,7 +136,7 @@ class J3dNodeTable {
     static final int BOUNDING_POLYTOPE = 173;
     static final int TRANSFORM3D = 180;
     static final int BACKGROUND = 181;
-    
+
     // 190 - 199: Lights
     static final int LIGHT = 190;
     static final int POINT_LIGHT = 191;
@@ -148,7 +144,7 @@ class J3dNodeTable {
     static final int DIRECTIONAL_LIGHT = 193;
     static final int AMBIENT_LIGHT = 194;
 
-    
+
     /**
      * Constructs this Object, which initializes the array and Hashtable
      */
@@ -165,13 +161,13 @@ class J3dNodeTable {
 	nodeArray[BRANCH_GROUP] = "BranchGroup";
 
 	nodeArray[SHAPE3D] = "Shape3D";
-		
+
 	nodeArray[APPEARANCE] = "Appearance";
 	nodeArray[MATERIAL] = "Material";
-	nodeArray[TEXTURE] = "Texture";	
+	nodeArray[TEXTURE] = "Texture";
 	nodeArray[TEXTURE_2D] = "Texture2D";
 	nodeArray[TEXTURE_3D] = "Texture3D";
-	nodeArray[IMAGE_COMPONENT] = "ImageComponent";	
+	nodeArray[IMAGE_COMPONENT] = "ImageComponent";
 	nodeArray[IMAGE_COMPONENT_2D] = "ImageComponent2D";
 	nodeArray[IMAGE_COMPONENT_3D] = "ImageComponent3D";
 	nodeArray[TRANSPARENCY_ATTRIBUTES] = "TransparencyAttributes";
@@ -212,7 +208,7 @@ class J3dNodeTable {
 	nodeArray[SCALE_INTERPOLATOR] = "ScaleInterpolator";
 	nodeArray[SOUND_PLAYER] = "SoundPlayer";
 	nodeArray[SOUND_FADER] = "SoundFader";
-	
+
 	nodeArray[BOUNDS] = "Bounds";
 	nodeArray[BOUNDING_SPHERE] = "BoundingSphere";
 	nodeArray[BOUNDING_BOX] = "BoundingBox";
@@ -225,7 +221,7 @@ class J3dNodeTable {
 	nodeArray[SPOT_LIGHT] = "SpotLight";
 	nodeArray[DIRECTIONAL_LIGHT] = "DirectionalLight";
 	nodeArray[AMBIENT_LIGHT] = "AmbientLight";
-	
+
 	for (int i = 0; i < MAX_NUM_NODES; ++i) {
 	    if (nodeArray[i] != null)
 		nodeTable.put(nodeArray[i], new Integer(i));
@@ -251,7 +247,7 @@ class J3dNodeTable {
 	if ((lastIndex = fullName.lastIndexOf("Retained")) == -1)
 	    lastIndex = fullName.length();
 	String nodeName = fullName.substring(firstIndex, lastIndex);
-	if ((i = (Integer)nodeTable.get(nodeName)) 
+	if ((i = (Integer)nodeTable.get(nodeName))
 	    != null) {
 	    return i.intValue();
 	}

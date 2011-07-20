@@ -26,17 +26,19 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.lang.Math;
-import java.util.Vector;
-import java.util.ArrayList;
-import java.net.URL;
+import java.awt.AWTEvent;
+import java.awt.event.WindowEvent;
 import java.io.InputStream;
-import java.util.Enumeration;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 
-import java.awt.*;
-import java.awt.event.*;
+import javax.vecmath.Point2f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
+import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
 
 /**
  * This structure parallels the RenderBin structure and
@@ -571,7 +573,7 @@ class SoundScheduler extends J3dStructure {
 			    // flag which is not implement
 			    turnOff(soundAtom);
                             // Fix to Issue 431.
-                            soundAtom.enable(soundRetained.enable); 
+                            soundAtom.enable(soundRetained.enable);
 			}
 		    }
 		}
@@ -3221,7 +3223,7 @@ class SoundScheduler extends J3dStructure {
 	// result in the re-evaluation of the lights/fogs/backgrounds
 	Object[] users = (Object[])(m.args[3]);
 	int i;
-	
+
 	for (i = 0; i < users.length; i++) {
 	    LeafRetained leaf = (LeafRetained)users[i];
 	    if  (leaf instanceof SoundRetained && universe.soundStructure.isSoundScopedToView(leaf, view)) {

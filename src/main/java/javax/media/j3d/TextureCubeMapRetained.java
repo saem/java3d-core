@@ -26,10 +26,6 @@
 
 package javax.media.j3d;
 
-import java.util.*;
-import javax.vecmath.Color4f;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
 
 /**
  * TextureCubeMap is a subclass of Texture class.
@@ -40,8 +36,8 @@ class TextureCubeMapRetained extends TextureRetained {
     static final int NUMFACES = 6;
 
 
-    void initialize(int	format, int width, int widPower, 
-			int height, int heiPower, int mipmapMode, 
+    void initialize(int	format, int width, int widPower,
+			int height, int heiPower, int mipmapMode,
 			int boundaryWidth) {
 
 	this.numFaces = 6;
@@ -62,7 +58,7 @@ class TextureCubeMapRetained extends TextureRetained {
 	if (this.images == null) {
             throw new IllegalArgumentException(
 			J3dI18N.getString("TextureRetained0"));
-	} 
+	}
 
         if (image instanceof ImageComponent3D) {
             throw new IllegalArgumentException(
@@ -81,7 +77,7 @@ class TextureCubeMapRetained extends TextureRetained {
 		this.images[face][level].clearLive(refCount);
 	    }
 
-	    
+
 	    if (image != null) {
 		((ImageComponentRetained)image.retained).setLive(
 			inBackgroundGroup, refCount);
@@ -91,7 +87,7 @@ class TextureCubeMapRetained extends TextureRetained {
         /*  Don't think this is needed.   --- Chien.
          ((ImageComponent2DRetained)image.retained).setTextureRef();
         */
-        
+
 	if (image != null) {
 	    this.images[face][level] = (ImageComponentRetained)image.retained;
 	} else {
@@ -125,7 +121,7 @@ class TextureCubeMapRetained extends TextureRetained {
 			enable = false;
 		    }
 		}
-		if (!enable) 
+		if (!enable)
 		    sendMessage(ENABLE_CHANGED, Boolean.FALSE);
 	    }
 	}
@@ -184,7 +180,7 @@ class TextureCubeMapRetained extends TextureRetained {
 	}
     }
 
-	
+
 
 
     /**
@@ -201,7 +197,7 @@ class TextureCubeMapRetained extends TextureRetained {
 			J3dI18N.getString("TextureCubeMap4"));
 	}
 
-	return  (((images != null) && (images[face][level] != null)) ? 
+	return  (((images != null) && (images[face][level] != null)) ?
 		 (ImageComponent)images[face][level].source : null);
     }
 
@@ -302,12 +298,12 @@ class TextureCubeMapRetained extends TextureRetained {
             // All faces should have the same image format and type.
             int imageFormat = images[0][0].getImageFormatTypeIntValue(false);
             int imageType = images[0][0].getImageDataTypeIntValue();
-            
+
             for (int i = 0; i < 6; i++) {
                 updateTextureImage(cv, i, maxLevels, 0,
                         format, imageFormat,
                         width, height, boundaryWidth,
-                        imageType, null);               
+                        imageType, null);
             }
         }
     }
@@ -319,7 +315,7 @@ class TextureCubeMapRetained extends TextureRetained {
             int width, int height,
             int boundaryWidth, int imageDataType,
             Object imageData) {
-        
+
         Pipeline.getPipeline().updateTextureCubeMapImage(cv.ctx,
                 face, numLevels, level,
                 textureFormat, imageFormat,
@@ -335,7 +331,7 @@ class TextureCubeMapRetained extends TextureRetained {
             int imgXOffset, int imgYOffset,
             int tilew, int width, int height,
             int imageDataType, Object imageData) {
-        
+
         Pipeline.getPipeline().updateTextureCubeMapSubImage(cv.ctx,
                 face, level, xoffset, yoffset,
                 textureFormat, imageFormat,

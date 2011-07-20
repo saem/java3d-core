@@ -26,7 +26,6 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.Color4f;
 import java.util.ArrayList;
 
 class TextureUnitStateRetained extends NodeComponentRetained {
@@ -47,7 +46,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 					    NodeComponentRetained thisComp,
 					    int messageOp) {
 	if (source.isLive()) {
-  	   
+
 	    if ((comp == null && thisComp == null) ||
 		(comp != null && comp.retained == thisComp))
 		return;
@@ -63,14 +62,14 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 		// texture unit state as users of this texture component
 		((NodeComponentRetained)comp.retained).copyMirrorUsers(this);
 	    }
-	
+
 	    if (messageOp != -1) {
-	        sendMessage(messageOp, 
-		    (comp == null ? null : 
+	        sendMessage(messageOp,
+		    (comp == null ? null :
 		        ((NodeComponentRetained)comp.retained).mirror));
 	    }
 
-	} 
+	}
     }
 
     final void initTextureUnitState(Texture texture,
@@ -95,7 +94,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	// message to avoid modifying the renderBin repeatedly
 
 	Object args[] = new Object[3];
-	args[0] = (texture == null ? null : 
+	args[0] = (texture == null ? null :
 			((TextureRetained)texture.retained).mirror);
 	args[1] = (texAttrs == null ? null :
 			((TextureAttributesRetained)texAttrs.retained).mirror);
@@ -131,7 +130,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 					TEXTURE_ATTRS_CHANGED);
 	initTextureAttributes(texAttrs);
     }
-	
+
     final void initTexCoordGeneration(TexCoordGeneration texGen) {
 	if (texGen == null)
 	    this.texGen = null;
@@ -143,7 +142,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	setTextureUnitStateComponent(texGen, this.texGen, TEXCOORD_GEN_CHANGED);
 	initTexCoordGeneration(texGen);
     }
-	
+
     Texture getTexture() {
 	return (texture == null ? null : (Texture)texture.source);
     }
@@ -156,7 +155,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	return (texGen == null ? null : (TexCoordGeneration)texGen.source);
     }
 
-    void updateNative(int unitIndex, Canvas3D cv, 
+    void updateNative(int unitIndex, Canvas3D cv,
 			boolean reload, boolean simulate) {
 
 	//System.err.println("TextureUnitState/updateNative: unitIndex= " + unitIndex + " reload= " + reload + " simulate= " + simulate);
@@ -170,7 +169,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	if (index < 0)
 	    index = 0;
 
-	
+
 	boolean dirty = ((cv.canvasDirty & (Canvas3D.TEXTUREATTRIBUTES_DIRTY|Canvas3D.TEXTUREBIN_DIRTY)) != 0);
 
         if (this.texture == null) {
@@ -211,8 +210,8 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 		    (texGen != null) &&
 		    ((texGen.genMode == TexCoordGeneration.EYE_LINEAR) ||
 		    ((texGen.genMode == TexCoordGeneration.SPHERE_MAP)))) {
-		    // We need to reload tex since eye linear 
-		    // and sphere map in D3D will change the 
+		    // We need to reload tex since eye linear
+		    // and sphere map in D3D will change the
 		    // texture transform matrix also.
 		    dirty = true;
 		}
@@ -224,9 +223,9 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 
 	    TextureAttributesRetained mTexAttrs;
 	    if (this.texAttrs.mirror == null) {
-		mTexAttrs = this.texAttrs;		
+		mTexAttrs = this.texAttrs;
 	    } else {
-		mTexAttrs = (TextureAttributesRetained) this.texAttrs.mirror;   
+		mTexAttrs = (TextureAttributesRetained) this.texAttrs.mirror;
 	    }
 
 
@@ -248,7 +247,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 		}
 	    	cv.texUnitState[index].texAttrs = mTexAttrs;
 	    }
-        } 
+        }
 
 	if (this.texGen == null) {
 	    if (reload || dirty || cv.texUnitState[index].texGen != null) {
@@ -259,9 +258,9 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	    TexCoordGenerationRetained mTexGen;
 
 	    if (this.texGen.mirror == null) {
-		mTexGen = this.texGen;		
+		mTexGen = this.texGen;
 	    } else {
-		mTexGen = (TexCoordGenerationRetained)this.texGen.mirror;	
+		mTexGen = (TexCoordGenerationRetained)this.texGen.mirror;
 	    }
 
 	    if (mTexGen.mirrorCompDirty) {
@@ -276,19 +275,19 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 		this.texGen.updateNative(cv);
 		cv.texUnitState[index].texGen = mTexGen;
             }
-        } 
+        }
 	cv.canvasDirty &= ~Canvas3D.TEXTUREATTRIBUTES_DIRTY;
     }
 
 
    /**
-    * Creates and initializes a mirror object, point the mirror object 
+    * Creates and initializes a mirror object, point the mirror object
     * to the retained object if the object is not editable
     */
     synchronized void createMirrorObject() {
 
 	if (mirror == null) {
-	    TextureUnitStateRetained mirrorTus  = 
+	    TextureUnitStateRetained mirrorTus  =
 			new TextureUnitStateRetained();
 	    mirror = mirrorTus;
         }
@@ -299,7 +298,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 
     synchronized void initMirrorObject() {
 
-	TextureUnitStateRetained mirrorTus = 
+	TextureUnitStateRetained mirrorTus =
 		(TextureUnitStateRetained)mirror;
 
 	if (this.texture != null)
@@ -308,7 +307,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	    mirrorTus.texture = null;
 
 	if (this.texAttrs != null)
-	    mirrorTus.texAttrs = 
+	    mirrorTus.texAttrs =
 		(TextureAttributesRetained)this.texAttrs.mirror;
 	else
 	    mirrorTus.texAttrs = null;
@@ -320,7 +319,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
     }
 
 
-    /** Update the "component" field of the mirror object with the 
+    /** Update the "component" field of the mirror object with the
      *  given "value"
      */
     synchronized void updateMirrorObject(int component, Object value) {
@@ -335,20 +334,20 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	}
 	else if ((component & TEXCOORD_GEN_CHANGED) != 0) {
 	    mirrorTus.texGen = (TexCoordGenerationRetained)value;
-	} 
+	}
 	else if ((component & ALL_STATE_CHANGED) != 0) {
 	    Object [] args = (Object []) value;
 	    mirrorTus.texture = (TextureRetained)args[0];
 	    mirrorTus.texAttrs = (TextureAttributesRetained)args[1];
 	    mirrorTus.texGen = (TexCoordGenerationRetained)args[2];
-	} 
+	}
     }
 
 
     boolean equivalent(TextureUnitStateRetained tr) {
 
 	if (tr == null) {
-	    return (false); 
+	    return (false);
 
 	} else if ((this.changedFrequent != 0) || (tr.changedFrequent != 0)) {
 	    return (this.mirror == tr);
@@ -359,11 +358,11 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	        return false;
 	    }
 
-	    if (this.texAttrs != null && 
+	    if (this.texAttrs != null &&
 		    !this.texAttrs.equivalent(tr.texAttrs)) {
 		return false;
 	    }
-		
+
 	    if (this.texGen != null &&
 		    !this.texGen.equivalent(tr.texGen)) {
 		return false;
@@ -379,7 +378,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	// the cloned object is used for RenderBin only.
 	// In most cases, it will duplicate all attributes in the RenderBin
 	// so that updating a mirror object in one level will not affect the
-	// entire structure of the RenderBin, but will affect only those bins 
+	// entire structure of the RenderBin, but will affect only those bins
 	// that got affected by the modified mirror object
 	if (this.texAttrs != null)
 	    tr.texAttrs = (TextureAttributesRetained)this.texAttrs.clone();
@@ -420,7 +419,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	}
     }
 
-    protected void set(TextureRetained texture, 
+    protected void set(TextureRetained texture,
 			TextureAttributesRetained texAttrs,
 			TexCoordGenerationRetained texGen) {
 	this.texture = texture;
@@ -475,10 +474,10 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 
 
     void setLive(boolean backgroundGroup, int refCount) {
-	if (texture != null) 
+	if (texture != null)
 	    texture.setLive(backgroundGroup, refCount);
 
-	if (texAttrs != null) 
+	if (texAttrs != null)
 	    texAttrs.setLive(backgroundGroup, refCount);
 
 	if (texGen != null)
@@ -488,7 +487,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
         // mirror object
         super.doSetLive(backgroundGroup, refCount);
 	super.markAsLive();
-	
+
     }
 
 
@@ -560,10 +559,10 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 		((texAttrs != null) && (texAttrs.source.isLive())) ||
 		((texGen != null) && (texGen.source.isLive())));
     }
-		
+
     final void sendMessage(int attrMask, Object attr) {
 	ArrayList univList = new ArrayList();
-	ArrayList gaList = Shape3DRetained.getGeomAtomsList(mirror.users, univList);  
+	ArrayList gaList = Shape3DRetained.getGeomAtomsList(mirror.users, univList);
 
 	// Send to rendering attribute structure, regardless of
 	// whether there are users or not (alternate appearance case ..)
@@ -582,7 +581,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	    createMessage = new J3dMessage();
 	    createMessage.threads = J3dThread.UPDATE_RENDER;
 	    createMessage.type = J3dMessage.TEXTURE_UNIT_STATE_CHANGED;
-		
+
 	    createMessage.universe = (VirtualUniverse) univList.get(i);
 	    createMessage.args[0] = this;
 	    createMessage.args[1]= new Integer(attrMask);
@@ -592,7 +591,7 @@ class TextureUnitStateRetained extends NodeComponentRetained {
 	    GeometryAtom[] gaArr = new GeometryAtom[gL.size()];
 	    gL.toArray(gaArr);
 	    createMessage.args[3] = gaArr;
-	    
+
 	    VirtualUniverse.mc.processMessage(createMessage);
 	}
 

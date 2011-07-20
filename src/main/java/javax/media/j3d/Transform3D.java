@@ -26,7 +26,24 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.AxisAngle4d;
+import javax.vecmath.AxisAngle4f;
+import javax.vecmath.GMatrix;
+import javax.vecmath.Matrix3d;
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Matrix4d;
+import javax.vecmath.Matrix4f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
+import javax.vecmath.Point4d;
+import javax.vecmath.Quat4d;
+import javax.vecmath.Quat4f;
+import javax.vecmath.SingularMatrixException;
+import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
+import javax.vecmath.Vector4d;
+import javax.vecmath.Vector4f;
+
 import com.sun.j3d.internal.HashCodeUtil;
 
 /**
@@ -565,7 +582,7 @@ public class Transform3D {
      * @param pointOut  the transformed point
      */
     void transform(Point3d point, Point4d pointOut) {
-        
+
         pointOut.x = mat[0]*point.x + mat[1]*point.y +
                 mat[2]*point.z + mat[3];
         pointOut.y = mat[4]*point.x + mat[5]*point.y +
@@ -575,9 +592,9 @@ public class Transform3D {
         pointOut.w = mat[12]*point.x + mat[13]*point.y +
                 mat[14]*point.z + mat[15];
     }
-   
-    
-    
+
+
+
     private static final boolean almostZero(double a) {
 	return ((a < EPSILON_ABSOLUTE) && (a > -EPSILON_ABSOLUTE));
     }
@@ -2136,7 +2153,7 @@ public class Transform3D {
 	mat[13] = m1.m31;
 	mat[14] = m1.m32;
 	mat[15] = m1.m33;
-        
+
 	dirtyBits = ALL_DIRTY;
 
 	if (autoNormalize)  {
@@ -3439,7 +3456,7 @@ public class Transform3D {
 	    scales = new double[3];
 
 	scales[0] = scales[1] = scales[2] = scale;
-        
+
         // Issue 253: set all dirty bits if input is infinity or NaN
         if (isInfOrNaN(x) || isInfOrNaN(y) || isInfOrNaN(z) || isInfOrNaN(scale)) {
             dirtyBits = ALL_DIRTY;

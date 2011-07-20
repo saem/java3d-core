@@ -26,7 +26,9 @@
 
 package javax.media.j3d;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * The SharedGroup node provides the ability to share a scene graph from
@@ -60,7 +62,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 
     /**
      * The Shared Group Node's parent vector.
-     */  
+     */
     Vector parents = new Vector(1);
 
     // J3d copy.
@@ -87,7 +89,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	// Group's setAuxData()
 	super.setAuxData(s, index, hkIndex);
 
-	branchGroupPaths.add(hkIndex, s.branchGroupPaths.get(index));	    
+	branchGroupPaths.add(hkIndex, s.branchGroupPaths.get(index));
 
         if (orderedPaths == null) {
             orderedPaths = new ArrayList(1);
@@ -119,7 +121,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	}
 	else {
 	    lights.add(hkIndex, null);
-	}	    
+	}
 
 	if (fogs == null) {
 	    fogs = new ArrayList(1);
@@ -129,7 +131,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	}
 	else {
 	    fogs.add(hkIndex, null);
-	}	    
+	}
 
 
 	if (modelClips == null) {
@@ -140,7 +142,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	}
 	else {
 	    modelClips.add(hkIndex, null);
-	}	    
+	}
 
 
 	if (altAppearances == null) {
@@ -151,15 +153,15 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	}
 	else {
 	    altAppearances.add(hkIndex, null);
-	}	    
+	}
     }
 
-    
+
     void setNodeData(SetLiveState s) {
-	
+
 	// For inSharedGroup case.
-	int i, j, len;	
-	
+	int i, j, len;
+
 	if (localToVworld == null) {
 	    localToVworld = new Transform3D[s.keys.length][];
 	    localToVworldIndex = new int[s.keys.length][];
@@ -170,12 +172,12 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	else {
 
 	    int newLen = localToVworld.length + s.keys.length;
-	    
+
 	    Transform3D newTList[][] = new Transform3D[newLen][];
 	    HashKey newHList[] = new HashKey[newLen];
 	    int newIndexList[][] = new int[newLen][];
             CachedTargets newTargets[] = new CachedTargets[newLen];
-	    
+
 	    len = localToVworld.length;
 
 	    // Copy the existing data into the newly created data objects.
@@ -195,7 +197,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 
 	int[] hkIndex = new int[1];
 	int hkIndexPlus1, blkSize;
-	
+
         s.hashkeyIndex = new int[s.keys.length];
 
 	// This should appear before super.setNodeData() if it exists
@@ -208,7 +210,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	    }
             s.hashkeyIndex[j] = hkIndex[0];
 
-		
+
 	    if(hkIndex[0] == i) { // Append to last.
 		localToVworldKeys[i] = s.keys[j];
 		localToVworld[i] = s.currentTransforms[j];
@@ -228,12 +230,12 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 				 hkIndexPlus1, blkSize);
                 System.arraycopy(cachedTargets, hkIndex[0], cachedTargets,
                                  hkIndexPlus1, blkSize);
-		
+
 		localToVworldKeys[hkIndex[0]] = s.keys[j];
 		localToVworld[hkIndex[0]] = s.currentTransforms[j];
 		localToVworldIndex[hkIndex[0]] = s.currentTransformsIndex[j];
 	    }
-	    
+
 	    //	    System.err.println("SG: j = "+j+" hkIndex[0] = "+hkIndex[0]+" s.keys[j] = "+s.keys[j]);
 	    // For now (1.2.1beta2) only. We cleanup setLive, and clearLive in
 	    // next release.
@@ -259,12 +261,12 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	s.altAppearances = altAppearances;
 	s.modelClips = modelClips;
     }
-    
+
     void setLive(SetLiveState s) {
 
 	int i,j;
 	Targets[] newTargets = null;
-	
+
         // save setLiveState
 	Transform3D savedLocalToVworld[][] = s.localToVworld;
 	int savedLocalToVworldIndex[][] = s.localToVworldIndex;
@@ -275,7 +277,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	ArrayList savedFogs = s.fogs;
 	ArrayList savedMclips = s.modelClips;
 	ArrayList savedAltApps = s.altAppearances;
-	
+
 	SharedGroupRetained savedLastSharedGroup = s.lastSharedGroup;
         Targets[] savedSwitchTargets = s.switchTargets;
         ArrayList savedSwitchStates = s.switchStates;
@@ -284,7 +286,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
         ArrayList savedChildTransformLinks = s.childTransformLinks;
         GroupRetained savedParentTransformLink = s.parentTransformLink;
         int[] savedHashkeyIndex = s.hashkeyIndex;
-	
+
         // update setLiveState for this node
         // Note that s.containsNodesList is updated in super.setLive
 	s.lastSharedGroup = this;
@@ -298,7 +300,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
                 newTargets[i] = new Targets();
 	    } else {
                 newTargets[i] = null;
-	    } 
+	    }
         }
 	s.transformTargets = newTargets;
 
@@ -329,7 +331,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	s.fogs = savedFogs;
 	s.modelClips = savedMclips;
 	s.altAppearances = savedAltApps;
-	
+
 	s.lastSharedGroup = savedLastSharedGroup;
         s.switchTargets = savedSwitchTargets;
         s.switchStates = savedSwitchStates;
@@ -355,7 +357,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
      * remove the localToVworld transform for a node.
      */
     void removeNodeData(SetLiveState s) {
-	
+
 	int numChildren = children.size();
         ArrayList switchTargets;
 	int i,j;
@@ -364,7 +366,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	    localToVworld = null;
 	    localToVworldIndex = null;
 	    localToVworldKeys = null;
-	    // restore to default and avoid calling clear() 
+	    // restore to default and avoid calling clear()
 	    // that may clear parent reference branchGroupPaths
 	    // Note that this function did not invoke super.removeNodeData()
 	    branchGroupPaths = new ArrayList(1);
@@ -379,10 +381,10 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	}
 	else {
 	    int index, len;
-	    
-	    // Remove the localToVworld key 
+
+	    // Remove the localToVworld key
 	    int newLen = localToVworld.length - s.keys.length;
-	
+
 	    Transform3D[][] newTList = new Transform3D[newLen][];
 	    HashKey[] newHList = new HashKey[newLen];
 	    Transform3D newChildTList[][] = null;
@@ -392,14 +394,14 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	    int[] tempIndex = new int[s.keys.length];
 	    int curStart =0, newStart =0;
 	    boolean found = false;
-	
+
 	    for(i=0;i<s.keys.length;i++) {
 		index = s.keys[i].equals(localToVworldKeys, 0, localToVworldKeys.length);
 
 		tempIndex[i] = index;
-	    
+
 		if(index >= 0) {
-		    found = true;		
+		    found = true;
 		    if(index == curStart) {
 			curStart++;
 		    }
@@ -411,7 +413,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 			System.arraycopy(localToVworldKeys, curStart, newHList, newStart, len);
                         System.arraycopy(cachedTargets, curStart, newTargets,
                                          newStart, len);
-		    
+
 			curStart = index+1;
 			newStart = newStart + len;
 		    }
@@ -421,7 +423,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 		    MasterControl.getCoreLogger().severe("Can't Find matching hashKey in SG.removeNodeData.");
 		}
 	    }
-	
+
 	    if((found == true) && (curStart < localToVworld.length)) {
 		len = localToVworld.length - curStart;
 		System.arraycopy(localToVworld, curStart, newTList, newStart, len);
@@ -461,7 +463,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	s.modelClips = modelClips;
 	s.altAppearances = altAppearances;
     }
-    
+
     void clearLive(SetLiveState s) {
 
         int i,j,k, index;
@@ -509,7 +511,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 		}
 	    }
 	}
-	
+
         // restore setLiveState from it's local variables.
         // removeNodeData has altered these variables.
         s.localToVworld = savedLocalToVworld;
@@ -564,9 +566,9 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 		    j = currentKey.equals(ln.sharedGroup.localToVworldKeys,0,
 					  ln.sharedGroup.localToVworldKeys.length);
 		    if(j < 0) {
-			System.err.println("SharedGroupRetained : Can't find hashKey"); 
+			System.err.println("SharedGroupRetained : Can't find hashKey");
 		    }
-		    
+
                     if (j < ln.sharedGroup.localToVworldKeys.length) {
                         ln.sharedGroup.updateChildLocalToVworld(
 				ln.sharedGroup.localToVworldKeys[j], j,
@@ -582,7 +584,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
     void traverseSwitchChild(int child, HashKey key,
 			     int index, SwitchRetained switchRoot,
 			     boolean init, boolean swChanged,
-			     boolean switchOn, int switchLevel, 
+			     boolean switchOn, int switchLevel,
 			     ArrayList updateList) {
 
         SwitchRetained sw;
@@ -605,15 +607,15 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
                 ln = (LinkRetained)obj;
                 switchKey.set(key);
                 switchKey.append(LinkRetained.plus).append(ln.nodeId);
-		
+
 		if (ln.sharedGroup.localToVworldKeys != null) {
-		    
+
 		    j = switchKey.equals(ln.sharedGroup.localToVworldKeys,0,
 					 ln.sharedGroup.localToVworldKeys.length);
 		    if(j < 0) {
-			System.err.println("SharedGroupRetained : Can't find hashKey"); 
+			System.err.println("SharedGroupRetained : Can't find hashKey");
 		    }
-		    
+
 		    if (j < ln.sharedGroup.localToVworldKeys.length) {
 			for(k=0; k<ln.sharedGroup.children.size(); k++) {
 			    ln.sharedGroup.traverseSwitchChild(k,
@@ -680,7 +682,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
      * @return An array of Link nodes
      */
     Link[] getLinks() {
-	Link[] links; 
+	Link[] links;
 	// make sure this method is MT-safe
 	synchronized(parents) {
 	    int n = parents.size();
@@ -692,7 +694,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	    }
 	}
 	return links;
-    }	
+    }
 
     void insertChildrenData(int index) {
         if (childrenSwitchLinks == null) {
@@ -734,9 +736,9 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 
     // re-evalute localTargetThreads using newCachedTargets and
     // re-evaluate targetThreads
-    public void computeTargetThreads(int type, 
+    public void computeTargetThreads(int type,
 					CachedTargets[] newCachedTargets) {
-	
+
 	localTargetThreads = 0;
 	if (type == TargetsInterface.TRANSFORM_TARGETS) {
 	    for(int i=0; i<newCachedTargets.length; i++) {
@@ -753,13 +755,13 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	    for(int i=0; i<numLinks; i++) {
 		node = (NodeRetained)childTransformLinks.get(i);
 		if (node.nodeType == NodeRetained.LINK) {
-		    childLink = (TargetsInterface) 
+		    childLink = (TargetsInterface)
 			((LinkRetained)node).sharedGroup;
 		} else {
 		    childLink = (TargetsInterface) node;
 		}
 		if (childLink != null) {
-		    targetThreads |= 
+		    targetThreads |=
 			childLink.getTargetThreads(TargetsInterface.TRANSFORM_TARGETS);
 		}
 	    }
@@ -785,7 +787,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
         }
     }
 
-    // re-evaluate targetThreads using childTargetThreads and 
+    // re-evaluate targetThreads using childTargetThreads and
     // propagate changes to ancestors
     public void propagateTargetThreads(int type, int childTargetThreads) {
         if (type == TargetsInterface.TRANSFORM_TARGETS) {
@@ -818,7 +820,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
 	if (type == TargetsInterface.TRANSFORM_TARGETS) {
             int size = cachedTargets.length;
             for (int i=0; i<size; i++) {
-                newCt[i] = cachedTargets[i];        
+                newCt[i] = cachedTargets[i];
             }
 	} else {
             System.err.println("copyCachedTargets: wrong arguments");
@@ -840,7 +842,7 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
         }
     }
 
-    public void resetCachedTargets(int type, 
+    public void resetCachedTargets(int type,
 			CachedTargets[] newCtArr,int child) {
 	if (type == TargetsInterface.SWITCH_TARGETS) {
             // child info is not used, SG does not have per child states
@@ -887,8 +889,8 @@ class SharedGroupRetained extends GroupRetained implements TargetsInterface {
         s.parentTransformLink = this;
         child.setLive(s);
     }
-    
-    /** 
+
+    /**
      * Make the boundsCache of this node and all its parents dirty
      */
     void dirtyBoundsCache() {

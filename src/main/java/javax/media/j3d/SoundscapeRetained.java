@@ -28,7 +28,7 @@ package javax.media.j3d;
 import java.util.ArrayList;
 
 /**
- * The SoundscapeRetained object defines all soundscape rendering state 
+ * The SoundscapeRetained object defines all soundscape rendering state
  * as a subclass of a Leaf node.
  */
 class SoundscapeRetained extends LeafRetained
@@ -37,12 +37,12 @@ class SoundscapeRetained extends LeafRetained
     static final int BOUNDING_LEAF_CHANGED	= 0x00002;
     static final int APPLICATION_BOUNDS_CHANGED	= 0x00004;
 
-    /**  
+    /**
      * Soundscape nodes application region
-     */  
+     */
     Bounds             applicationRegion = null;
 
-    /** 
+    /**
      * The bounding leaf reference
      */
     BoundingLeafRetained boundingLeaf = null;
@@ -51,12 +51,12 @@ class SoundscapeRetained extends LeafRetained
      * The transformed Application Region
      */
     Bounds transformedRegion = null;
-  
-    /** 
+
+    /**
      * Aural attributes associated with this Soundscape
-     */  
+     */
     AuralAttributesRetained    attributes = null;
- 
+
     // A bitmask that indicates that the something has changed.
     int isDirty = 0xffff;
 
@@ -82,7 +82,7 @@ class SoundscapeRetained extends LeafRetained
         VirtualUniverse.mc.processMessage(createMessage);
     }
 
- 
+
     SoundscapeRetained() {
         super();
         this.nodeType = NodeRetained.SOUNDSCAPE;
@@ -95,7 +95,7 @@ class SoundscapeRetained extends LeafRetained
     /**
      * Set the Soundscape's application region.
      * @param region a region that contains the Soundscape's new application region
-     */  
+     */
     void setApplicationBounds(Bounds region)
     {
         if (region != null) {
@@ -119,7 +119,7 @@ class SoundscapeRetained extends LeafRetained
     /**
      * Get the Soundscape's application region.
      * @return this Soundscape's application region information
-     */  
+     */
     Bounds getApplicationBounds()
     {
       Bounds b = null;
@@ -138,7 +138,7 @@ class SoundscapeRetained extends LeafRetained
 
     /**
      * Set the Soundscape's application region to the specified Leaf node.
-     */  
+     */
     void setApplicationBoundingLeaf(BoundingLeaf region) {
         if (boundingLeaf != null) {
             // Remove the soundscape as users of the original bounding leaf
@@ -161,7 +161,7 @@ class SoundscapeRetained extends LeafRetained
 
     /**
      * Get the Soundscape's application region
-     */  
+     */
     BoundingLeaf getApplicationBoundingLeaf() {
 	if (boundingLeaf != null) {
 	    return (BoundingLeaf)boundingLeaf.source;
@@ -213,7 +213,7 @@ class SoundscapeRetained extends LeafRetained
     {
 	if (attributes != null) {
             return ((AuralAttributes) attributes.source);
-	} 
+	}
         else
             return ((AuralAttributes) null);
     }
@@ -233,11 +233,11 @@ class SoundscapeRetained extends LeafRetained
 
     // The update Object function.
     synchronized void updateMirrorObject(Object[] objs) {
-        // NOTE: There doesn't seem to be a use for mirror objects since 
+        // NOTE: There doesn't seem to be a use for mirror objects since
         //     Soundscapes can't be shared.
         // This method updates the transformed region from either bounding
         // leaf or application bounds.   Bounding leaf takes precidence.
-        Transform3D trans = null; 
+        Transform3D trans = null;
         int component = ((Integer)objs[1]).intValue();
         if ((component & BOUNDING_LEAF_CHANGED) != 0) {
             if (this.boundingLeaf != null) {
@@ -264,7 +264,7 @@ class SoundscapeRetained extends LeafRetained
             else {
                 transformedRegion = null;
             }
-        }      
+        }
     }
 
     // The update tranform fields
@@ -306,7 +306,7 @@ class SoundscapeRetained extends LeafRetained
         GroupRetained group;
         Transform3D trans;
         Bounds region = null;
-  
+
         if (ms == null)
             return;
 }
@@ -333,7 +333,7 @@ class SoundscapeRetained extends LeafRetained
         else {
             ms.boundingLeaf = null;
         }
- 
+
         if (applicationRegion != null) {
             ms.applicationRegion = (Bounds) applicationRegion.clone();
             // Assign region only if bounding leaf is null
@@ -342,7 +342,7 @@ class SoundscapeRetained extends LeafRetained
                 ms.transformedRegion.transform(ms.applicationRegion,
                                     ms.getLastLocalToVworld());
             }
-                 
+
         }
         else {
             ms.applicationRegion = null;
@@ -381,7 +381,7 @@ class SoundscapeRetained extends LeafRetained
 	if (inSharedGroup) {
 	    throw new
 		IllegalSharingException(J3dI18N.getString("SoundscapeRetained0"));
-	}	
+	}
 
         // process switch leaf
         if (s.switchTargets != null &&
@@ -394,7 +394,7 @@ class SoundscapeRetained extends LeafRetained
 
 	super.markAsLive();
     }
- 
+
     /**
      * This clearLive routine first calls the superclass's method, then
      * it removes itself to the list of lights

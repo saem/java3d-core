@@ -26,7 +26,9 @@
 
 package javax.media.j3d;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * A sound structure is a object that organizes Sounds and
@@ -50,12 +52,12 @@ class SoundStructure extends J3dStructure {
 
     /**
      * The list of view platforms
-     */  
+     */
     UnorderList viewPlatforms = new UnorderList(ViewPlatformRetained.class);
 
     /**
      * A bounds used for getting a view platform scheduling BoundingSphere
-     */  
+     */
     BoundingSphere tempSphere = new BoundingSphere();
     BoundingSphere vpsphere = new BoundingSphere();
 
@@ -87,7 +89,7 @@ class SoundStructure extends J3dStructure {
     void processMessages(long referenceTime) {
 	J3dMessage messages[] = getMessages(referenceTime);
 	int nMsg = getNumMessage();
-	J3dMessage m;	
+	J3dMessage m;
 
 	if (nMsg <= 0) {
 	    return;
@@ -139,7 +141,7 @@ class SoundStructure extends J3dStructure {
 	    // Dispatch a message about a sound change
 	    ViewPlatformRetained vpLists[] = (ViewPlatformRetained [])
 		viewPlatforms.toArray(false);
-		   
+
 	    // QUESTION: can I just use this message to pass to all the Sound Bins
 	    for (int k=viewPlatforms.arraySize()- 1; k>=0; k--) {
 		View[] views = vpLists[k].getViewList();
@@ -158,7 +160,7 @@ class SoundStructure extends J3dStructure {
 	    transformMsg = false;
 	    targets = null;
 	}
-	
+
 	Arrays.fill(messages, 0, nMsg, null);
     }
 
@@ -214,7 +216,7 @@ class SoundStructure extends J3dStructure {
 
     /**
      * Add sound to sounds list.
-     */ 
+     */
     void addScopedSound(SoundRetained mirSound, View view) {
         if (debugFlag)
             debugPrint("SoundStructure.addSound()");
@@ -232,7 +234,7 @@ class SoundStructure extends J3dStructure {
         nonViewScopedSounds.add(mirSound);
     } // end addSound()
 
-    
+
     void addScopedSoundscape(SoundscapeRetained soundscape, View view) {
         if (debugFlag)
             debugPrint("SoundStructure.addSoundscape()");
@@ -250,7 +252,7 @@ class SoundStructure extends J3dStructure {
         nonViewScopedSoundscapes.add(soundscape);
     }
 
-    
+
     void removeNodes(J3dMessage m) {
 	Object[] nodes = (Object[])m.args[0];
 	ArrayList viewScopedNodes = (ArrayList)m.args[3];
@@ -278,14 +280,14 @@ class SoundStructure extends J3dStructure {
 
 		if (node instanceof SoundRetained) {
 		    ((SoundRetained)node).isViewScoped = false;
-		    for (int k = 0; k < vsize; k++) {		
+		    for (int k = 0; k < vsize; k++) {
 			View view = (View) vl.get(k);
 			deleteScopedSound((SoundRetained) node, view);
 		    }
 		}
 		else if (node instanceof SoundscapeRetained) {
 		    ((SoundscapeRetained)node).isViewScoped = false;
-		    for (int k = 0; k < vsize; k++) {		
+		    for (int k = 0; k < vsize; k++) {
 			View view = (View) vl.get(k);
 			deleteScopedSoundscape((SoundscapeRetained) node, view);
 		    }
@@ -392,25 +394,25 @@ class SoundStructure extends J3dStructure {
     boolean intersect(Bounds region) {
         if (region == null)
             return false;
- 
+
         ViewPlatformRetained vpLists[] = (ViewPlatformRetained [])
                                             viewPlatforms.toArray(false);
-        
+
         for (int i=viewPlatforms.arraySize()- 1; i>=0; i--) {
             vpLists[i].schedSphere.getWithLock(tempSphere);
             if (tempSphere.intersect(region)) {
                 return true;
             }
-        }      
+        }
         return false;
     }
 
     void loadSound(SoundRetained sound, boolean forceLoad) {
-// QUESTION: should not be calling into soundScheduler directly??? 
+// QUESTION: should not be calling into soundScheduler directly???
         MediaContainer mediaContainer = sound.getSoundData();
         ViewPlatformRetained vpLists[] = (ViewPlatformRetained [])
                                             viewPlatforms.toArray(false);
-        
+
         for (int i=viewPlatforms.arraySize()- 1; i>=0; i--) {
             View[] views = vpLists[i].getViewList();
             for (int j=(views.length-1); j>=0; j--) {
@@ -418,7 +420,7 @@ class SoundStructure extends J3dStructure {
 // XXXX: Shouldn't this be done with messages??
                 v.soundScheduler.loadSound(sound, forceLoad);
             }
-        }        
+        }
     }
 
     void enableSound(SoundRetained sound) {
@@ -431,7 +433,7 @@ class SoundStructure extends J3dStructure {
                 v.soundScheduler.enableSound(sound);
             }
         }
-    } 
+    }
 
     void muteSound(SoundRetained sound) {
         ViewPlatformRetained vpLists[] = (ViewPlatformRetained [])
@@ -443,8 +445,8 @@ class SoundStructure extends J3dStructure {
                 v.soundScheduler.muteSound(sound);
             }
         }
-    } 
- 
+    }
+
     void pauseSound(SoundRetained sound) {
         ViewPlatformRetained vpLists[] = (ViewPlatformRetained [])
                                             viewPlatforms.toArray(false);
@@ -488,7 +490,7 @@ class SoundStructure extends J3dStructure {
          */
     }
 
-// How can active flag (based on View orientataion) be set here for all Views?!? 
+// How can active flag (based on View orientataion) be set here for all Views?!?
 
     UnorderList getSoundList(View view) {
 	ArrayList l = (ArrayList)viewScopedSounds.get(view);
@@ -561,7 +563,7 @@ class SoundStructure extends J3dStructure {
                 graphicsCtx = canvas.getGraphicsContext3D();
         }
 
-        if (debugFlag) { 
+        if (debugFlag) {
             debugPrint("SoundStructure: number of sounds in scene graph = "+nRetainedSounds);
             debugPrint("SoundStructure: number of immediate mode sounds = "+nImmedSounds);
         }
@@ -573,7 +575,7 @@ class SoundStructure extends J3dStructure {
         // node.updateTransformChange() called immediately rather than
         // waiting for updateObject to be called and process xformChangeList
         // which apprears to only happen when sound started...
-	
+
         UnorderList arrList = targets.targetList[Targets.SND_TARGETS];
         if (arrList != null) {
             int j,i;
@@ -588,13 +590,13 @@ class SoundStructure extends J3dStructure {
 
                     if (nodes[i] instanceof ConeSoundRetained) {
                 	xformChangeList.add(nodes[i]);
-                	ConeSoundRetained cnSndNode = 
+                	ConeSoundRetained cnSndNode =
 						(ConeSoundRetained)nodes[i];
                 	cnSndNode.updateTransformChange();
 
             	    } else if (nodes[i] instanceof PointSoundRetained) {
                 	xformChangeList.add(nodes[i]);
-                	PointSoundRetained ptSndNode = 
+                	PointSoundRetained ptSndNode =
 						(PointSoundRetained)nodes[i];
                 	ptSndNode.updateTransformChange();
 
@@ -605,7 +607,7 @@ class SoundStructure extends J3dStructure {
 
             	    } else if (nodes[i] instanceof SoundscapeRetained) {
                 	xformChangeList.add(nodes[i]);
-                	SoundscapeRetained sndScapeNode = 	
+                	SoundscapeRetained sndScapeNode =
 						(SoundscapeRetained)nodes[i];
                 	sndScapeNode.updateTransformChange();
 
@@ -615,7 +617,7 @@ class SoundStructure extends J3dStructure {
                 }
             }
         }
-    }    
+    }
 
     // Debug print mechanism for Sound nodes
     static final boolean debugFlag = false;
@@ -654,7 +656,7 @@ class SoundStructure extends J3dStructure {
 
 	ArrayList soundList = null;
 	ArrayList soundsScapeList = null;
-	    
+
 	if (((component & ViewSpecificGroupRetained.ADD_VIEW) != 0) ||
 	    ((component & ViewSpecificGroupRetained.SET_VIEW) != 0)) {
 	    int i;
@@ -695,7 +697,7 @@ class SoundStructure extends J3dStructure {
 	    ArrayList leafList;
 	    View view;
 
-	    
+
 	    if ((component & ViewSpecificGroupRetained.REMOVE_VIEW) != 0) {
 		view = (View)objAry[0];
 		leafList = (ArrayList)objAry[2];
@@ -731,8 +733,8 @@ class SoundStructure extends J3dStructure {
 		    viewScopedSoundscapes.remove(view);
 	    }
 
-	}	
-    
+	}
+
     }
 
     void cleanup() {}

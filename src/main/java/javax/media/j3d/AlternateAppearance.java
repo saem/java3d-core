@@ -112,7 +112,7 @@ public class AlternateAppearance extends Leaf {
         ALLOW_APPEARANCE_READ,
         ALLOW_SCOPE_READ
     };
-    
+
     /**
      * Constructs an AlternateAppearance node with default
      * parameters.  The default values are as follows:
@@ -128,7 +128,7 @@ public class AlternateAppearance extends Leaf {
 	// Just use the defaults
         // set default read capabilities
         setDefaultReadCapabilities(readCapabilities);
-        
+
     }
 
     /**
@@ -164,7 +164,7 @@ public class AlternateAppearance extends Leaf {
 	    if(!this.getCapability(ALLOW_APPEARANCE_WRITE))
 	    	throw new CapabilityNotSetException(J3dI18N.getString("AlternateAppearance0"));
 
-	if (isLive()) 
+	if (isLive())
 	    ((AlternateAppearanceRetained)this.retained).setAppearance(appearance);
 	else
 	    ((AlternateAppearanceRetained)this.retained).initAppearance(appearance);
@@ -201,7 +201,7 @@ public class AlternateAppearance extends Leaf {
 	    	throw new CapabilityNotSetException(J3dI18N.getString("AlternateAppearance3"));
 
 
-	if (isLive()) 
+	if (isLive())
 	    ((AlternateAppearanceRetained)this.retained).setInfluencingBounds(region);
 	else
 	    ((AlternateAppearanceRetained)this.retained).initInfluencingBounds(region);
@@ -526,15 +526,15 @@ public class AlternateAppearance extends Leaf {
     void duplicateAttributes(Node originalNode, boolean forceDuplicate) {
 	super.duplicateAttributes(originalNode, forceDuplicate);
 
-	AlternateAppearanceRetained attr = (AlternateAppearanceRetained) 
+	AlternateAppearanceRetained attr = (AlternateAppearanceRetained)
 	                                   originalNode.retained;
 	AlternateAppearanceRetained rt = (AlternateAppearanceRetained) retained;
 
 	rt.initAppearance((Appearance) getNodeComponent(
-						       attr.getAppearance(), 
+						       attr.getAppearance(),
 						       forceDuplicate,
 						       originalNode.nodeHashtable));
-	
+
 	rt.initInfluencingBounds(attr.getInfluencingBounds());
 
 	Enumeration elm = attr.getAllScopes();
@@ -542,7 +542,7 @@ public class AlternateAppearance extends Leaf {
 	  // this reference will set correctly in updateNodeReferences() callback
 	    rt.initAddScope((Group) elm.nextElement());
 	}
-	
+
 	// correct value will set in updateNodeReferences
 	rt.initInfluencingBoundingLeaf(attr.getInfluencingBoundingLeaf());
 
@@ -579,7 +579,7 @@ public class AlternateAppearance extends Leaf {
                                    	  retained;
 
         BoundingLeaf bl = rt.getInfluencingBoundingLeaf();
-	
+
         if (bl != null) {
             Object o = referenceTable.getNewObjectReference(bl);
             rt.initInfluencingBoundingLeaf((BoundingLeaf) o);

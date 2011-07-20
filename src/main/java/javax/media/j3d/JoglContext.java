@@ -26,9 +26,14 @@
 
 package javax.media.j3d;
 
-import java.nio.*;
-import javax.media.opengl.*;
-import com.sun.opengl.cg.*;
+import java.nio.Buffer;
+import java.nio.FloatBuffer;
+
+import javax.media.opengl.GL;
+import javax.media.opengl.GLContext;
+
+import com.sun.opengl.cg.CGcontext;
+import com.sun.opengl.cg.CgGL;
 
 /**
  * Graphics context objects for Jogl rendering pipeline.
@@ -160,7 +165,7 @@ class JoglContext implements Context {
   private int        glslVertexAttrOffset;
 
   // Only used when Cg shader library is active
-  private CGcontext  cgContext; 
+  private CGcontext  cgContext;
   private int        cgVertexProfile;
   private int        cgFragmentProfile;
 

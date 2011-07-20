@@ -250,13 +250,13 @@ public abstract class ImageComponent extends NodeComponent {
         ALLOW_IMAGE_READ,
         ALLOW_FORMAT_READ
     };
-    
+
     /**
      * Not a public constructor, for internal use
      */
     ImageComponent() {
         // set default read capabilities
-        setDefaultReadCapabilities(readCapabilities);        
+        setDefaultReadCapabilities(readCapabilities);
     }
 
     /**
@@ -276,7 +276,7 @@ public abstract class ImageComponent extends NodeComponent {
      * object
      * @exception IllegalArgumentException if format is invalid, or if
      * width or height are not positive.
-     */  
+     */
     public ImageComponent(int format, int width, int height) {
         // set default read capabilities
         setDefaultReadCapabilities(readCapabilities);
@@ -323,7 +323,7 @@ public abstract class ImageComponent extends NodeComponent {
      * @return the width of this image component object
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     public int getWidth() {
         if (isLiveOrCompiled())
             if(!this.getCapability(ALLOW_SIZE_READ))
@@ -336,7 +336,7 @@ public abstract class ImageComponent extends NodeComponent {
      * @return the height of this image component object
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     public int getHeight() {
         if (isLiveOrCompiled())
             if(!this.getCapability(ALLOW_SIZE_READ))
@@ -349,7 +349,7 @@ public abstract class ImageComponent extends NodeComponent {
      * @return the format of this image component object
      * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
-     */  
+     */
     public int getFormat() {
         if (isLiveOrCompiled())
             if(!this.getCapability(ALLOW_FORMAT_READ))
@@ -394,7 +394,7 @@ public abstract class ImageComponent extends NodeComponent {
      */
     public void setYUp(boolean yUp) {
 	checkForLiveOrCompiled();
-        
+
         // check for illegal image class
         if (((ImageComponentRetained)this.retained).getImageClass() == ImageClass.NIO_IMAGE_BUFFER) {
             throw new IllegalStateException("ImageComponent4");

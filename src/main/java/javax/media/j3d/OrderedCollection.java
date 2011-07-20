@@ -42,7 +42,7 @@ class OrderedCollection extends Object implements ObjectUpdate{
 
     // LightBin used for next frame
     LightBin nextFrameLightBin = null;
-    
+
     // LightBins to be added for this frame
     LightBin addLightBins = null;
 
@@ -65,7 +65,7 @@ class OrderedCollection extends Object implements ObjectUpdate{
 	addLightBins = null;
 	onUpdateList = false;
     }
-    
+
 
 
 }

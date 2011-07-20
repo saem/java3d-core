@@ -26,7 +26,10 @@
 
 package javax.media.j3d;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * A transform update is a object that manages TransformGroups
@@ -50,7 +53,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
     private UpdateTargets targets = new UpdateTargets();
 
     /**
-     * An arrayList of nodes that need collisionBounds updates 
+     * An arrayList of nodes that need collisionBounds updates
      */
     private ArrayList collisionObjectList = new ArrayList();
 
@@ -65,7 +68,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
     // just switched-on
     private ArrayList<TransformGroupRetained> activeTraverseList =
             new ArrayList<TransformGroupRetained>();
-    
+
     // contains TG that have been previously changed but just switched-on
     private ArrayList switchDirtyTgList = new ArrayList(1);
 
@@ -113,7 +116,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 
 	    for (i=0; i<nMsg; i++) {
 		m = messages[i];
-		
+
 		switch (m.type) {
 		case J3dMessage.INSERT_NODES:
 		    objectList.add(m.args[0]);
@@ -151,7 +154,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 		    if (tiArr != null) {
 			Object newCtArr[] = (Object[])m.args[3];
 			for (int j=0; j<tiArr.length;j++) {
-			    TargetsInterface ti = 
+			    TargetsInterface ti =
 				(TargetsInterface)tiArr[j];
 			    ti.updateCachedTargets(
 						   TargetsInterface.TRANSFORM_TARGETS,
@@ -175,15 +178,15 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 		m.decRefcount();
 	    }
 	    processCurrentLocalToVworld();
-	    
+
 	    // XXXX: temporary -- processVwcBounds will be
 	    // done in GeometryStructure
-	    if (objectList.size() > 0) { 
+	    if (objectList.size() > 0) {
 		processGeometryAtomVwcBounds();
 	    }
 	    processVwcBounds();
 	}
-        
+
         // Issue 434: clear references to objects that have been processed
         objectList.clear();
 
@@ -252,7 +255,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
                             data.switchDirty = false;
                         } else {
                             // if in switch, add to activetraverseList only if
-                            // it is currently switched on, otherwise, 
+                            // it is currently switched on, otherwise,
                             // mark it as switchDirty
                             if (data.switchState.currentSwitchOn) {
                                 if (!added) {
@@ -317,7 +320,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
     // Insertion sort on smallest arrays
     private void insertSort(int size, TransformGroupRetained[] tgs) {
         for (int i=0; i<size; i++) {
-            for (int j=i; j>0 && 
+            for (int j=i; j>0 &&
 		 (tgs[j-1].maxTransformLevel > tgs[j].maxTransformLevel); j--) {
                 TransformGroupRetained tmptg = tgs[j];
                 tgs[j] = tgs[j-1];
@@ -347,7 +350,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
          if (l<r) quicksort(i,r, tgs);
     }
 
-    
+
     public void updateObject() {
 	processLastLocalToVworld();
 	processLastSwitchOn();
@@ -373,17 +376,17 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 	TransformGroupRetained tg;
 	HashKey key;
 
-	
+
 	int dTGSize = dirtyTransformGroups.size();
 	if (J3dDebug.devPhase && J3dDebug.debug) {
 	    J3dDebug.doDebug(J3dDebug.transformStructure, J3dDebug.LEVEL_5,
                         "processLastLocalToVworld(): dTGSize= " + dTGSize + "\n");
 	}
-	
+
 	for (i=0, k=0; i < dTGSize; i++) {
 	    tg  = (TransformGroupRetained)dirtyTransformGroups.get(i);
 	    // Check if the transformGroup is still alive
-	    
+
 	    // XXXX: This is a hack, should be fixed after EA
 	    // Null pointer checking should be removed!
 	    // should call trans = tg.getCurrentChildLocalToVworld(key);
@@ -395,26 +398,26 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 			    if (tg.localToVworldKeys[j].equals(key)) {
 				break;
 			    }
-			}		  
+			}
 			if (j < tg.localToVworldKeys.length) {
 			    // last index = current index
-			    tg.childLocalToVworldIndex[j][NodeRetained.LAST_LOCAL_TO_VWORLD] = 
+			    tg.childLocalToVworldIndex[j][NodeRetained.LAST_LOCAL_TO_VWORLD] =
 				tg.childLocalToVworldIndex[j][NodeRetained.CURRENT_LOCAL_TO_VWORLD];
 			}
 		    }
 		    else {
 			// last index = current index
-			tg.childLocalToVworldIndex[0][NodeRetained.LAST_LOCAL_TO_VWORLD] = 
+			tg.childLocalToVworldIndex[0][NodeRetained.LAST_LOCAL_TO_VWORLD] =
 			    tg.childLocalToVworldIndex[0][NodeRetained.CURRENT_LOCAL_TO_VWORLD];
 		    }
 		}
-		
+
 	    }
 
 	}
 	dirtyTransformGroups.clear();
 	keySet.clear();
-	
+
     }
 
     void processGeometryAtomVwcBounds() {
@@ -430,12 +433,12 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 	    if (J3dDebug.devPhase && J3dDebug.debug) {
 		J3dDebug.doDebug(J3dDebug.transformStructure, J3dDebug.LEVEL_5,
 				 "vwcBounds computed this frame = " + nodes.length + "\n");
-	    }	    
+	    }
 	    for (int j = 0; j < nodes.length; j++) {
 		// If the list has geometry atoms, update the vwc bounds
 		synchronized(nodes[j]) {
 		    if (nodes[j] instanceof GeometryAtom) {
-			ga = (GeometryAtom) nodes[j]; 
+			ga = (GeometryAtom) nodes[j];
                         ms = ga.source;
 
                         // update mirrorShape's vwcBounds if in use
@@ -458,19 +461,19 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 			Bounds bound = (g.sourceNode.collisionBound != null ?
                                        g.sourceNode.collisionBound :
                                        g.sourceNode.getEffectiveBounds());
-			g.collisionVwcBounds.transform(bound, 
+			g.collisionVwcBounds.transform(bound,
 					g.getCurrentLocalToVworld());
 		    }
 		}
 	    }
 	}
-	// process collision bounds only update 
+	// process collision bounds only update
 	for (int i = 0; i < collisionObjectList.size(); i++) {
 	    Object[] nodes = (Object[]) collisionObjectList.get(i);
 	    for (int j = 0; j < nodes.length; j++) {
 		synchronized(nodes[j]) {
 		    if (nodes[j] instanceof GeometryAtom) {
-		        ga = (GeometryAtom) nodes[j]; 
+		        ga = (GeometryAtom) nodes[j];
                         ms = ga.source;
 
                         if (ms.collisionVwcBound != null) {
@@ -478,7 +481,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
                                        ms.collisionBound,
                                        ms.getCurrentLocalToVworld(0));
                         }
-		    } 
+		    }
 		}
             }
         }
@@ -539,13 +542,13 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
  	    }
  	}
 
-	// process collision bounds only update 
+	// process collision bounds only update
 	for (i = 0; i < collisionObjectList.size(); i++) {
 	    nodes = (Object[]) collisionObjectList.get(i);
 	    for (j = 0; j < nodes.length; j++) {
 		synchronized(nodes[j]) {
 		    if (nodes[j] instanceof GeometryAtom) {
-		        ga = (GeometryAtom) nodes[j]; 
+		        ga = (GeometryAtom) nodes[j];
                         ms = ga.source;
 
                         if (ms.collisionVwcBound != null) {
@@ -553,7 +556,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
                                        ms.collisionBound,
                                        ms.getCurrentLocalToVworld(0));
                         }
-		    } 
+		    }
 		}
             }
         }
@@ -579,7 +582,7 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
             ms.bounds = updateBounds;
             if (ms.collisionBound == null) {
                 ms.collisionVwcBound = ms.vwcBounds;
-            } 
+            }
 	}
 	objectList.add(gaArray);
     }
@@ -589,14 +592,14 @@ class TransformStructure extends J3dStructure implements ObjectUpdate {
 	int i;
         Shape3DRetained ms;
         Bounds collisionBound = (Bounds)m.args[1];
-	
+
 	if (m.args[0] instanceof GroupRetained) {
             GroupRetained g = (GroupRetained) m.args[0];
             if (g.mirrorGroup != null) {
                 objectList.add(g.mirrorGroup.toArray());
             }
         } else {
-	    Object[] gaArray = (Object[]) m.args[0]; 
+	    Object[] gaArray = (Object[]) m.args[0];
             GeometryAtom ga;
 
             for (i=0; i<gaArray.length; i++) {

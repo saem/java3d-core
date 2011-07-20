@@ -26,8 +26,8 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.lang.Math;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 /**
  * The IndexedPointArray object draws the array of vertices as individual points.
@@ -37,7 +37,7 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 
     IndexedPointArrayRetained() {
         this.geoType = GEO_TYPE_INDEXED_POINT_SET;
-    } 
+    }
 
     boolean intersect(PickShape pickShape, PickInfo pickInfo, int flags, Point3d iPnt,
                       GeometryRetained geom, int geomIndex) {
@@ -49,7 +49,7 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 
         int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
 		 initialVertexIndex : initialCoordIndex);
-    
+
 	switch (pickShape.getPickType()) {
 	case PickShape.PICKRAY:
 	    PickRay pickRay= (PickRay) pickShape;
@@ -68,28 +68,28 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 			y = pnt.y;
 			z = pnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
 	    break;
 	case PickShape.PICKSEGMENT:
 	    PickSegment pickSegment = (PickSegment) pickShape;
-	    Vector3d dir = 
-		new Vector3d(pickSegment.end.x - pickSegment.start.x, 
+	    Vector3d dir =
+		new Vector3d(pickSegment.end.x - pickSegment.start.x,
 			     pickSegment.end.y - pickSegment.start.y,
 			     pickSegment.end.z - pickSegment.start.z);
-	    
+
 	    while (i < validVertexCount) {
                 vtxIndexArr[0] = indexCoord[i];
 		getVertexData(indexCoord[i++], pnt);
-		if (intersectPntAndRay(pnt, pickSegment.start, 
+		if (intersectPntAndRay(pnt, pickSegment.start,
 					dir, sdist) &&
 		    (sdist[0] <= 1.0)) {
 		    if (flags == 0) {
@@ -101,13 +101,13 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 			y = pnt.y;
 			z = pnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -131,13 +131,13 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 			y = pnt.y;
 			z = pnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -158,13 +158,13 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 			y = pnt.y;
 			z = pnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -185,13 +185,13 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 			y = pnt.y;
 			z = pnt.z;
                 	if((flags & PickInfo.CLOSEST_GEOM_INFO) != 0) {
-                            storeInterestData(pickInfo, flags, geom, geomIndex, 
+                            storeInterestData(pickInfo, flags, geom, geomIndex,
                                               vtxIndexArr, iPnt, sdist[0]);
                         }
 		    }
                     if((flags & PickInfo.ALL_GEOM_INFO) != 0) {
-                        storeInterestData(pickInfo, flags, geom, geomIndex, 
-                                          vtxIndexArr, iPnt, sdist[0]);                      
+                        storeInterestData(pickInfo, flags, geom, geomIndex,
+                                          vtxIndexArr, iPnt, sdist[0]);
                     }
 		}
 	    }
@@ -200,8 +200,8 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 	    // Should not happen since API already check for this
 	    throw new IllegalArgumentException(J3dI18N.getString("IndexedPointArrayRetained0"));
 	default:
-	    throw new RuntimeException ("PickShape not supported for intersection"); 
-	} 
+	    throw new RuntimeException ("PickShape not supported for intersection");
+	}
 
 	if (minDist < Double.MAX_VALUE) {
 	    iPnt.x = x;
@@ -216,12 +216,12 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 	Point3d point = new Point3d();
 	int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
 		 initialVertexIndex : initialCoordIndex);
-	
+
 	switch (pnts.length) {
 	case 3: // Triangle
 	    while (i < validVertexCount) {
 		getVertexData(indexCoord[i++], point);
-		if (intersectTriPnt(pnts[0], pnts[1], pnts[2], point)) { 
+		if (intersectTriPnt(pnts[0], pnts[1], pnts[2], point)) {
 		    return true;
 		}
 	    }
@@ -229,8 +229,8 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 	case 4: // Quad
 	    while (i < validVertexCount) {
 		getVertexData(indexCoord[i++], point);
-		if (intersectTriPnt(pnts[0], pnts[1], pnts[2], point) || 
-		    intersectTriPnt(pnts[0], pnts[2], pnts[3], point)) { 
+		if (intersectTriPnt(pnts[0], pnts[1], pnts[2], point) ||
+		    intersectTriPnt(pnts[0], pnts[2], pnts[3], point)) {
 		    return true;
 		}
 	    }
@@ -253,8 +253,8 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 	case 1: // Point
 	    while (i < validVertexCount) {
 		getVertexData(indexCoord[i++], point);
-		if ((pnts[0].x == point.x) && 
-		    (pnts[0].y == point.y) && 
+		if ((pnts[0].x == point.x) &&
+		    (pnts[0].y == point.y) &&
 		    (pnts[0].z == point.z)) {
 		    return true;
 		}
@@ -279,7 +279,7 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 	    }
 	}
 	return false;
-	
+
     }
 
     // the bounds argument is already transformed
@@ -287,7 +287,7 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 	int i = ((vertexFormat & GeometryArray.BY_REFERENCE) == 0 ?
 		 initialVertexIndex : initialCoordIndex);
 	Point3d pnt = new Point3d();
-	
+
 	while (i < validVertexCount) {
 	    getVertexData(indexCoord[i++], pnt);
 	    if (targetBound.intersect(pnt)) {
@@ -295,10 +295,10 @@ class IndexedPointArrayRetained extends IndexedGeometryArrayRetained {
 	    }
 	}
 	return false;
-    }	
+    }
 
-    int getClassType() { 
-	return POINT_TYPE; 
+    int getClassType() {
+	return POINT_TYPE;
     }
 }
 

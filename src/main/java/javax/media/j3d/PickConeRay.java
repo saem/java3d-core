@@ -26,7 +26,10 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point4d;
+import javax.vecmath.Vector3d;
+
 import com.sun.j3d.internal.Distance;
 
 /**
@@ -95,7 +98,7 @@ public final class PickConeRay extends PickCone {
 	if (bounds instanceof BoundingSphere) {
 	    Point3d sphCenter = ((BoundingSphere)bounds).getCenter();
 	    double sphRadius = ((BoundingSphere)bounds).getRadius();
-	    double sqDist = 
+	    double sqDist =
 		Distance.pointToRay (sphCenter, origin, direction, rayPt, null);
 	    vector.sub (rayPt, origin);
 	    distance = vector.length();
@@ -104,7 +107,7 @@ public final class PickConeRay extends PickCone {
 		return true;
 	    }
 	    return false;  // we are too far to intersect
-	}  
+	}
 	//
 	// ================ BOUNDING BOX ================
 	//
@@ -114,9 +117,9 @@ public final class PickConeRay extends PickCone {
 	    ((BoundingBox)bounds).getLower (lower);
 
 	    Point3d center = ((BoundingBox)bounds).getCenter ();
-	    
+
 	    // First, see if cone is too far away from BoundingBox
-	    double sqDist = 
+	    double sqDist =
 		Distance.pointToRay (center, origin, direction, rayPt, null);
 
 	    vector.sub (rayPt, origin);
@@ -128,7 +131,7 @@ public final class PickConeRay extends PickCone {
 	    temp = (center.y - lower.y + radius);
 	    boxRadiusSquared += temp*temp;
 	    temp = (center.z - lower.z + radius);
-	    boxRadiusSquared += temp*temp;		
+	    boxRadiusSquared += temp*temp;
 
 
 	    if (sqDist > boxRadiusSquared) {
@@ -146,7 +149,7 @@ public final class PickConeRay extends PickCone {
 	    // Ray does not intersect, test for distance with each edge
 	    Point3d upper = new Point3d();
 	    ((BoundingBox)bounds).getUpper (upper);
-      
+
 	    Point3d[][] edges = {
 		// Top horizontal 4
 		{upper, new Point3d (lower.x, upper.y, upper.z)},
@@ -167,8 +170,8 @@ public final class PickConeRay extends PickCone {
 
 	    for (int i=0;i<edges.length;i++) {
 		// System.err.println ("Testing edge: "+edges[i][0]+" - "+edges[i][1]);
-		double distToEdge = 
-		    Distance.rayToSegment (origin, direction, edges[i][0], edges[i][1], 
+		double distToEdge =
+		    Distance.rayToSegment (origin, direction, edges[i][0], edges[i][1],
 					   rayPt, null, null);
 
 		vector.sub (rayPt, origin);
@@ -196,7 +199,7 @@ public final class PickConeRay extends PickCone {
 	    bsphere.getCenter (sphCenter);
 	    double sphRadius = bsphere.getRadius();
 
-	    double sqDist = 
+	    double sqDist =
 		Distance.pointToRay (sphCenter, origin, direction, rayPt, null);
 	    vector.sub (rayPt, origin);
 	    distance = vector.length();
@@ -224,13 +227,13 @@ public final class PickConeRay extends PickCone {
 		    midpt.y = (ptope.verts[i].y + ptope.verts[j].y) * 0.5;
 		    midpt.z = (ptope.verts[i].z + ptope.verts[j].z) * 0.5;
 
-		    if (! PickCylinder.pointInPolytope (ptope, 
+		    if (! PickCylinder.pointInPolytope (ptope,
 							midpt.x, midpt.y, midpt.z)) {
 			continue;
 		    }
-		    distToEdge = 
-			Distance.rayToSegment (origin, direction, 
-					       ptope.verts[i], ptope.verts[j], 
+		    distToEdge =
+			Distance.rayToSegment (origin, direction,
+					       ptope.verts[i], ptope.verts[j],
 					       rayPt, null, null);
 		    vector.sub (rayPt, origin);
 		    distance = vector.length();
@@ -251,30 +254,30 @@ public final class PickConeRay extends PickCone {
     }
 
     // Only use within J3D.
-    // Return a new PickConeRay that is the transformed (t3d) of this pickConeRay.  
+    // Return a new PickConeRay that is the transformed (t3d) of this pickConeRay.
     PickShape transform(Transform3D t3d) {
-	
+
 	Point3d end = new Point3d();
-	
+
 	PickConeRay newPCR = new PickConeRay();
-	
+
 	newPCR.origin.x = origin.x;
 	newPCR.origin.y = origin.y;
 	newPCR.origin.z = origin.z;
 	newPCR.spreadAngle = spreadAngle;
-	
+
 	end.x = origin.x + direction.x;
 	end.y = origin.y + direction.y;
 	end.z = origin.z + direction.z;
-	
+
 	t3d.transform(newPCR.origin);
 	t3d.transform(end);
-	
+
 	newPCR.direction.x = end.x - newPCR.origin.x;
 	newPCR.direction.y = end.y - newPCR.origin.y;
 	newPCR.direction.z = end.z - newPCR.origin.z;
 	newPCR.direction.normalize();
-	
+
 	return newPCR;
     }
 }

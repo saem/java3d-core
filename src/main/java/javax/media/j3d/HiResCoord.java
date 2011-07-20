@@ -26,15 +26,14 @@
 
 package javax.media.j3d;
 
-import java.lang.Integer;
-import javax.vecmath.*;
+import javax.vecmath.Vector3d;
 
 /**
  * High resolution coordinate object.
  *
  */
 
-/** 
+/**
  * The HiResCoord object specifies the location of scene
  * components within the Virtual Universe.
  * The coordinates of all scene graph objects are relative to
@@ -76,10 +75,10 @@ public class HiResCoord {
      */
     int		z[];
 
-private double scales[] = { 
-      79228162514264337593543950336.0,                                             // 2^96	 
-      18446744073709551616.0,                                                      // 2^64	 
-      4294967296.0,                                                                // 2^32	
+private double scales[] = {
+      79228162514264337593543950336.0,                                             // 2^96
+      18446744073709551616.0,                                                      // 2^64
+      4294967296.0,                                                                // 2^32
       1.0,                                                                         // 2^0
       2.3283064365386962890625e-10,                                                // 2^-32
       5.421010862427522170037264004349708557128906250000000000000000e-20,          // 2^-64
@@ -88,7 +87,7 @@ private double scales[] = {
 
 
 
-    /** 
+    /**
      * Constructs and initializes a new HiResCoord using the values
      * provided in the argument.
      * The HiResCoord represents 768 bits of floating point 3-Space.
@@ -111,7 +110,7 @@ private double scales[] = {
 
     }
 
-    /** 
+    /**
      * Constructs and initializes a new HiResCoord using the values
      * provided in the argument.
      * The HiResCoord represents 768 bits of floating point 3-Space.
@@ -155,7 +154,7 @@ private double scales[] = {
 	this.z[7] = hc.z[7];
     }
 
-    /** 
+    /**
      * Constructs and initializes a new HiResCoord located at (0, 0, 0).
      * The HiResCoord represents 768 bits of floating point 3-Space.
      */
@@ -267,7 +266,7 @@ private double scales[] = {
 	this.z[6] = Z[6];
 	this.z[7] = Z[7];
     }
-    
+
     /**
      * Retrieves this HiResCoord's location and saves the coordinates
      * in the specified arrays. The arrays must be large enough
@@ -304,7 +303,7 @@ private double scales[] = {
 	Z[6] = this.z[6];
 	Z[7] = this.z[7];
     }
-    
+
     /**
      * Retrieves this HiResCoord's location and places it into the hires
      * argument.
@@ -338,10 +337,10 @@ private double scales[] = {
 	hc.z[6] = this.z[6];
 	hc.z[7] = this.z[7];
     }
-    
+
     /**
      * Retrieves this HiResCoord's X value and stores it in the specified
-     * array. The array must be large enough to hold all of the ints. 
+     * array. The array must be large enough to hold all of the ints.
      * @param X an eight-element array that will receive the x position
      */
     public void getHiResCoordX(int[] X) {
@@ -357,7 +356,7 @@ private double scales[] = {
 
     /**
      * Retrieves this HiResCoord's Y value and stores it in the specified
-     * array. The array must be large enough to hold all of the ints. 
+     * array. The array must be large enough to hold all of the ints.
      * @param Y an eight-element array that will receive the y position
      */
     public void getHiResCoordY(int[] Y) {
@@ -373,7 +372,7 @@ private double scales[] = {
 
     /**
      * Retrieves this HiResCoord's Z value and stores it in the specified
-     * array. The array must be large enough to hold all of the ints. 
+     * array. The array must be large enough to hold all of the ints.
      * @param Z an eight-element array that will receive the z position
      */
     public void getHiResCoordZ(int[] Z) {
@@ -488,7 +487,7 @@ private double scales[] = {
     //
         hiResNegate( tmpHc, h2);
         hiResAdd( this, h1, tmpHc);
-        
+
     }
 
     /**
@@ -589,7 +588,7 @@ private double scales[] = {
      return;
    }
 
-   private void hiResAdd(HiResCoord ho, HiResCoord h1, HiResCoord h2 ){  
+   private void hiResAdd(HiResCoord ho, HiResCoord h1, HiResCoord h2 ){
     int i;
     long tmp1, tmp2,carry;
     long signMask = Integer.MAX_VALUE;
@@ -651,7 +650,7 @@ private double scales[] = {
     return;
   }
 
-  private void hiResScale( int tin[], int tout[], double scale) { 
+  private void hiResScale( int tin[], int tout[], double scale) {
       int i;
       long tmp,carry;
       int signMask = Integer.MAX_VALUE;
@@ -660,7 +659,7 @@ private double scales[] = {
       carryMask += 1;
       long signBit = 1;
       signBit =  signBit << 31;
- 
+
       carry = 0;
       for(i=7;i>0;i--) {
         tmp = 0;
@@ -673,7 +672,7 @@ private double scales[] = {
       tout[0] = (int)(tin[0]*scale + carry);
       return;
   }
-  private void hiResDiff( HiResCoord h1, HiResCoord h2, Vector3d diff) { 
+  private void hiResDiff( HiResCoord h1, HiResCoord h2, Vector3d diff) {
        int i;
        HiResCoord diffHi = new HiResCoord();
        long value;

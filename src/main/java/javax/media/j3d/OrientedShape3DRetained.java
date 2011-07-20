@@ -26,8 +26,12 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
-import java.util.ArrayList;
+import javax.vecmath.AxisAngle4d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
+import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
+import javax.vecmath.Vector4d;
 
 class OrientedShape3DRetained extends Shape3DRetained {
 
@@ -66,10 +70,10 @@ class OrientedShape3DRetained extends Shape3DRetained {
 
     // Frequently used variables for scale invariant computation
     // Left and right Vworld to Clip coordinates transforms
-    private Transform3D left_xform = new Transform3D(); 
-    private Transform3D right_xform = new Transform3D(); 
+    private Transform3D left_xform = new Transform3D();
+    private Transform3D right_xform = new Transform3D();
 
-    // Transform for scaling the OrientedShape3D to correct for 
+    // Transform for scaling the OrientedShape3D to correct for
     // perspective foreshortening
     Transform3D scaleXform = new Transform3D();
 
@@ -249,7 +253,7 @@ class OrientedShape3DRetained extends Shape3DRetained {
         changeMessage.args[0] = getGeomAtomsArray(mirrorShape3D);
 	changeMessage.args[1] = new Integer(component);
 	changeMessage.args[2] = attr;
-	OrientedShape3DRetained[] o3dArr = 
+	OrientedShape3DRetained[] o3dArr =
 	    new OrientedShape3DRetained[mirrorShape3D.size()];
 	mirrorShape3D.toArray(o3dArr);
 	changeMessage.args[3] = o3dArr;
@@ -259,7 +263,7 @@ class OrientedShape3DRetained extends Shape3DRetained {
 
     void updateImmediateMirrorObject(Object[] args) {
 	int component = ((Integer)args[1]).intValue();
-	if ((component & (ALIGNMENT_CHANGED      | 
+	if ((component & (ALIGNMENT_CHANGED      |
 			  AXIS_CHANGED           |
 			  ROTATION_CHANGED       |
 			  CONSTANT_SCALE_CHANGED |
@@ -312,7 +316,7 @@ class OrientedShape3DRetained extends Shape3DRetained {
 		    newList[i] = orientedTransforms[i];
 		}
 		newList[viewIndex] = xform;
-		orientedTransforms = newList; 
+		orientedTransforms = newList;
 	    }
 	    else {
 		if (orientedTransforms[viewIndex] == null) {
@@ -330,7 +334,7 @@ class OrientedShape3DRetained extends Shape3DRetained {
         double angle = 0.0;
         double sign;
 	boolean status;
-	
+
 	Transform3D orientedxform = getOrientedTransform(viewIndex);
 	//  get viewplatforms's location in virutal world
         if (mode == OrientedShape3D.ROTATE_ABOUT_AXIS) {   // rotate about axis
@@ -362,16 +366,16 @@ class OrientedShape3DRetained extends Shape3DRetained {
 	    }
 	    if (status) {
 
-		// compute the sign of the angle by checking if the cross product 
+		// compute the sign of the angle by checking if the cross product
 		// of the two vectors is in the same direction as the normal axis
-		vector.cross(eyeVec, zAxis); 
+		vector.cross(eyeVec, zAxis);
 		if (vector.dot(nAxis) > 0.0) {
 		    sign = 1.0;
-		} else { 
+		} else {
 		    sign = -1.0;
 		}
-		
-		// compute the angle between the projected eye vector and the 
+
+		// compute the angle between the projected eye vector and the
 		// projected z
 
 		double dot = eyeVec.dot(zAxis);
@@ -382,10 +386,10 @@ class OrientedShape3DRetained extends Shape3DRetained {
 		}
 
 		angle = sign*Math.acos(dot);
-		
+
 		// use -angle because xform is to *undo* rotation by angle
-		aa.x = nAxis.x; 
-		aa.y = nAxis.y; 
+		aa.x = nAxis.x;
+		aa.y = nAxis.y;
 		aa.z = nAxis.z;
 		aa.angle = -angle;
 		orientedxform.set(aa);
@@ -395,10 +399,10 @@ class OrientedShape3DRetained extends Shape3DRetained {
 	    }
 
         } else if(mode == OrientedShape3D.ROTATE_ABOUT_POINT ){ // rotate about point
-	    // Need to rotate Z axis to point to eye, and Y axis to be 
-	    // parallel to view platform Y axis, rotating around rotation pt 
+	    // Need to rotate Z axis to point to eye, and Y axis to be
+	    // parallel to view platform Y axis, rotating around rotation pt
 
-	    // get the eye point 
+	    // get the eye point
 	    canvas.getCenterEyeInImagePlate(viewPosition);
 
 	    // derive the yUp point
@@ -436,7 +440,7 @@ class OrientedShape3DRetained extends Shape3DRetained {
 	    // rotation axis is cross product of eyeVec and zAxis
 	    vector.cross(eyeVec, zAxis); // vector is cross product
 
-	    // if cross product is non-zero, vector is rotation axis and 
+	    // if cross product is non-zero, vector is rotation axis and
 	    // rotation angle is acos(eyeVec.dot(zAxis)));
 	    double length = vector.length();
 	    if (length > 0.0001) {
@@ -463,12 +467,12 @@ class OrientedShape3DRetained extends Shape3DRetained {
 	    yAxis.z = 0.0;
 	    zRotate.transform(yAxis);
 
-	    // project the yAxis onto the plane perp to the eyeVec 
+	    // project the yAxis onto the plane perp to the eyeVec
 	    status = projectToPlane(yAxis, eyeVec);
 
 
 	    if (status) {
-		// project the yUp onto the plane perp to the eyeVec 
+		// project the yUp onto the plane perp to the eyeVec
 		status = projectToPlane(yUp, eyeVec);
 	    }
 
@@ -485,11 +489,11 @@ class OrientedShape3DRetained extends Shape3DRetained {
 
 		angle = Math.acos(dot);
 
-		// check the sign by looking a the cross product vs the eyeVec 
+		// check the sign by looking a the cross product vs the eyeVec
 		vector.cross(yUp, yAxis);  // vector is cross product
 		if (eyeVec.dot(vector) < 0) {
 		    angle *= -1;
-		} 
+		}
 		aa.x = eyeVec.x;
 		aa.y = eyeVec.y;
 		aa.z = eyeVec.z;
@@ -504,13 +508,13 @@ class OrientedShape3DRetained extends Shape3DRetained {
 		orientedxform.mul(xform);   // yRotate
 		orientedxform.mul(zRotate); // zRotate
 		vector.scale(-1.0);   	    // vector to translate back
-		xform.set(vector);    	    // xform to translate back 
+		xform.set(vector);    	    // xform to translate back
 		orientedxform.mul(xform);   // translate back
 	    }
 	    else {
 		orientedxform.setIdentity();
 	    }
-		
+
 	}
 	//Scale invariant computation
 	if(constantScale) {

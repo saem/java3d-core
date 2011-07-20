@@ -32,7 +32,7 @@ package javax.media.j3d;
  */
 
 class CgShaderProgramRetained extends ShaderProgramRetained {
-    
+
     /**
      * Constructs a Cg shader program node component.
      */
@@ -43,7 +43,7 @@ class CgShaderProgramRetained extends ShaderProgramRetained {
 	// System.err.println("CgShaderProgramRetained : createMirrorObject");
         // This method should only call by setLive().
 	if (mirror == null) {
-	    CgShaderProgramRetained  mirrorCgSP = new CgShaderProgramRetained();	    
+	    CgShaderProgramRetained  mirrorCgSP = new CgShaderProgramRetained();
 	    mirror = mirrorCgSP;
 	}
 	initMirrorObject();
@@ -305,17 +305,17 @@ class CgShaderProgramRetained extends ShaderProgramRetained {
     /**
      * Method to create the native shader.
      */
-    ShaderError createShader(Context ctx, ShaderRetained shader, ShaderId[] shaderIdArr) {	
+    ShaderError createShader(Context ctx, ShaderRetained shader, ShaderId[] shaderIdArr) {
 	  return Pipeline.getPipeline().createCgShader(ctx, shader.shaderType, shaderIdArr);
     }
-    
+
     /**
      * Method to destroy the native shader.
      */
     ShaderError destroyShader(Context ctx, ShaderId shaderId) {
 	return Pipeline.getPipeline().destroyCgShader(ctx, shaderId);
     }
-    
+
     /**
      * Method to compile the native shader.
      */
@@ -327,7 +327,7 @@ class CgShaderProgramRetained extends ShaderProgramRetained {
      * Method to create the native shader program.
      */
     ShaderError createShaderProgram(Context ctx, ShaderProgramId[] shaderProgramIdArr) {
-	    return Pipeline.getPipeline().createCgShaderProgram(ctx, shaderProgramIdArr);  
+	    return Pipeline.getPipeline().createCgShaderProgram(ctx, shaderProgramIdArr);
     }
 
     /**
@@ -343,7 +343,7 @@ class CgShaderProgramRetained extends ShaderProgramRetained {
     ShaderError linkShaderProgram(Context ctx, ShaderProgramId shaderProgramId, ShaderId[] shaderIds) {
         return Pipeline.getPipeline().linkCgShaderProgram(ctx, shaderProgramId, shaderIds);
     }
- 
+
     ShaderError bindVertexAttrName(Context ctx, ShaderProgramId shaderProgramId, String attrName, int attrIndex) {
         // This is a no-op for Cg
         return null;
@@ -357,7 +357,7 @@ class CgShaderProgramRetained extends ShaderProgramRetained {
             String[] attrNames, AttrNameInfo[] attrNameInfoArr) {
 
         int numAttrNames = attrNames.length;
-        
+
         ShaderAttrLoc[] locArr = new ShaderAttrLoc[numAttrNames];
         int[] typeArr = new int[numAttrNames];
         int[] sizeArr = new int[numAttrNames]; // currently unused
@@ -387,7 +387,7 @@ class CgShaderProgramRetained extends ShaderProgramRetained {
     ShaderError enableShaderProgram(Context ctx, ShaderProgramId shaderProgramId) {
 	return Pipeline.getPipeline().useCgShaderProgram(ctx, shaderProgramId);
     }
-	
+
     /**
      * Method to disable the native shader program.
      */

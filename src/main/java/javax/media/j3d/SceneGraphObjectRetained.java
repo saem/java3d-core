@@ -26,8 +26,6 @@
 
 package javax.media.j3d;
 
-import java.util.Vector;
-import java.util.Hashtable;
 
 /**
  * SceneGraphObjectRetained is a superclass, which has things that
@@ -89,7 +87,7 @@ abstract class SceneGraphObjectRetained extends IndexedObject
        boolean isInSetLive() {
 	   return inSetLive;
        }
-       
+
     /**
      * Makes the internal node live.
      */
@@ -114,7 +112,7 @@ abstract class SceneGraphObjectRetained extends IndexedObject
     /**
      * Makes the internal node not live
      */
-    void clearLive(VirtualUniverse univ, int index, 
+    void clearLive(VirtualUniverse univ, int index,
 	 	   boolean sharedGroup, HashKey [] keys) {
 	inBackgroundGroup = false;
 	this.source.clearLive();
@@ -149,7 +147,7 @@ abstract class SceneGraphObjectRetained extends IndexedObject
 
     void mergeTransform(TransformGroupRetained xform) {
     }
-  
+
     void traverse(boolean sameLevel, int level) {
 
 	System.err.println();
@@ -159,7 +157,7 @@ abstract class SceneGraphObjectRetained extends IndexedObject
         System.err.print(this);
     }
 
-    /** 
+    /**
      * true if component can't be read or written after compile or setlive()
      */
     boolean isStatic() {
@@ -169,7 +167,7 @@ abstract class SceneGraphObjectRetained extends IndexedObject
     protected Object clone() {
 	try {
 	    return super.clone();
-	} catch (CloneNotSupportedException e) { 
+	} catch (CloneNotSupportedException e) {
 	    return null;
 	}
     }

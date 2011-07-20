@@ -26,7 +26,6 @@
 
 package javax.media.j3d;
 
-import javax.vecmath.*;
 import java.util.ArrayList;
 
 /**
@@ -50,7 +49,7 @@ class LightBin extends Object implements ObjectUpdate {
     LightRetained[] lights = null;
 
     /**
-     * An Array of reference counts for shared lights in 
+     * An Array of reference counts for shared lights in
      * among EnvirionmentSets
      */
     int[] lightsRef = null;
@@ -90,7 +89,7 @@ class LightBin extends Object implements ObjectUpdate {
     int canvasDirty = 0;
 
     /**
-     * lightDirty Mask  cache , used to 
+     * lightDirty Mask  cache , used to
      * mark the lightdirty bits for next frame
      */
     int lightDirtyMaskCache = 0;
@@ -101,8 +100,8 @@ class LightBin extends Object implements ObjectUpdate {
      */
     int lightDirtyMask = 0;
 
-    /** 
-     * List of pointLts in this lightbin 
+    /**
+     * List of pointLts in this lightbin
      * Need to reload these lights when vworld scale changes
      */
     ArrayList pointLts = new ArrayList();
@@ -156,7 +155,7 @@ class LightBin extends Object implements ObjectUpdate {
 
         numEsLights = e.lights.size();
 	slotsNeeded = numEsLights;
-	for (i=0; i<numEsLights; i++) {	    
+	for (i=0; i<numEsLights; i++) {
 	    light = (LightRetained) e.lights.get(i);
 	    if (light instanceof AmbientLightRetained) {
 		continue;
@@ -181,7 +180,7 @@ class LightBin extends Object implements ObjectUpdate {
     void addEnvironmentSet(EnvironmentSet e, RenderBin rb) {
 	int i, j, numEsLights;
 	LightRetained light;
-	
+
 	numEsLights = e.lights.size();
 	for (i=0; i<numEsLights; i++) {
 	    light = (LightRetained) e.lights.get(i);
@@ -217,8 +216,8 @@ class LightBin extends Object implements ObjectUpdate {
 			    if (pointLtsSlotIndex != null)
 				pointLtsSlotIndexLen = pointLtsSlotIndex.length;
 			    if (pointLtsSlotIndexLen < pointLts.size()) {
-				
-				int[] newIndexList = 
+
+				int[] newIndexList =
 					new int[pointLtsSlotIndexLen + 8];
 				for (int x = 0; x < pointLtsSlotIndexLen; x++) {
 				    newIndexList[x] = pointLtsSlotIndex[x];
@@ -266,7 +265,7 @@ class LightBin extends Object implements ObjectUpdate {
 		environmentSetList.prev = e;
 		environmentSetList = e;
 	    }
-	    for (i = 1; i < insertEnvSet.size(); i++) {	
+	    for (i = 1; i < insertEnvSet.size(); i++) {
 		e = (EnvironmentSet)insertEnvSet.get(i);
 		e.next = environmentSetList;
 		environmentSetList.prev = e;
@@ -288,7 +287,7 @@ class LightBin extends Object implements ObjectUpdate {
 	}
 	onUpdateList = false;
     }
-	
+
 
 
     /**
@@ -337,9 +336,9 @@ class LightBin extends Object implements ObjectUpdate {
 		    e.next.prev = e.prev;
 		}
 	    }
-	    
+
 	    // Mark all canvases that uses this environment set as
-	    Canvas3D canvases[] = renderBin.view.getCanvases();	
+	    Canvas3D canvases[] = renderBin.view.getCanvases();
 	    for (i = 0; i < canvases.length; i++) {
 		// Mark the environmentSet cached by all the canvases as null
 		// to force to reEvaluate when it comes back from the freelist
@@ -352,7 +351,7 @@ class LightBin extends Object implements ObjectUpdate {
 	}
 	e.prev = null;
 	e.next = null;
-        
+
 	if (environmentSetList == null && insertEnvSet.size() == 0) {
 	    renderBin.removeLightBin(this);
 	    geometryBackground = null;
@@ -382,8 +381,8 @@ class LightBin extends Object implements ObjectUpdate {
 
 	int frameCount = VirtualUniverse.mc.frameCount;
 
-	// TODO: When working on issue 15 and 88, we realise that the 
-	// logic in this method flaw. As we are ready into 1.3.2beta1 
+	// TODO: When working on issue 15 and 88, we realise that the
+	// logic in this method flaw. As we are ready into 1.3.2beta1
 	// phase, and there isn't an existing issue related to the logic
 	// error in method, we decided not to fix it for now. This method
 	// should have the logic as in EnvironmentSet.updateAttributes();
@@ -394,18 +393,18 @@ class LightBin extends Object implements ObjectUpdate {
 
             if (geometryBackground == null) {
 		scale = cv.canvasViewCache.getVworldToCoexistenceScale();
-                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat, 
+                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat,
 				      renderBin.vworldToVpc);
 	    } else {
 		scale = cv.canvasViewCache.getInfVworldToCoexistenceScale();
-                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat, 
+                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat,
 				      renderBin.infVworldToVpc);
-	    } 
+	    }
 
 
 	    for (i=0; i<maxLights; i++) {
 		if (lights[i] != null) {
-                    if (cv.lights[i] != lights[i] || 
+                    if (cv.lights[i] != lights[i] ||
 				cv.frameCount[i] != frameCount) {
                         cv.lights[i] = lights[i];
                         cv.frameCount[i] = frameCount;
@@ -418,18 +417,18 @@ class LightBin extends Object implements ObjectUpdate {
 	    // invalidate canvas cached enableMask
 	    cv.enableMask = -1;
 	}
-	// across frames 
+	// across frames
 	else if ((cv.canvasDirty & Canvas3D.LIGHTBIN_DIRTY) != 0) {
 	    // Just update the dirty lights
             if (geometryBackground == null) {
 		scale = cv.canvasViewCache.getVworldToCoexistenceScale();
-                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat, 
+                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat,
 				      renderBin.vworldToVpc);
 	    } else {
 		scale = cv.canvasViewCache.getInfVworldToCoexistenceScale();
-                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat, 
+                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat,
 				      renderBin.infVworldToVpc);
-	    } 
+	    }
 	    i = 0;
 	    int mask = lightDirtyMask;
 	    while (mask != 0) {
@@ -441,19 +440,19 @@ class LightBin extends Object implements ObjectUpdate {
 		mask >>= 1;
 		i++;
 	    }
-	    
+
 	    cv.canvasDirty &= ~Canvas3D.LIGHTBIN_DIRTY;
 	}
 	else if ((pointLts.size() > 0) && ((cv.canvasDirty & Canvas3D.VIEW_MATRIX_DIRTY) != 0 )) {
             if (geometryBackground == null) {
 		scale = cv.canvasViewCache.getVworldToCoexistenceScale();
-                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat, 
+                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat,
 				      renderBin.vworldToVpc);
 	    } else {
 		scale = cv.canvasViewCache.getInfVworldToCoexistenceScale();
-                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat, 
+                cv.setModelViewMatrix(cv.ctx, cv.vpcToEc.mat,
 				      renderBin.infVworldToVpc);
-	    } 
+	    }
 	    for (i = 0; i < pointLts.size(); i++) {
 		LightRetained lt = (LightRetained) pointLts.get(i);
 		lt.update(cv.ctx, pointLtsSlotIndex[i], scale);

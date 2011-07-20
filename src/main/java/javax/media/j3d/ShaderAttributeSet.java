@@ -26,10 +26,6 @@
 
 package javax.media.j3d;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.HashMap;
-import javax.vecmath.*;
 
 /**
  * The ShaderAttributeSet object provides uniform attributes to shader
@@ -94,7 +90,7 @@ public class ShaderAttributeSet extends NodeComponent {
     private static final int[] readCapabilities = {
         ALLOW_ATTRIBUTES_READ
     };
-    
+
     /**
      * Constructs an empty ShaderAttributeSet object. The attributes set
      * is initially empty.
@@ -118,7 +114,7 @@ public class ShaderAttributeSet extends NodeComponent {
      *
      * @exception NullPointerException if attr is null
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void put(ShaderAttribute attr) {
@@ -129,7 +125,7 @@ public class ShaderAttributeSet extends NodeComponent {
         if (isLiveOrCompiled())
 	    if (!this.getCapability(ALLOW_ATTRIBUTES_WRITE))
 		throw new CapabilityNotSetException(J3dI18N.getString("ShaderAttributeSet1"));
-	
+
         ((ShaderAttributeSetRetained)this.retained).put(attr);
 
     }
@@ -147,7 +143,7 @@ public class ShaderAttributeSet extends NodeComponent {
      * attribute name, or null if the name is not in the attributes
      * set
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public ShaderAttribute get(String attrName) {
@@ -172,18 +168,18 @@ public class ShaderAttributeSet extends NodeComponent {
      *
      * @exception NullPointerException if attrName is null
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void remove(String attrName) {
 	if (attrName == null) {
 	    throw new NullPointerException();
 	}
-	
+
         if (isLiveOrCompiled())
 	    if (!this.getCapability(ALLOW_ATTRIBUTES_WRITE))
 		throw new CapabilityNotSetException(J3dI18N.getString("ShaderAttributeSet1"));
-	
+
 	((ShaderAttributeSetRetained)this.retained).remove(attrName);
     }
 
@@ -200,7 +196,7 @@ public class ShaderAttributeSet extends NodeComponent {
      *
      * @exception NullPointerException if attr is null
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void remove(ShaderAttribute attr) {
@@ -219,7 +215,7 @@ public class ShaderAttributeSet extends NodeComponent {
      * Removes all shader attributes from the attributes set. The
      * attributes set will be empty following this call.
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public void clear() {
@@ -236,7 +232,7 @@ public class ShaderAttributeSet extends NodeComponent {
      *
      * @return a shallow copy of the attributes set
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public ShaderAttribute[] getAll() {
@@ -253,7 +249,7 @@ public class ShaderAttributeSet extends NodeComponent {
      *
      * @return the number of elements in the attributes set
      *
-     * @exception CapabilityNotSetException if appropriate capability is 
+     * @exception CapabilityNotSetException if appropriate capability is
      * not set and this object is part of live or compiled scene graph
      */
     public int size() {
@@ -261,7 +257,7 @@ public class ShaderAttributeSet extends NodeComponent {
         if (isLiveOrCompiled())
 	    if (!this.getCapability(ALLOW_ATTRIBUTES_READ))
 		throw new CapabilityNotSetException(J3dI18N.getString("ShaderAttributeSet0"));
-	
+
 	return ((ShaderAttributeSetRetained)this.retained).size();
     }
 
