@@ -54,7 +54,7 @@ class ConfigView extends ConfigObject {
     /**
      * Set of ConfigScreen instances added to this view.
      */
-    Set screens = new HashSet() ;
+    Set<ConfigScreen> screens = new HashSet<ConfigScreen>() ;
 
     /**
      * Indicates whether or not stereo viewing should be enabled for this

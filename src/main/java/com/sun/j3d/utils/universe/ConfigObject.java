@@ -121,7 +121,7 @@ class ConfigObject {
     /**
      * List of alias Strings for this object if it's not an alias itself.
      */
-    List aliases = new ArrayList() ;
+    List<String> aliases = new ArrayList<String>() ;
     
     protected ClassLoader classLoader;
 
